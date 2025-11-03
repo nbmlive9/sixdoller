@@ -1,0 +1,112 @@
+<div class="container mb-5">
+
+  <!-- Loader Section -->
+  <div *ngIf="isLoading" class="d-flex flex-column justify-content-center align-items-center" style="height: 300px;">
+    <img src="assets/favicon.png" alt="Loading..." width="70" height="70" class="mb-3 loader-img">
+    <p class="fw-semibold text-primary">Loading team data...</p>
+  </div>
+
+  <!-- Team Table (Visible when not loading) -->
+  <div *ngIf="!isLoading" class="table-responsive mt-3">
+    <table class="table table-bordered table-striped align-middle text-center">
+      <thead class="table-primary">
+        <tr>
+          <th>S.no</th>
+          <th>Team</th>
+          <th>Eligible</th>
+          <th>Team</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>G1</td>
+          <td>4</td>
+          <td (click)="openLevelModal(team.level1)" class="text-primary fw-bold cursor-pointer">
+            {{ team.level1.length }}
+          </td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>G2</td>
+          <td>16</td>
+          <td (click)="openLevelModal(team.level2)" class="text-primary fw-bold cursor-pointer">
+            {{ team.level2.length }}
+          </td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>G3</td>
+          <td>64</td>
+          <td (click)="openLevelModal(team.level3)" class="text-primary fw-bold cursor-pointer">
+            {{ team.level3.length }}
+          </td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>G4</td>
+          <td>256</td>
+          <td (click)="openLevelModal(team.level4)" class="text-primary fw-bold cursor-pointer">
+            {{ team.level4.length }}
+          </td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>G5</td>
+          <td>1024</td>
+          <td (click)="openLevelModal(team.level5)" class="text-primary fw-bold cursor-pointer">
+            {{ team.level5.length }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- LEVEL DETAILS MODAL -->
+<div class="modal fade" id="levelModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content rounded-4 shadow-lg border-0">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-dark">Level Members</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <table class="table table-bordered table-striped">
+          <thead class="table-secondary">
+            <tr>
+              <th>#</th>
+              <th>Reg ID</th>
+              <th>Name</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let member of selectedLevelMembers; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ member.regid }}</td>
+              <td title="{{ member.name }}">{{ member.name?.substring(0, 6) }}</td>
+              <td>
+                <span [ngClass]="member.topupstatus == '1' ? 'text-success' : 'text-danger'">
+                  {{ member.topupstatus == '1' ? 'Active' : 'Inactive' }}
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- No Members Case -->
+        <div *ngIf="selectedLevelMembers.length === 0" class="text-center text-muted my-3">
+          No members found in this level.
+        </div>
+      </div>
+
+      <div class="modal-footer border-0">
+        <button class="btn btn-secondary w-100 rounded-pill" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

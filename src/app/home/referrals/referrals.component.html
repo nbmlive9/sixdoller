@@ -1,0 +1,51 @@
+<div class="mb-5">
+  <main class="container my-4">
+
+    <!-- Loader Screen -->
+    <div *ngIf="isLoading" class="d-flex flex-column justify-content-center align-items-center" style="height: 200px;">
+      <img src="assets/favicon.png" alt="Loading..." width="60" height="60" class="mb-3">
+      <p class="fw-semibold text-primary">Loading referrals...</p>
+    </div>
+
+    <!-- Referrals Content -->
+    <div *ngIf="!isLoading">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <div class="fw-bold">My Referrals</div>
+        <a routerLink="/allreferrals" class="small text-decoration-none">View all</a>
+      </div>
+
+      <div *ngIf="data1?.length > 0; else noData">
+        <div class="vstack gap-2 mt-2" *ngFor="let row of data1">
+          <div class="txn-card">
+            <div class="txn-icon"><i class="bi bi-person"></i></div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between">
+                <div class="txn-title">{{ row.name }}</div>
+                <div class="txn-amt text-success">{{ row.regid }}</div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="txn-sub">{{ row.cdate | date:'dd/MMM/yyyy' }}</div>
+                
+                <!-- Topup Status -->
+                <div *ngIf="row.topupstatus == '1'">
+                  <span class="text-success">Activated</span>
+                </div>
+                <div *ngIf="row.topupstatus == '0'">
+                  <span class="text-danger">Not Activated</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- No Data Template -->
+      <ng-template #noData>
+        <div class="text-center text-muted mt-3">
+          No referrals found.
+        </div>
+      </ng-template>
+    </div>
+
+  </main>
+</div>

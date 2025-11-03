@@ -1,0 +1,253 @@
+<section >
+    <div class="container-fluid" style="  background: url('assets/b.jpg') no-repeat center/cover;">
+      <div class="row">
+        <div class="col-lg-6 col-md-8 col-sm-10 mx-auto py-5 order-1 order-lg-0">
+          <div class="register-container   p-4 rounded-4 ">
+             <div class="text-center">
+               <img src="assets/favicon.png" class="img-fluid" alt="" srcset="">
+             </div>
+            <h1 class="text-center mb-4 fw-bold text-white">REGISTER</h1>
+            <form [formGroup]="form" novalidate>
+              <div class="row g-3 form-box">
+                <div class="col-sm-6">
+                  <label class="form-label">Full Name</label>
+                  <div class="input-wrapper">
+                    <i class="fas fa-user input-icon"></i>
+                    <input type="text" formControlName="name" placeholder="Enter Name" class="form-control" required>
+                  </div>
+                  <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="text-danger mt-1 small">
+                    Name is required.
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label class="form-label">Email</label>
+                  <div class="input-wrapper">
+                    <i class="fas fa-envelope input-icon"></i>
+                    <input type="email" formControlName="email" placeholder="example@domain.com" class="form-control" required>
+                  </div>
+                  <div *ngIf="form.get('email')?.touched && form.get('email')?.invalid" class="text-danger mt-1 small">
+                    <span *ngIf="form.get('email')?.errors?.['required']">Email is required.</span>
+                    <span *ngIf="form.get('email')?.errors?.['email']">Enter a valid email address.</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label class="form-label">Password</label>
+                  <div class="input-wrapper">
+                    <i class="fas fa-lock input-icon"></i>
+                    <input type="password" formControlName="password" placeholder="********" class="form-control" required>
+                  </div>
+                  <div *ngIf="form.get('password')?.touched && form.get('password')?.invalid" class="text-danger mt-1 small">
+                    <span *ngIf="form.get('password')?.errors?.['required']">Password is required.</span>
+                    <span *ngIf="form.get('password')?.errors?.['minlength']">Password must be at least 6 characters.</span>
+                  </div>
+                </div>
+
+                <div class="col-sm-6">
+                  <label class="form-label">Referral ID</label>
+                  <div class="input-wrapper">
+                    <i class="fas fa-key input-icon"></i>
+                    <input type="text" formControlName="sponcerid" placeholder="Enter referral ID" class="form-control" (keyup)="onRegisterIdSelect($event)">
+                  </div>
+                  <span class="text-white">{{ idselectmsg }}</span>
+                  <span class="text-danger">{{ errorMessage }}</span>
+                  <div *ngIf="form.get('sponcerid')?.touched && form.get('sponcerid')?.invalid" class="text-danger mt-1 small">
+                    Referral ID is required.
+                  </div>
+                </div>
+
+  
+              <div class="mt-3">
+                <label>
+                  <input type="checkbox" formControlName="terms" required />
+                  <span class="text-white">I have read and agree to </span>
+                  <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal" class="text-white">Terms & Conditions</a>
+                </label>
+                <div *ngIf="form.get('terms')?.touched && form.get('terms')?.invalid" class="text-danger small mt-1">
+                  You must accept terms and conditions.
+                </div>
+              </div>
+              
+                <button type="submit" class="btn btn-danger w-100 mt-3 rounded-pill"   data-bs-toggle="modal" data-bs-target="#exampleModal" (click)="userSubmit()" [disabled]="!form.valid">Sign Up</button>
+                <div class="text-center mt-3 text-white">
+                  Already have an account? <a routerLink="/login" class="text-primary text-white">Log In</a>
+                </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+
+ <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content position-relative">
+
+      <canvas id="confetti-canvas" class="position-absolute top-0 start-0 w-100 h-100" style="pointer-events: none;"></canvas>
+
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold text-success">
+          <i class="bi bi-check-circle-fill me-2"></i> Registration Successful
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body text-center">
+        <div class="p-3" *ngIf="udata">
+          <p><strong>Name:</strong> {{ udata.name }}</p>
+          <p><strong>User ID:</strong> {{ udata.regid }}</p>
+          <p><strong>Password:</strong> {{ udata.password }}</p>
+          <p><strong>Sponsor ID:</strong> {{ udata.refid }}</p>
+          <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
+        </div>
+      </div>
+
+      <div class="modal-footer border-0 justify-content-center">
+        <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade" id="errorModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content border-danger">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title">
+          <i class="bi bi-exclamation-triangle me-2"></i> Registration Failed
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-center">
+        <p class="text-danger fw-bold">{{ errorMessage }}</p>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn btn-danger px-4" data-bs-dismiss="modal">
+          Try Again
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  
+  <style>
+    /* Apply font globally to modal */
+    .success-modal {
+      font-family: 'Poppins', sans-serif;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+      animation: fadeIn 0.4s ease-in-out;
+    }
+  
+    .custom-bg {
+      background: linear-gradient(
+          rgba(255, 255, 255, 0.95),
+          rgba(255, 255, 255, 0.95)
+        ),
+        url('assets/congratulations-13773_256.gif');
+      background-size: cover;
+      background-position: center;
+      padding: 20px;
+    }
+  
+    /* .details-card p {
+      margin: 8px 0;
+      font-size: 15px;
+      color: #333;
+    } */
+  
+    .details-card strong {
+      color: #2c7a4b;
+    }
+  
+    .btn-success {
+      background: linear-gradient(90deg, #28a745, #2ecc71);
+      border: none;
+      font-weight: bold;
+      transition: all 0.3s ease-in-out;
+    }
+  
+    .btn-success:hover {
+      background: linear-gradient(90deg, #2ecc71, #28a745);
+      transform: scale(1.05);
+    }
+  
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+  </style>
+  
+  
+  <!-- Modal -->
+  <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="termsModalLabel">bitraze.org – Terms & Conditions</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body" style="max-height: 70vh; overflow-y: auto;">
+          <p><strong>Effective Date:</strong> [Insert Date]</p>
+  
+          <p>Welcome to <strong>bitraze.org</strong>, an AI-powered trading platform designed to assist users in executing automated cryptocurrency and digital asset trades using algorithmic strategies. By accessing or using our website, mobile application, or related services (collectively, the “Platform”), you agree to comply with and be bound by these Terms and Conditions (“Terms”).</p>
+  
+          <h6>1. Eligibility</h6>
+          <p>You must be at least 18 years old and legally permitted to use digital asset trading services in your jurisdiction.</p>
+  
+          <h6>2. Nature of Services</h6>
+          <p>bitraze.org provides AI-driven trading tools, market analytics, and automation features. We do not guarantee profits.</p>
+  
+          <h6>3. Risk Acknowledgment</h6>
+          <p>Cryptocurrency trading involves significant risk, and you may lose part or all of your invested capital.</p>
+  
+          <h6>4. Account Registration & Security</h6>
+          <p>You must keep your login credentials secure and notify us immediately of any unauthorized access.</p>
+  
+          <h6>5. Fees and Payments</h6>
+          <p>All fees will be disclosed before purchase and are non-refundable unless required by law.</p>
+  
+          <h6>6. Prohibited Use</h6>
+          <p>Do not use the platform for illegal purposes, market manipulation, or fraud.</p>
+  
+          <h6>7. Disclaimer of Warranties</h6>
+          <p>The platform is provided “as is” without any warranties.</p>
+  
+          <h6>8. Limitation of Liability</h6>
+          <p>We are not liable for losses resulting from trading activities or reliance on AI recommendations.</p>
+  
+          <h6>9. Termination</h6>
+          <p>We may suspend or terminate accounts for violations of these Terms.</p>
+  
+          <h6>10. Governing Law</h6>
+          <p>These Terms are governed by the laws of [Insert Jurisdiction].</p>
+  
+          <h6>11. Changes to Terms</h6>
+          <p>We may update these Terms at any time, and continued use constitutes acceptance.</p>
+  
+          <h6>12. Contact Us</h6>
+          <p>Email: <a href="mailto:support@bitraze.org">support@bitraze.org</a></p>
+  
+          <p class="text-danger"><strong>Important:</strong> Cryptocurrency and AI-based trading involve high risk. Trade only if you fully understand the risks.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,35 @@
+
+
+<section style="background: url('assets/b.jpg') no-repeat center/cover;
+">
+  <div class="form-box">
+   <div *ngIf="successMessage" class="alert alert-success text-center">
+            {{ successMessage }}
+          </div>
+          <div *ngIf="errorMessage" class="alert alert-danger text-center">
+            {{ errorMessage }}
+          </div>
+           <div class="text-center">
+               <img src="assets/favicon.png" class="img-fluid" alt="" srcset="">
+             </div>
+    <form [formGroup]="form" (submit)="onSubmit()" novalidate>
+      <h2>Member Login</h2>
+      <div class="inputbox">
+        <input type="text" formControlName="regid" required>
+        <label>Username</label>
+      </div>
+      <div class="inputbox">
+        <input type="password" formControlName="password" required>
+        <label>Password</label>
+      </div>
+      <div class="forget">
+        <label><input type="checkbox"> Remember Me</label>
+        <a routerLink="/forgot">Forgot password?</a>
+      </div>
+      <button type="submit" [disabled]="!form.valid">Log in</button>
+      <div class="register">
+        <p>Don't have an account? <a href="#" routerLink="/sign">Register</a></p>
+      </div>
+    </form>
+  </div>
+</section>

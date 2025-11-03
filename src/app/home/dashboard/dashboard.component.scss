@@ -1,0 +1,392 @@
+.wallet-header { background: #fff; border-radius: 0 0 1rem 1rem; padding: .5rem 1rem; }
+.balance-card { border-radius: 1rem; background: linear-gradient(135deg,#1d40d0,#00f2fe); color: #fff; }
+.txn-card { background: #fff; border-radius: 1rem; padding: .8rem; box-shadow: 0 2px 6px rgba(0,0,0,.05); }
+.txn-icon { width:46px; height:46px; display:flex; align-items:center; justify-content:center; background:#f0eef4; border-radius:12px; }
+.scroll-item { flex:0 0 auto; width:80px; text-align:center; margin-right:12px; }
+.hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.hide-scrollbar::-webkit-scrollbar { display:none; }
+.promo-banner { background:#f9f9f9; border-radius:12px; padding:12px; display:flex; justify-content:space-between; align-items:center; box-shadow:0 2px 8px rgba(0,0,0,0.08); }
+.scanner-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:flex; justify-content:center; align-items:center; z-index:9999; }
+.scanner-container { position: relative; width:100%; max-width:400px; height:70vh; }
+.close-btn { position:absolute; top:10px; right:10px; width:40px; height:40px; border-radius:50%; padding:0; }
+
+.toggle-btn-group {
+  display: flex;
+  border-radius: 50px;
+  overflow: hidden;
+  background: #f0f0f0; /* light corporate bg */
+}
+
+.toggle-btn {
+  flex: 1;
+  padding: 10px 0;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.3s ease;
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.toggle-btn.active {
+  background: linear-gradient(135deg,#1D40D0,#00f2fe); /* Android/iOS gradient */
+  color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.toggle-btn:not(.active):hover {
+  background: rgba(0,0,0,0.05);
+}
+
+@media (max-width: 576px) {
+  .toggle-btn {
+    font-size: 0.85rem;
+    padding: 8px 0;
+  }
+}
+
+/* Investment Card Container */
+.investment-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 230px;
+  max-width: 260px;
+  // background: #fff;
+  // border-radius: 16px;
+  // padding: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+/* Hover Effect */
+.investment-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+/* Gradient Variants */
+// .card-lite {
+//   background: linear-gradient(135deg, #1e3c72, #2a5298);
+//   color: #fff;
+// }
+
+// .card-pro {
+//   background: linear-gradient(135deg, #ff7e5f, #feb47b);
+//   color: #fff;
+// }
+
+// .card-max {
+//   background: linear-gradient(135deg, #11998e, #38ef7d);
+//   color: #fff;
+// }
+
+/* Image Container */
+.card-image {
+  width: 100%;
+  height: 170px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.15);
+  padding: 8px;
+  margin-bottom: 12px;
+}
+
+/* Image Styling */
+.card-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain; /* Keeps aspect ratio perfect */
+  transition: transform 0.3s ease;
+}
+
+/* Subtle Zoom on Hover */
+.investment-card:hover .card-image img {
+  transform: scale(1.05);
+}
+
+/* Card Title */
+// .card-title {
+//   font-weight: 600;
+//   font-size: 1.1rem;
+//   letter-spacing: 0.5px;
+//   text-transform: capitalize;
+//   color: inherit;
+// }
+
+/* Scrollbar Hidden */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Responsive for Mobile */
+@media (max-width: 576px) {
+  .investment-card {
+    // min-width: 180px;
+    max-width: 200px;
+    // padding: 12px;
+  }
+  .card-image {
+    height: 150px;
+  }
+  // .card-title {
+  //   font-size: 1rem;
+  // }
+}
+
+
+.join-amount {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+}
+
+.join-amount .amount {
+  background: rgba(255,255,255,0.2);
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.btn-light {
+  color: #000;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 6px 16px;
+  transition: all 0.3s ease;
+}
+
+.btn-light:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+@media (max-width: 576px) {
+  .investment-card { min-height: 200px; width: 200px !important; }
+  .join-amount .amount { font-size: 0.75rem; padding: 3px 6px; }
+  .btn-light { font-size: 0.85rem; padding: 5px 14px; }
+}
+
+/* For modal and share buttons */
+.share-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.share-icon i,
+.share-icon img {
+  font-size: 2.5rem;
+  color: #0d6efd;
+  background: #f4f8ff;
+  padding: 14px;
+  border-radius: 50%;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.share-icon img {
+  width: 52px;
+  height: 52px;
+}
+
+.share-icon span {
+  font-size: 0.8rem;
+  color: #333;
+  font-weight: 500;
+}
+
+.share-icon:hover i,
+.share-icon:hover img {
+  background: #0d6efd;
+  color: white;
+  transform: scale(1.05);
+}
+
+.modal-content {
+  border-radius: 1.2rem;
+}
+
+.btn-close {
+  background: transparent;
+  border: none;
+}
+
+@media (max-width: 576px) {
+  .share-icon i,
+  .share-icon img {
+    font-size: 2rem;
+    padding: 10px;
+  }
+
+  .share-icon span {
+    font-size: 0.75rem;
+  }
+}
+
+
+.staking-banner {
+  background: linear-gradient(135deg, #155ee6 0%, #2a5298 100%);
+  color: #fff;
+  border-left: 5px solid #ffc107; // highlight stripe
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  .banner-text h5 {
+    font-size: 1.2rem;
+  }
+
+  .banner-text p {
+    font-size: 0.9rem;
+    color: #f0f8ff;
+  }
+
+  .banner-amount h4 {
+    font-size: 1.5rem;
+    color: #fff;
+  }
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.modal-body .shadow-sm {
+  transition: transform 0.2s ease-in-out;
+}
+.modal-body .shadow-sm:hover {
+  transform: translateY(-2px);
+}
+
+.bg-gradient-blue {
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.8em;
+}
+
+@media (max-width: 576px) {
+  .modal-dialog {
+    width: 90%;
+  }
+  .modal-body .shadow-sm {
+    padding: 0.6rem;
+  }
+}
+
+.global-fund-card {
+  width: 100%;
+  background: linear-gradient(135deg, #2c3e50, #4ca1af); /* Modern blue-grey gradient */
+  color: #fff;
+  text-align: center;
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  /* Elegant Shadow */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+
+  /* Smooth hover animation */
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.25);
+  }
+
+  /* Title styling */
+  h5 {
+    font-size: 1.4rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* Amount styling */
+  .join-amount .amount {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #fff;
+  }
+
+  /* Button styling */
+  .btn {
+    border-radius: 25px;
+    padding: 0.4rem 1.2rem;
+    font-size: 0.9rem;
+    background: #ffffff;
+    color: #2c3e50;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: #f1f1f1;
+      color: #000;
+    }
+  }
+}
+
+.dashboard-welcome {
+    background: linear-gradient(90deg, #0d6efd 0%, #6610f2 100%);
+    color: #fff;
+}
+
+.dashboard-welcome1 {
+    background: linear-gradient(90deg, #6610f2 0%, #0d6efd 100%);
+    color: #fff;
+}
+
+.dashboard-welcome2 {
+    background: linear-gradient(90deg, #033797 0%, #0f0b00 100%);
+    color: #fff;
+}
+
+.dashboard-welcome .welcome-text h4 {
+    font-size: 1.5rem;
+}
+
+.dashboard-welcome .welcome-text p {
+    color: rgba(255,255,255,0.85);
+}
+
+.dashboard-welcome .welcome-icon img {
+    max-height: 70px;
+}
+
+/* Wallet Card Gradient */
+.balance-card {
+  background: linear-gradient(135deg, #001f3f, #003f7f);
+  color: white;
+  border-radius: 15px;
+}
+
+/* BTZ Price Card */
+.btz-price-card {
+  border: 1px solid #e3e6f0;
+  border-radius: 15px;
+  background: #ffffff;
+}
+
+.btz-price-card h4 {
+  color: #007bff;
+  font-size: 1.6rem;
+}
+
+/* Modal Header Gradient */
+.bg-gradient-primary {
+  background: linear-gradient(90deg, #007bff, #00d4ff);
+  color: #fff;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f0f9ff;
+}

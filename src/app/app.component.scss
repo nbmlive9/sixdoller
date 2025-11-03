@@ -1,0 +1,14 @@
+// navs
+.bottom-nav a {
+    color: #212529; /* default dark */
+    transition: color 0.3s ease;
+  }
+  
+  .bottom-nav a:hover {
+    color: #0d6efd!important; /* hover blue */
+  }
+  
+  .bottom-nav a.active-link {
+    color: #0d6efd !important; /* active blue */
+  }
+  

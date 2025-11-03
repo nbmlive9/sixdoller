@@ -1,0 +1,31 @@
+<!-- Bottom Navigation (hidden on login & signup) -->
+<div *ngIf="!hideBottomNav()" class="bottom-nav d-flex justify-content-around align-items-center shadow-lg">
+  <a routerLink="/home" 
+     routerLinkActive="active-link" 
+     [routerLinkActiveOptions]="{ exact: true }"
+     class="nav-item text-center">
+    <i class="bi bi-wallet2 fs-4"></i>
+    <span class="nav-label">Assets</span>
+  </a>
+
+  <a routerLink="/deposit" 
+     routerLinkActive="active-link" 
+     class="nav-item text-center">
+    <i class="bi bi-cash-coin fs-4"></i>
+    <span class="nav-label">Deposit</span>
+  </a>
+
+  <a routerLink="/team" 
+     routerLinkActive="active-link" 
+     class="nav-item text-center">
+    <i class="bi bi-people fs-4"></i>
+    <span class="nav-label">Team</span>
+  </a>
+
+  <a routerLink="/profile" 
+     routerLinkActive="active-link" 
+     class="nav-item text-center">
+    <i class="bi bi-person-circle fs-4"></i>
+    <span class="nav-label">Profile</span>
+  </a>
+</div>

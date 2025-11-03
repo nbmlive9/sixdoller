@@ -1,0 +1,33 @@
+.back-link {
+  cursor: pointer;
+  color: #333;
+  font-weight: 600;
+}
+.back-link i {
+  font-size: 0.9rem;
+}
+
+/* Cards for mobile */
+.txn-card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.txn-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.12);
+}
+
+.badge-success { background: rgba(26,168,75,.12); color: #1aa84b; font-weight: 600; }
+.badge-danger { background: rgba(255,77,73,.12); color: #ff4d49; font-weight: 600; }
+
+@media (max-width: 576px) {
+  .txn-card {
+    padding: 0.8rem;
+  }
+  .txn-card .fw-semibold { font-size: 0.95rem; }
+  .txn-card small { font-size: 0.8rem; }
+}

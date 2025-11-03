@@ -1,0 +1,58 @@
+<div class="container-fluid bg-light py-2 shadow-sm">
+  <div class="container d-flex align-items-center">
+    <h6 class="fw-bold mb-0 back-link" onclick="history.back()">
+      <i class="fa fa-chevron-left me-2"></i> Back
+    </h6>
+  </div>
+</div>
+
+<div class="container mt-4">
+  <h5 class="mb-3 text-primary fw-bold">Direct Team</h5>
+
+  <!-- Desktop Table -->
+  <div class="table-responsive d-none d-md-block">
+    <table class="table table-bordered table-hover align-middle shadow-sm">
+      <thead class="table-dark">
+        <tr>
+          <th>S.No</th>
+          <th>User ID</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data1; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ row.regid }}</td>
+          <td>{{ row.name }}</td>
+          <td>
+            <span [ngClass]="row.topupstatus == '1' ? 'badge bg-success' : 'badge bg-danger'">
+              {{ row.topupstatus == '1' ? 'Activated' : 'Not Activated' }}
+            </span>
+          </td>
+          <td>{{ row.adate | date:'dd/MM/yyyy' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Mobile Cards -->
+  <div class="d-md-none vstack gap-3 mb-5">
+    <div *ngFor="let row of data1; let i = index" class="card shadow-sm rounded-3 p-3 border-0 txn-card">
+      <div class="d-flex justify-content-between align-items-start">
+        <div>
+          <div class="fw-semibold mb-1">{{ row.name }}</div>
+          <small class="text-muted">ID: {{ row.regid }}</small>
+        </div>
+        <span [ngClass]="row.topupstatus == '1' ? 'badge bg-success' : 'badge bg-danger'">
+          {{ row.topupstatus == '1' ? 'Activated' : 'Not Activated' }}
+        </span>
+      </div>
+      <div class="text-muted mt-2"><small>Date: {{ row.adate | date:'dd/MM/yyyy' }}</small></div>
+      <div class="fw-semibold mt-1">S.No: {{ i + 1 }}</div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

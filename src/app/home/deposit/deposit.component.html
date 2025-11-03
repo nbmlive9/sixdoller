@@ -1,0 +1,125 @@
+<!-- Back -->
+<div class="container-fluid">
+  <div class="container p-1 mt-3">
+    <h6 class="fw-bold back-link" onclick="history.back()">
+      <i class="fa fa-chevron-left"></i> Back
+    </h6>
+  </div>
+</div>
+
+<!-- Wallet Add Form -->
+<div class="container my-3">
+  <div *ngIf="!paymentInfo">
+    <div class=" balance-card  border-0 rounded-4 mx-auto" style="max-width:420px;">
+      <div class=" p-4">
+        <h5 class="text-primary">Deposit Wallet</h5>
+        <h4 class="fw-bold text-center mb-4">
+          {{ pdata?.actwallet | currency:'USD':true:'1.0-2' }}
+        </h4>
+
+        <form [formGroup]="form" (ngSubmit)="generatePayment()">
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Amount (USDT BEP20 Network Only)</label>
+            <input type="number" formControlName="amount" min="10" class="form-control form-control-lg rounded-3" placeholder="Enter Amount" (input)="formatAmount($event)">
+            <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
+              Amount is required and must be ≥ $10
+            </div>
+          </div>
+          <div class="container text-center ">
+            <button type="submit" class="btn btn-sm btn-danger mt-2" [disabled]="submitting">
+              {{ submitting ? 'Generating…' : 'Confirm' }}
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container" *ngIf="paymentInfo">
+  <div class="modal-body text-center">
+    <p class="mb-2">Send Only <b>USDT BEP20</b> for <b><strong>{{ paymentInfo.price_amount | currency:'USD':true:'1.0-2'}} (Recived: {{paymentInfo.amount_received | currency:'USD':true:'1.0-2'}})</strong></b> Deposit to:
+    </p>
+    <p class="wallet-address">
+      {{ paymentInfo.pay_address }}
+    </p>
+    <button (click)="copyAddress()" class="btn btn-outline-primary btn-sm copy-btn mb-3">
+      Copy
+    </button>
+
+    <qrcode [qrdata]="paymentInfo?.pay_address" [width]="200" [errorCorrectionLevel]="'M'">
+    </qrcode>
+
+      <!-- Timer display -->
+    <div *ngIf="showTimer" class="mt-3">
+      <p class="text-primary fw-bold">
+        Please wait for <span class="text-danger">{{ countdown }}</span> seconds before checking payment status.
+      </p>
+    </div>
+
+    <div *ngIf="alertMessage" class="mt-3">
+      <div class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
+        {{ alertMessage }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+          (click)="alertMessage = ''"></button>
+      </div>
+    </div>
+    <div class="mt-2">
+      <!-- <button class="btn btn-success btn-custom">Share on WhatsApp</button> -->
+      <button (click)="checkPaymentStatus()" [disabled]="checkingStatus" class="btn btn-success mt-2">
+        {{ checkingStatus ? 'Checking…' : 'Check Payment Status' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- App Bar -->
+<!-- Transactions -->
+<main class="container my-4 mb-5">
+  <div class="d-flex justify-content-between align-items-center mb-2">
+    <div class="fw-bold">Deposit Transactions</div>
+  </div>
+
+  <!-- show spinner while loading -->
+  <div *ngIf="loadingTxns" class="text-center my-4">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- if data exists -->
+  <div *ngIf="!loadingTxns && ddata?.length > 0; else noData">
+    <div class="vstack gap-2 mt-3 mb-3" *ngFor="let row of ddata">
+      <div class="txn-card">
+        <div class="txn-icon"><i class="bi bi-person"></i></div>
+        <div class="flex-grow-1">
+          <div class="d-flex justify-content-between">
+            <div class="txn-title">Txn: {{ row.transno }}</div>
+            <div class="txn-amt text-success">
+              {{ row.amount | currency:'USD':true:'1.0-2' }}
+            </div>
+          </div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="txn-sub">{{ row.cdate | date:'dd/MM/YYYY' }}</div>
+            <span class="badge rounded-pill badge-success">Success</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- no data fallback -->
+  <ng-template #noData>
+    <div *ngIf="!loadingTxns" class="text-center text-danger mt-3">
+      No transactions found.
+    </div>
+  </ng-template>
+</main>
+
+
+
+
+
+
+
+<app-footer></app-footer>

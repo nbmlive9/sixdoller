@@ -1,0 +1,110 @@
+// .wallet-header {
+//   background: linear-gradient(135deg, hsl(196, 38%, 94%));
+//   border-radius: 4px;
+// }
+
+.balance-card {
+    border-radius: 1rem;
+    background: linear-gradient(135deg, #1D40D0, #00f2fe);
+    color: white;
+  }
+  
+  .bottom-nav a {
+    font-size: 0.9rem;
+  }
+  // gift cards
+  
+  .promo-banner {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .promo-text h6 {
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+  }
+  .promo-text a {
+    font-weight: 600;
+    text-decoration: none;
+    color: #0d6efd;
+  }
+  .promo-text a:hover {
+    text-decoration: underline;
+  }
+  .promo-img img {
+    max-width: 60px;
+    height: auto;
+  }
+  
+  /* Mobile Responsive */
+  @media (max-width: 576px) {
+    .promo-banner {
+      flex-direction: row;
+      text-align: left;
+    }
+    .promo-img img {
+      max-width: 50px;
+    }
+  }
+  // scroller
+  .hide-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .hide-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  /* Always 4 items visible */
+  .scroll-item {
+    flex: 0 0 25%;   /* 25% width per item */
+    max-width: 25%;
+    padding: 0 10px;
+  }
+  // navs
+  .bottom-nav a {
+    color: #212529; /* default dark */
+    transition: color 0.3s ease;
+  }
+  
+  .bottom-nav a:hover {
+    color: #0d6efd!important; /* hover blue */
+  }
+  
+  .bottom-nav a.active-link {
+    color: #0d6efd !important; /* active blue */
+  }
+
+//   
+/* Appbar */
+.appbar{
+  background: linear-gradient(135deg,#5f259f,#4a1c7c);
+  color:#fff; border-radius:0 0 1rem 1rem;
+  padding:1rem 0;
+}
+.avatar{ width:40px;height:40px;border-radius:50%;background:#fff2;
+  display:flex;align-items:center;justify-content:center;font-weight:600; }
+
+/* Transaction Cards */
+.txn-card{
+  background:#fff; border-radius:1rem;
+  padding:0.9rem; display:flex; align-items:center; gap:.8rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+}
+.txn-icon{
+  width:46px;height:46px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  background:#f0eef4;font-size:1.25rem;
+}
+.txn-title{ font-weight:600; }
+.txn-sub{ font-size:.85rem; color:#6b6b6b; }
+.txn-amt{ font-weight:700; }
+.badge-success{ background:rgba(26,168,75,.12); color:#1aa84b; }
+  
+  
+  

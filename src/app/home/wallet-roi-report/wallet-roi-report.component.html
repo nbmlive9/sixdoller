@@ -1,0 +1,53 @@
+<div class="container-fluid">
+
+  <!-- Back Link -->
+  <div class="container p-1 mt-3">
+    <h6 class="fw-bold back-link" onclick="history.back()" style="cursor: pointer;">
+      <i class="fa fa-chevron-left"></i> Back
+    </h6>
+  </div>
+
+  <!-- Title -->
+  <h5 class="fw-bold text-dark mb-4 text-center">Staking Report</h5>
+   
+
+<!-- Deposit Transactions -->
+<main class="container my-4 mb-5">
+  <!-- <div class="fw-bold mb-3">Recent Transactions</div> -->
+  <!-- <div class="vstack gap-3" *ngFor="let row of adata"> -->
+    <div class="vstack gap-3">
+<div class="container mb-5">
+  <div class="table-responsive mt-3">
+    <table class="table table-bordered table-striped align-middle text-center">
+      <thead class="table-primary">
+        <tr>
+          <th>Date</th>
+          <th>Purchase</th>
+          <th>Earn</th>
+          <th>Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of data1; else noTransactions">
+          <td>{{row.cdate | date:'dd/MMM/YYYY'}}</td>
+          <td>{{row.pkamount | currency:'USD':true:'1.0-2'}}</td>
+          <td> {{row.cramount | currency:'USD':true:'1.0-2'}} </td>
+          <td> {{row.balamount | currency:'USD':true:'1.0-2'}} </td>
+        </tr>
+        
+      </tbody>
+    </table>
+  </div>
+</div>
+    
+  </div>
+      <ng-template #noTransactions>
+      <div class="text-center text-muted py-4">
+        No transactions yet.
+      </div>
+    </ng-template>
+</main>
+
+
+
+<app-footer></app-footer>

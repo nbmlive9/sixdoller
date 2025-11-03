@@ -1,0 +1,33 @@
+
+/* Back link */
+.back-link { cursor:pointer; color:#333; }
+.back-link i { font-size:.9rem; margin-right:4px; }
+
+/* Wallet Card */
+.balance-card { background:#fff; border-radius:1rem; }
+.balance-card h4 { color:#1aa84b; }
+
+/* Appbar */
+.appbar{
+  background: linear-gradient(135deg,#5f259f,#4a1c7c);
+  color:#fff; border-radius:0 0 1rem 1rem;
+  padding:1rem 0;
+}
+.avatar{ width:40px;height:40px;border-radius:50%;background:#fff2;
+  display:flex;align-items:center;justify-content:center;font-weight:600; }
+
+/* Transaction Cards */
+.txn-card{
+  background:#fff; border-radius:1rem;
+  padding:0.9rem; display:flex; align-items:center; gap:.8rem;
+  box-shadow:0 2px 6px rgba(0,0,0,.05);
+}
+.txn-icon{
+  width:46px;height:46px;border-radius:12px;
+  display:flex;align-items:center;justify-content:center;
+  background:#f0eef4;font-size:1.25rem;
+}
+.txn-title{ font-weight:600; }
+.txn-sub{ font-size:.85rem; color:#6b6b6b; }
+.txn-amt{ font-weight:700; }
+.badge-success{ background:rgba(26,168,75,.12); color:#1aa84b; }

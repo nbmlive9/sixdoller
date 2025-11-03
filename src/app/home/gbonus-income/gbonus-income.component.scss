@@ -1,0 +1,25 @@
+
+.modal-body .shadow-sm {
+  transition: transform 0.2s ease-in-out;
+}
+.modal-body .shadow-sm:hover {
+  transform: translateY(-2px);
+}
+
+.bg-gradient-blue {
+  background: linear-gradient(135deg, #007bff, #00c6ff);
+}
+
+.badge {
+  font-size: 0.9rem;
+  padding: 0.5em 0.8em;
+}
+
+@media (max-width: 576px) {
+  .modal-dialog {
+    width: 90%;
+  }
+  .modal-body .shadow-sm {
+    padding: 0.6rem;
+  }
+}

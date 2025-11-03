@@ -1,0 +1,81 @@
+<div class="container-fluid bg-light py-2 shadow-sm">
+  <div class="container d-flex align-items-center">
+    <h6 class="fw-bold mb-0 cursor-pointer" (click)="Back()">
+      <i class="fa fa-chevron-left me-2"></i> Back
+    </h6>
+  </div>
+</div>
+
+<div class="container mt-3 mb-5">
+  <h3 class="mb-4 text-primary fw-bold">Referrals</h3>
+
+  <!-- Date Filter -->
+  <div class="row g-3 mb-4">
+    <div class="col-12 col-md-4">
+      <label for="startDate" class="form-label fw-semibold">From Date</label>
+      <input type="date" class="form-control shadow-sm" [(ngModel)]="startDate" id="startDate">
+    </div>
+    <div class="col-12 col-md-4">
+      <label for="endDate" class="form-label fw-semibold">To Date</label>
+      <input type="date" class="form-control shadow-sm" [(ngModel)]="endDate" id="endDate">
+    </div>
+    <div class="col-12 col-md-4 d-grid">
+      <button class="btn btn-primary shadow-sm" (click)="applyDateFilter()">
+        Apply Filter
+      </button>
+    </div>
+  </div>
+
+  <!-- Scrollable container -->
+ <!-- Scrollable container -->
+<div class="scroll-container overflow-auto mb-3" style="max-height: 70vh;">
+  <div class="mb-3 fw-semibold fs-5 text-secondary">Referrals Report</div>
+
+  <div class="vstack gap-3 mb-5" *ngIf="pro.length > 0; else noData">
+    <div class="vstack gap-2 mt-2" *ngFor="let row of pro">
+          <div class="txn-card">
+            <div class="txn-icon"><i class="bi bi-person"></i></div>
+            <div class="flex-grow-1">
+              <div class="d-flex justify-content-between">
+                <div class="txn-title">{{ row.name }}</div>
+                <div class="txn-amt text-success">{{ row.regid }}</div>
+              </div>
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="txn-sub">{{ row.cdate | date:'dd/MMM/yyyy' }}</div>
+                
+                <!-- Topup Status -->
+                <div *ngIf="row.topupstatus == '1'">
+                  <span class="text-success">Activated</span>
+                </div>
+                <div *ngIf="row.topupstatus == '0'">
+                  <span class="text-danger">Not Activated</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+
+    <!-- No Data Template -->
+  <ng-template #noData>
+    <div class="text-center mt-5">
+      <p class="text-muted fw-semibold fs-6">Transaction Reports</p>
+    </div>
+  </ng-template>
+
+  <!-- Loading & No More -->
+<div class="text-center mt-3" *ngIf="loading">
+  <img src="assets/favicon.png" width="50" alt="Loading...">
+  <p class="text-primary fw-semibold">Loading more transactions...</p>
+</div>
+<div class="text-center mt-3" *ngIf="allLoaded && pro.length > 0">
+  <p class="text-muted fw-semibold">No more transactions</p>
+</div>
+<div class="text-center mt-3" *ngIf="allLoaded && pro.length > 0">
+  <p class="text-muted fw-semibold">All transactions loaded</p>
+</div>
+
+
+</div>
+
+<app-footer></app-footer>
