@@ -8,20 +8,18 @@ import { ProfileComponent } from './profile/profile.component';
 import { DepositComponent } from './deposit/deposit.component';
 import { DirectTeamComponent } from './direct-team/direct-team.component';
 import { ReportComponent } from './report/report.component';
-import { BuyLiteComponent } from './buy-lite/buy-lite.component';
-import { BuyProComponent } from './buy-pro/buy-pro.component';
-import { BuyMaxComponent } from './buy-max/buy-max.component';
 import { ReferralsComponent } from './referrals/referrals.component';
 import { ReferralsAllDataComponent } from './referrals-all-data/referrals-all-data.component';
 import { SelfTransferComponent } from './self-transfer/self-transfer.component';
 import { WalletRoiReportComponent } from './wallet-roi-report/wallet-roi-report.component';
-import { PromotionBonusComponent } from './promotion-bonus/promotion-bonus.component';
+
 import { WithdrawReportsComponent } from './withdraw-reports/withdraw-reports.component';
 import { SupportTicketComponent } from './support-ticket/support-ticket.component';
 import { SignUpComponent } from '../sign-up/sign-up.component';
 import { ReceivedWalletComponent } from './received-wallet/received-wallet.component';
 import { BoardIncomeComponent } from './board-income/board-income.component';
 import { LevelIncomeComponent } from './level-income/level-income.component';
+import { ReferralIncomeComponent } from './referral-income/referral-income.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -36,15 +34,14 @@ const routes: Routes = [
   { path: 'report', component: ReportComponent },
   { path: 'boardincome', component: BoardIncomeComponent },
   { path: 'levelincome', component: LevelIncomeComponent },
-  { path: 'bitraze-lite', component: BuyLiteComponent },
-  { path: 'bitraze-pro', component: BuyProComponent },
-  { path: 'bitraze-max', component: BuyMaxComponent },
+   { path: 'rfincome', component: ReferralIncomeComponent },
+
   { path: 'myreferrals', component: ReferralsComponent },
   { path: 'allreferrals', component: ReferralsAllDataComponent },
   { path: 'selftransfer', component: SelfTransferComponent },
   { path: 'dashboard', component: DashboardComponent },
   { path: 'walletri', component: WalletRoiReportComponent },
-  { path: 'btzbonus', component: PromotionBonusComponent },
+
   { path: 'withdrawreport', component: WithdrawReportsComponent },
     { path: 'support', component: SupportTicketComponent },
 

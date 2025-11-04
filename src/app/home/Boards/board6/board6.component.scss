@@ -1,0 +1,64 @@
+.crypto-tree-section {
+  padding: 15px 10px;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  border-radius: 16px;
+  margin: 15px 0;
+}
+
+.section-title {
+  text-align: center;
+  color: #00d4ff;
+  margin-bottom: 15px;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.tree-slider-wrapper {
+  overflow-x: auto;
+  padding-bottom: 10px;
+}
+
+.tree-slider {
+  display: flex;
+  gap: 20px;
+}
+
+.tree-node-container {
+  min-width: 120px;
+  flex-shrink: 0;
+}
+
+ .tree-node {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 8px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .tree-node img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 3px solid #00d4ff;
+      background: #0d1117;
+      box-shadow: 0 0 15px #00d4ff;
+      margin-bottom: 5px;
+    }
+
+    .node-title {
+      font-size: 0.8rem;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .children {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    .tree-node:hover {
+      transform: translateY(-3px);
+    }

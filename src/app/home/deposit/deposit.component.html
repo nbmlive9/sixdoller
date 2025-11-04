@@ -1,125 +1,128 @@
-<!-- Back -->
-<div class="container-fluid">
-  <div class="container p-1 mt-3">
-    <h6 class="fw-bold back-link" onclick="history.back()">
-      <i class="fa fa-chevron-left"></i> Back
-    </h6>
+<div class="dashboard-container">
+  
+<app-header></app-header>
+<div class="deposit-page">
+
+  <!-- Deposit Summary -->
+  <section class="balance-section text-center mb-3">
+    <div class="balance-card">
+      <h6>Activation Fund</h6>
+      <h3 class="mt-1">{{pfdata?.actwallet | currency:'USD':true:'1.2-2'}}</h3>
+      <button class="btn btn-glow mt-2" data-bs-toggle="modal" data-bs-target="#addFundModal">
+        <i class="fas fa-plus-circle me-1"></i> Deposit Amount
+      </button>
+    </div>
+  </section>
+
+  <!-- Transaction Table -->
+  <!-- <div class="txn-section">
+    <h6 class="fw-semibold mb-2 text-white">Deposit History</h6>
+    <div class="card table-responsive shadow-sm">
+      <table class="table align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Txn ID</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let row of ddata; let i = index;">
+            <td>{{ i + 1 }}</td>
+            <td>{{ row.cdate | date:'dd/MM/yyyy' }}</td>
+            <td class="text-success fw-bold">{{ row.amount | currency:'USD':true:'1.2-2' }}</td>
+            <td>{{ row.transno }}</td>
+            <td><span class="badge bg-success">Success</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div> -->
+
+  <div class="container-fluid py-3 crypto-bg-dark">
+  <div class="container">
+    <h6 class="text-gradient mb-3">Deposit History</h6>
+
+    <div class="scroll-container">
+      <div *ngIf="ddata.length > 0; else noData">
+        <div *ngFor="let wd of ddata" class="txn-card glass-card transition-hover p-3 mb-3 d-flex justify-content-between align-items-center">
+          <div>
+            <div class="fw-semibold text-white fs-6">{{ wd.transno }}</div>
+            <div class="text-white-50 small">{{ wd.cdate | date:'dd/MM/yyyy' }}</div>
+          </div>
+          <div class="text-end">
+            <div [ngClass]="wd.amount >= 0 ? 'text-success-glow' : 'text-danger-glow'" class="fw-bold fs-6">
+              {{ wd.amount | currency:'USD':true:'1.2-2' }}
+            </div>
+            <span class="badge badge-crypto mt-1" 
+                  [ngClass]="wd.amount >= 0 ? 'bg-success-glass text-success-glow' : 'bg-danger-glass text-danger-glow'">
+              {{ wd.amount >= 0 ? 'Credit' : 'Debit' }}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <ng-template #noData>
+        <div class="text-center py-5">
+          <p class="text-white-50 fw-semibold">No transactions found.</p>
+        </div>
+      </ng-template>
+
+    </div>
   </div>
 </div>
 
-<!-- Wallet Add Form -->
-<div class="container my-3">
-  <div *ngIf="!paymentInfo">
-    <div class=" balance-card  border-0 rounded-4 mx-auto" style="max-width:420px;">
-      <div class=" p-4">
-        <h5 class="text-primary">Deposit Wallet</h5>
-        <h4 class="fw-bold text-center mb-4">
-          {{ pdata?.actwallet | currency:'USD':true:'1.0-2' }}
-        </h4>
 
-        <form [formGroup]="form" (ngSubmit)="generatePayment()">
-          <div class="mb-3">
-            <label class="form-label fw-semibold">Amount (USDT BEP20 Network Only)</label>
-            <input type="number" formControlName="amount" min="10" class="form-control form-control-lg rounded-3" placeholder="Enter Amount" (input)="formatAmount($event)">
-            <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
-              Amount is required and must be ≥ $10
-            </div>
+</div>
+
+<!-- ✅ Deposit Modal -->
+<div class="modal fade" id="addFundModal" tabindex="-1" aria-labelledby="addFundModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content deposit-modal">
+      <div class="modal-header border-0">
+        <h5 class="modal-title text-gradient fw-semibold" id="addFundModalLabel">
+          <i class="fas fa-coins me-1"></i> Add Fund
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" id="depositForm" (ngSubmit)="onSubmit()">
+          <label for="amount" class="form-label">USDT Amount (BEP20 Only)</label>
+          <input
+            id="amount"
+            class="form-control styled-input"
+            type="number"
+            formControlName="amount"
+            placeholder="Enter Amount"
+            min="1"
+          />
+          <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
+            Amount is required and must be ≥ $1
           </div>
-          <div class="container text-center ">
-            <button type="submit" class="btn btn-sm btn-danger mt-2" [disabled]="submitting">
-              {{ submitting ? 'Generating…' : 'Confirm' }}
-            </button>
-          </div>
+
+          <label for="yohan_amount" class="form-label mt-3">Yohan Coins</label>
+          <input
+            id="yohan_amount"
+            class="form-control styled-input"
+            type="number"
+            formControlName="yohan_amount"
+            readonly
+          />
+
+          <!-- Hidden transaction hash -->
+          <input type="hidden" formControlName="transno" />
+
+          <button type="submit" class="btn btn-gradient w-100 mt-4" [disabled]="!form.valid">
+            <i class="fas fa-paper-plane me-1"></i> Submit Deposit
+          </button>
         </form>
       </div>
     </div>
   </div>
 </div>
 
-<div class="container" *ngIf="paymentInfo">
-  <div class="modal-body text-center">
-    <p class="mb-2">Send Only <b>USDT BEP20</b> for <b><strong>{{ paymentInfo.price_amount | currency:'USD':true:'1.0-2'}} (Recived: {{paymentInfo.amount_received | currency:'USD':true:'1.0-2'}})</strong></b> Deposit to:
-    </p>
-    <p class="wallet-address">
-      {{ paymentInfo.pay_address }}
-    </p>
-    <button (click)="copyAddress()" class="btn btn-outline-primary btn-sm copy-btn mb-3">
-      Copy
-    </button>
-
-    <qrcode [qrdata]="paymentInfo?.pay_address" [width]="200" [errorCorrectionLevel]="'M'">
-    </qrcode>
-
-      <!-- Timer display -->
-    <div *ngIf="showTimer" class="mt-3">
-      <p class="text-primary fw-bold">
-        Please wait for <span class="text-danger">{{ countdown }}</span> seconds before checking payment status.
-      </p>
-    </div>
-
-    <div *ngIf="alertMessage" class="mt-3">
-      <div class="alert alert-{{alertType}} alert-dismissible fade show" role="alert">
-        {{ alertMessage }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
-          (click)="alertMessage = ''"></button>
-      </div>
-    </div>
-    <div class="mt-2">
-      <!-- <button class="btn btn-success btn-custom">Share on WhatsApp</button> -->
-      <button (click)="checkPaymentStatus()" [disabled]="checkingStatus" class="btn btn-success mt-2">
-        {{ checkingStatus ? 'Checking…' : 'Check Payment Status' }}
-      </button>
-    </div>
-  </div>
 </div>
-
-<!-- App Bar -->
-<!-- Transactions -->
-<main class="container my-4 mb-5">
-  <div class="d-flex justify-content-between align-items-center mb-2">
-    <div class="fw-bold">Deposit Transactions</div>
-  </div>
-
-  <!-- show spinner while loading -->
-  <div *ngIf="loadingTxns" class="text-center my-4">
-    <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-  </div>
-
-  <!-- if data exists -->
-  <div *ngIf="!loadingTxns && ddata?.length > 0; else noData">
-    <div class="vstack gap-2 mt-3 mb-3" *ngFor="let row of ddata">
-      <div class="txn-card">
-        <div class="txn-icon"><i class="bi bi-person"></i></div>
-        <div class="flex-grow-1">
-          <div class="d-flex justify-content-between">
-            <div class="txn-title">Txn: {{ row.transno }}</div>
-            <div class="txn-amt text-success">
-              {{ row.amount | currency:'USD':true:'1.0-2' }}
-            </div>
-          </div>
-          <div class="d-flex justify-content-between align-items-center">
-            <div class="txn-sub">{{ row.cdate | date:'dd/MM/YYYY' }}</div>
-            <span class="badge rounded-pill badge-success">Success</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- no data fallback -->
-  <ng-template #noData>
-    <div *ngIf="!loadingTxns" class="text-center text-danger mt-3">
-      No transactions found.
-    </div>
-  </ng-template>
-</main>
-
-
-
-
-
-
 
 <app-footer></app-footer>

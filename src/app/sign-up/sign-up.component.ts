@@ -88,12 +88,30 @@ export class SignUpComponent implements OnInit, AfterViewInit {
           this.udata = res.adddata;
           this.form.reset();
           this.successModal.show();
+       setTimeout(() => {
+    this.successModal.hide(); // ✅ Hide modal properly
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/sign']);
+    });
+  }, 10000);
         } else {
           this.showErrorModal('Registration failed. Please try again.');
+       setTimeout(() => {
+    this.successModal.hide(); // ✅ Hide modal properly
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/sign']);
+    });
+  }, 3000);
         }
       },
       (err: any) => {
         this.showErrorModal(err.error?.message || 'Registration failed');
+    setTimeout(() => {
+    this.successModal.hide(); // ✅ Hide modal properly
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/sign']);
+    });
+  }, 2000);
       }
     );
   }

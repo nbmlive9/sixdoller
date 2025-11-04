@@ -15,18 +15,18 @@ menuOpen = false;
   constructor(public router: Router, private token:TokenStorageService) {}
 
   ngOnInit(){
-     this.checkScreenSize();
+      this.checkScreen();
   }
 
-  @HostListener('window:resize')
-  onResize() {
-    this.checkScreenSize();
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.checkScreen();
   }
 
-  checkScreenSize() {
-    this.isDesktop = window.innerWidth >= 992; // Bootstrap LG breakpoint
+    checkScreen() {
+    this.isDesktop = window.innerWidth >= 992; // bootstrap lg breakpoint
     if (this.isDesktop) {
-      this.menuOpen = false; // always auto-open on desktop
+      this.menuOpen = false; // mobile menu hidden on desktop
     }
   }
 
@@ -34,10 +34,8 @@ menuOpen = false;
   this.menuOpen = !this.menuOpen;
 }
 
-    closeMenuDesktop() {
-    if (!this.isDesktop) {
-      this.menuOpen = false;
-    }
+   closeMenuDesktop() {
+    if (!this.isDesktop) this.menuOpen = false;
   }
   
       signOut() {

@@ -344,6 +344,20 @@ LevelMembersReport(){
   );   
 }
 
+WalletLevelAndReferralReport(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Wallet_Sponsor',
+    httpOptions
+  );   
+}
+
 GbonusWalletReport(){
   const token1 = this.token.getToken();
   const httpOptions = {
@@ -416,6 +430,19 @@ DepositWallet(value: { amount: string, note: string, transno: string }) {
       return this.http.get(AUTH_API + 'User_Deposites', httpOptions);
   }
 
+  YohanPrice(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Get_ROidynamicpaymentout',
+    httpOptions
+  );   
+}
 
   levelMember() {
     const token1 = this.token.getToken();
@@ -530,6 +557,230 @@ GetSupportTickets(){
     httpOptions
   );
 }
+
+GetBoard1(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardone_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard2(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardtwo_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard3(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardthree_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard4(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardfour_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard5(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardfive_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard6(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardsix_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard7(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardseven_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard8(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardeight_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard9(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardnine_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard10(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardten_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard11(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Boardeleven_Data',
+      httpOptions
+    );
+  }
+
+  GetBoard12(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'BoardTwelve_Data',
+      httpOptions
+    );
+  }
+
+   GetBoard13(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'BoardThirteen_Data',
+      httpOptions
+    );
+  }
+
+   GetBoard14(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'BoardFourteen_Data',
+      httpOptions
+    );
+  }
+
+   GetBoard15(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'BoardFifteen_Data',
+      httpOptions
+    );
+  }
+
+  GetRoyaltyIncome(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Royalty_Income',
+      httpOptions
+    );
+  }
 
  
 }

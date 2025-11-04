@@ -1,59 +1,128 @@
-
-/* Back link */
-.back-link { cursor:pointer; color:#333; }
-.back-link i { font-size:.9rem; margin-right:4px; }
-
-/* Wallet Card */
-.balance-card { background:#fff; border-radius:1rem; }
-.balance-card h4 { color:#1aa84b; }
-
-/* Appbar */
-.appbar{
-  background: linear-gradient(135deg,#5f259f,#4a1c7c);
-  color:#fff; border-radius:0 0 1rem 1rem;
-  padding:1rem 0;
+.dashboard-container {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  color: #fff;
+  padding-bottom: 80px;
+  font-family: 'Poppins', sans-serif;
 }
-.avatar{ width:40px;height:40px;border-radius:50%;background:#fff2;
-  display:flex;align-items:center;justify-content:center;font-weight:600; }
+/* ===== Page Background ===== */
 
-/* Transaction Cards */
-.txn-card{
-  background:#fff; border-radius:1rem;
-  padding:0.9rem; display:flex; align-items:center; gap:.8rem;
-  box-shadow:0 2px 6px rgba(0,0,0,.05);
+.deposit-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  padding: 20px 15px 80px;
 }
-.txn-icon{
-  width:46px;height:46px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  background:#f0eef4;font-size:1.25rem;
+
+/* ===== Balance Card ===== */
+.balance-card {
+  background: linear-gradient(135deg, #1D40D0, #00f2fe);
+  border-radius: 16px;
+  color: #fff;
+  padding: 1.5rem;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+  transition: transform 0.3s ease;
 }
-.txn-title{ font-weight:600; }
-.txn-sub{ font-size:.85rem; color:#6b6b6b; }
-.txn-amt{ font-weight:700; }
-.badge-success{ background:rgba(26,168,75,.12); color:#1aa84b; }
-.modal-content {
-  border-radius: 12px;
-  padding: 15px;
+.balance-card:hover {
+  transform: translateY(-4px);
 }
-.wallet-address {
-  word-break: break-all;
+.balance-card h6 {
+  opacity: 0.9;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+.btn-glow {
+  background: #fff;
+  color: #1D40D0;
+  border: none;
+  border-radius: 25px;
+  padding: 6px 16px;
   font-weight: 600;
-  color: #333;
-  font-size: 14px;
+  transition: all 0.3s;
 }
-.qr-code {
-  width: 200px;
-  max-width: 100%;
-  margin: auto;
-  display: block;
+.btn-glow:hover {
+  background: #e5e5e5;
+  transform: scale(1.05);
 }
-.btn-custom {
-  width: 100%;
-  margin-top: 10px;
-  border-radius: 8px;
+
+/* ===== Transaction Table ===== */
+.txn-section .card {
+  background: rgba(255,255,255,0.1);
+  border-radius: 16px;
+  overflow: hidden;
+  color: #fff;
+}
+.table thead th {
+  color: #a8d0ff;
+  font-size: 0.85rem;
+}
+.table tbody td {
+  color: #fff;
+  font-size: 0.9rem;
+  border-color: rgba(255,255,255,0.05);
+}
+.badge.bg-success {
+  background: rgba(0,255,140,0.15);
+  color: #00ff8c;
   font-weight: 500;
+  border-radius: 10px;
 }
-.copy-btn {
-  font-size: 14px;
-  padding: 3px 10px;
+
+/* ===== Modal Styling ===== */
+.deposit-modal {
+  background: linear-gradient(145deg, #203a43, #2c5364, #0f2027);
+  border-radius: 20px;
+  color: #fff;
+  padding: 10px 15px 20px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+.modal-header {
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.text-gradient {
+  background: linear-gradient(90deg, #00f2fe, #4facfe);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.styled-input {
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.15);
+  color: #fff;
+  border-radius: 10px;
+  padding: 10px;
+}
+.styled-input::placeholder {
+  color: rgba(255,255,255,0.6);
+}
+.styled-input:focus {
+  border-color: #00f2fe;
+  outline: none;
+}
+
+/* Gradient Submit Button */
+.btn-gradient {
+  background: linear-gradient(135deg, #00f2fe, #4facfe);
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #fff;
+  padding: 10px;
+  transition: 0.3s;
+}
+.btn-gradient:hover {
+  box-shadow: 0 0 15px #00f2fe;
+  transform: scale(1.02);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 576px) {
+  .balance-card h3 {
+    font-size: 1.3rem;
+  }
+  .table {
+    font-size: 0.8rem;
+  }
+  .deposit-modal {
+    padding: 10px;
+  }
 }

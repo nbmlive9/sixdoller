@@ -25,17 +25,10 @@
 <!-- Slide-Up / Overlay Menu -->
 <div class="menu-overlay d-lg-none" *ngIf="menuOpen" (click)="toggleMenu()"></div>
 
-<div
-  class="menu-drawer"
-  [class.show]="menuOpen || isDesktop"
->
+<div class="menu-drawer" [class.show]="menuOpen || isDesktop">
   <div class="menu-header">
     <h4><i class="fas fa-list"></i> Quick Menu</h4>
-    <button
-      class="close-btn"
-      (click)="closeMenuDesktop()"
-      [class.disabled]="isDesktop"
-    >
+    <button class="close-btn" (click)="closeMenuDesktop()" [class.disabled]="isDesktop">
       <i class="fas fa-times"></i>
     </button>
   </div>
@@ -46,16 +39,14 @@
     <button class="menu-item" routerLink="/withdrawreport">💰 Withdraw Fund</button>
     <button class="menu-item" routerLink="/received">📥 Received Wallet</button>
     <button class="menu-item" routerLink="/myreferrals">👥 My Referrals</button>
-    <button class="menu-item" routerLink="/levelmembers">🎯 Level Members</button>
+    <button class="menu-item" routerLink="/levelincome">🎯 Level Members</button>
     <button class="menu-item" routerLink="/report">📊 Wallet Report</button>
 
     <div class="menu-group">
       <h5>💎 Income</h5>
       <button class="submenu-item m-1" routerLink="/levelincome">Level Income</button>
       <button class="submenu-item m-1" routerLink="/boardincome">Board Income</button>
-      <button class="submenu-item m-1" routerLink="/referral-income">Referral Income</button>
+      <button class="submenu-item m-1" routerLink="/rfincome">Referral Income</button>
     </div>
-
-    <button class="menu-item" routerLink="/dashboard">🔁 Re-Birth IDs</button>
   </div>
 </div>

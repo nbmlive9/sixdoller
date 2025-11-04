@@ -5,7 +5,7 @@
   <!-- Main Body -->
   <section class="welcome-section">
     <h4>👋 Welcome, <span>{{ pfdata?.name }}</span></h4>
-    <p>{{pfdata?.regid}} Manage your earnings, wallet, and referral network.</p>
+    <p>{{pfdata?.regid}}</p>
   </section>
 
   <!-- Wallet Cards -->
@@ -43,27 +43,63 @@
       <h3>{{ pfdata?.purchasewallet | currency:'USD':true:'1.2-2' }}</h3>
     </div>
 
-    <div class="extra-card gradient-cyan">
+    <div class="extra-card gradient-referal">
       <h5>Board Income</h5>
       <h3> {{ hdata?.boardincome | currency:'USD':true:'1.2-2' }}</h3>
     </div>
 
-     <div class="extra-card gradient-teal">
+     <div class="stat-card gradient-royal">
+      <h5>Royalty Earning</h5>
+      <!-- <h3>{{ hdata?.referalincome | currency:'USD':true:'1.2-2' }}</h3> -->
+       <h3>$0.00</h3>
+    </div>
+
+     <div class="extra-card gradient-level">
       <h5>Level Income</h5>
       <h3>{{ hdata?.levelincome | currency:'USD':true:'1.2-2' }}</h3>
     </div>
   </section>
 
+  <!-- <app-board1></app-board1> -->
+<div class="board-display mt-4">
+    <app-board1 *ngIf="selectedBoard === 1"></app-board1>
+    <app-board2 *ngIf="selectedBoard === 2"></app-board2>
+    <app-board3 *ngIf="selectedBoard === 3"></app-board3>
+    <app-board4 *ngIf="selectedBoard === 4"></app-board4>
+    <app-board5 *ngIf="selectedBoard === 5"></app-board5>
+    <app-board6 *ngIf="selectedBoard === 6"></app-board6>
+    <app-board7 *ngIf="selectedBoard === 7"></app-board7>
+    <app-board8 *ngIf="selectedBoard === 8"></app-board8>
+    <app-board9 *ngIf="selectedBoard === 9"></app-board9>
+    <app-board10 *ngIf="selectedBoard === 10"></app-board10>
+    <app-board11 *ngIf="selectedBoard === 11"></app-board11>
+    <app-board12 *ngIf="selectedBoard === 12"></app-board12>
+    <app-board13 *ngIf="selectedBoard === 13"></app-board13>
+    <app-board14 *ngIf="selectedBoard === 14"></app-board14>
+    <app-board15 *ngIf="selectedBoard === 15"></app-board15>
+  </div>
   <!-- Board Status -->
   <section class="board-section">
-    <h4>Board Status</h4>
-    <div class="board-grid">
-      <div *ngFor="let b of boards" class="board-card" [class.active]="b.status === 'Active'">
-        <span>{{ b.name }}</span>
-        <small>{{ b.status }}</small>
-      </div>
+  <h4>Board Status</h4>
+
+  <!-- Board grid selector -->
+  <div class="board-grid">
+    <div
+      *ngFor="let board of boards"
+      class="board-card"
+      [class.active]="board.id === selectedBoard"
+      (click)="selectBoard(board.id)"
+    >
+      <span>{{ board.name }} </span>
+      <small>{{ board.status }}</small>
     </div>
-  </section>
+  </div>
+
+  <!-- Display selected board component -->
+  
+</section>
+
+
 </div>
 
 <!-- Footer Navigation -->

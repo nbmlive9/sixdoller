@@ -18,35 +18,22 @@ export class DashboardComponent {
   walletAddress: string = '';
   copied: boolean = false;
 
-  pack: any;
-
-  username = 'John Doe';
-  walletAmount = 12500.75;
-  activationFund = 5000;
-  referralCount = 23;
-  earning = 84000;
-  rebirthCount = 3;
-  holdingWallet = 2250;
-  levelIncome = 17400;
+  // boards = Array.from({ length: 15 }, (_, i) => ({
+  //   name: `Board ${i + 1}`,
+  //   status: Math.random() > 0.5 ? 'Active' : 'Inactive'
+  // }));
 
   boards = Array.from({ length: 15 }, (_, i) => ({
+    id: i + 1,
     name: `Board ${i + 1}`,
-    status: Math.random() > 0.5 ? 'Active' : 'Inactive'
+    status: i === 1 ? 'Active' : i === 0 ? 'Complete' : 'Pending' // Example status
   }));
 
-  currentBTZPrice: number = 0.001; // Default BTZ live price
-  btzPredictions = [
-    { date: '16 Nov 2027', price: 0.20 },
-    { date: '01 Mar 2028', price: 0.50 },
-    { date: '01 Mar 2029', price: 2.50 },
-    { date: '01 Mar 2030', price: 6.00 },
-    { date: '01 Mar 2031', price: 12.00 },
-    { date: '01 Mar 2032', price: 30.00 },
-    { date: '01 Mar 2033', price: 75.00 },
-    { date: '01 Mar 2034', price: 200.00 },
-    { date: '01 Mar 2035', price: 500.00 },
-  ];
+  selectedBoard: number = 1; // default board to show
 
+  selectBoard(id: number) {
+    this.selectedBoard = id;
+  }
 
   copyAddres() {
     navigator.clipboard.writeText(this.walletAddress).then(() => {
@@ -91,13 +78,6 @@ export class DashboardComponent {
     this.getProfiledata();
     this.getDashboarddata();
     this.gwalletReport();
-    
-    this.api.GetPackages().subscribe((res:any)=>{
-        // console.log('packages',res);
-        this.pack=res.data;
-    });
-    // gteam
-   this.currentBTZPrice = 0.001;
   }
 
 
@@ -127,7 +107,7 @@ export class DashboardComponent {
   copiedLink: boolean = false;
 
 copyReferralLink() {
-  const referralUrl = `https://bitraze.org/btz/referral/${this.pfdata?.regid}`;
+  const referralUrl = `https://sixdoller.live/btz/referral/${this.pfdata?.regid}`;
   if (!referralUrl) return;
 
   navigator.clipboard.writeText(referralUrl).then(() => {
@@ -158,36 +138,36 @@ copyReferralLink() {
     modal.show();
   }
 
-  shareTo(platform: string) {
-    const regid = this.pfdata?.regid;
-    const message = `Welcome to Bitraze! 🚀 Join for free: https://bitraze.org/btz/referral/${regid}`;
-    const encodedMessage = encodeURIComponent(message);
+  // shareTo(platform: string) {
+  //   const regid = this.pfdata?.regid;
+  //   const message = `Welcome to Bitraze! 🚀 Join for free: https://sixdoller.live/btz/referral/${regid}`;
+  //   const encodedMessage = encodeURIComponent(message);
 
-    let url = '';
+  //   let url = '';
 
-    switch (platform) {
-      case 'whatsapp':
-        url = `https://api.whatsapp.com/send?text=${encodedMessage}`;
-        break;
-      case 'telegram':
-        url = `https://t.me/share/url?url=https://bitraze.org/btz/referral/${regid}&text=${encodedMessage}`;
-        break;
-      case 'imo':
-        if (navigator.share) {
-          navigator.share({
-            title: 'Bitraze Invite',
-            text: message,
-            url: `https://bitraze.org/btz/referral/${regid}`,
-          }).catch(err => console.error('Sharing failed:', err));
-          return;
-        } else {
-          alert('Sharing not supported on this device');
-          return;
-        }
-    }
+  //   switch (platform) {
+  //     case 'whatsapp':
+  //       url = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+  //       break;
+  //     case 'telegram':
+  //       url = `https://t.me/share/url?url=https://sixdoller.live/btz/referral/${regid}&text=${encodedMessage}`;
+  //       break;
+  //     case 'imo':
+  //       if (navigator.share) {
+  //         navigator.share({
+  //           title: 'Bitraze Invite',
+  //           text: message,
+  //           url: `https://sixdoller.live/btz/referral/${regid}`,
+  //         }).catch(err => console.error('Sharing failed:', err));
+  //         return;
+  //       } else {
+  //         alert('Sharing not supported on this device');
+  //         return;
+  //       }
+  //   }
 
-    window.open(url, '_blank');
-  }
+  //   window.open(url, '_blank');
+  // }
 
 
 
