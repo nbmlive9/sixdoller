@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AuthUserService } from '../service/auth-user.service';
 
 import { BarcodeFormat } from '@zxing/library';   // 👈 important
+import { TokenStorageService } from '../service/token-storage.service';
 
 declare var bootstrap: any;
 
@@ -18,6 +19,20 @@ export class DashboardComponent {
   copied: boolean = false;
 
   pack: any;
+
+  username = 'John Doe';
+  walletAmount = 12500.75;
+  activationFund = 5000;
+  referralCount = 23;
+  earning = 84000;
+  rebirthCount = 3;
+  holdingWallet = 2250;
+  levelIncome = 17400;
+
+  boards = Array.from({ length: 15 }, (_, i) => ({
+    name: `Board ${i + 1}`,
+    status: Math.random() > 0.5 ? 'Active' : 'Inactive'
+  }));
 
   currentBTZPrice: number = 0.001; // Default BTZ live price
   btzPredictions = [
@@ -70,7 +85,7 @@ export class DashboardComponent {
   wdata:any;
    permissionDenied: boolean = false;
    loadingWallet: boolean = false;
-  constructor(private api:AuthUserService){}
+  constructor(private api:AuthUserService, private token:TokenStorageService){}
 
   ngOnInit(){
     this.getProfiledata();
@@ -84,6 +99,8 @@ export class DashboardComponent {
     // gteam
    this.currentBTZPrice = 0.001;
   }
+
+
 
   gwalletReport(){
     this.loadingWallet = true;
@@ -102,7 +119,7 @@ export class DashboardComponent {
 
   getProfiledata(){
     this.api.Profile().subscribe((res:any)=>{
-      // console.log('profile',res);
+      console.log('profile',res);
       this.pfdata=res.data[0];
     })
   }
@@ -124,9 +141,13 @@ copyReferralLink() {
 }
 
 
+  onRegister() {
+    alert('Redirecting to registration page...');
+  }
+
     getDashboarddata(){
     this.api.DashboardData().subscribe((res:any)=>{
-      // console.log('homedata',res);
+      console.log('homedata',res);
       this.hdata=res.data;
     })
   }

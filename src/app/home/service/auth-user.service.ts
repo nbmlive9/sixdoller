@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { TokenStorageService } from './token-storage.service';
 import { Observable } from 'rxjs';
 
-const AUTH_API ='https://bitraze.org/BTRZ/BTRZ/User/'
+const AUTH_API ='https://orgaliv.store/SHNKM6/SHNKM6/User/'
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +12,27 @@ export class AuthUserService {
 
   constructor(private http:HttpClient, public token: TokenStorageService) { }
 
-  UserRegistration(value: any){
+  UserRegistration(value: {
+    email: string;
+    sponcerid: string;
+    name: string;
+  }) {
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    };
     return this.http.post(
-      AUTH_API + 'Register', value, {
-        responseType: 'json',
-      });
+      AUTH_API + 'Register',
+      { 
+        "email":value.email, 
+        "sponcerid":value.sponcerid, 
+        "name":value.name, 
+      },
+      httpOptions
+    );
   }
 
    UserNameDisplay(id:any){
@@ -229,7 +245,8 @@ WalletReportLoad(page: number, perPage: number) {
 TransferWallet(value: {
   amount: string;
   regid: string;
-  transactionpassword:string;
+  wallettype:string;
+  remark:string;
 }){
   const token1 = this.token.getToken();
   const httpOptions = {
@@ -243,7 +260,8 @@ TransferWallet(value: {
     { 
     "amount":value.amount, 
     "regid":value.regid,  
-     "transactionpassword":value.transactionpassword,  
+     "wallettype":value.wallettype,  
+     "remark":value.remark,
   },
      httpOptions 
   );
@@ -294,6 +312,34 @@ RecivedWalletReport(){
   }
   return this.http.get(
     AUTH_API + 'Wallet_Receivereport',
+    httpOptions
+  );   
+}
+
+BoardIncomeReport(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Board_income',
+    httpOptions
+  );   
+}
+
+LevelMembersReport(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Level_members',
     httpOptions
   );   
 }

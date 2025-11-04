@@ -40,7 +40,8 @@ export class TransferAmountComponent {
     this.form = this.fb.group({
       regid: new FormControl('', [Validators.required]),
       amount: new FormControl('', [Validators.required]),
-      transactionpassword: new FormControl('', [Validators.required]),
+      wallettype: new FormControl('', [Validators.required]),
+      remark:new FormControl('User Transfer'),
     });
   }
 
@@ -98,45 +99,45 @@ export class TransferAmountComponent {
   }
 
   /** Open QR Scanner Modal */
-  openScanner() {
-    const modalElement = document.getElementById('qrScannerModal');
-    const modal = new bootstrap.Modal(modalElement);
-    modal.show();
-  }
+  // openScanner() {
+  //   const modalElement = document.getElementById('qrScannerModal');
+  //   const modal = new bootstrap.Modal(modalElement);
+  //   modal.show();
+  // }
 
   /** When QR Code is successfully scanned */
-  onScanSuccess(result: string) {
-    this.form.patchValue({ regid: result });
-    this.onRegisterIdSelect({ target: { value: result } });
+  // onScanSuccess(result: string) {
+  //   this.form.patchValue({ regid: result });
+  //   this.onRegisterIdSelect({ target: { value: result } });
 
-    // Close modal automatically
-    const modalElement = document.getElementById('qrScannerModal');
-    const modal = bootstrap.Modal.getInstance(modalElement);
-    modal.hide();
-  }
+  //   // Close modal automatically
+  //   const modalElement = document.getElementById('qrScannerModal');
+  //   const modal = bootstrap.Modal.getInstance(modalElement);
+  //   modal.hide();
+  // }
 
   /** Upload Image & Decode QR Code */
-  async onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (!file) return;
+  // async onFileSelected(event: any) {
+  //   const file = event.target.files[0];
+  //   if (!file) return;
 
-    try {
-      const codeReader = new BrowserQRCodeReader();
-      const imgUrl = URL.createObjectURL(file);
+  //   try {
+  //     const codeReader = new BrowserQRCodeReader();
+  //     const imgUrl = URL.createObjectURL(file);
 
-      const result = await codeReader.decodeFromImageUrl(imgUrl);
+  //     const result = await codeReader.decodeFromImageUrl(imgUrl);
 
-      if (result?.getText()) {
-        const scannedRegId = result.getText();
-        this.form.patchValue({ regid: scannedRegId });
-        this.onRegisterIdSelect({ target: { value: scannedRegId } });
-      } else {
-        alert('No QR code detected in the image.');
-      }
-    } catch (error) {
-      alert('Unable to read QR code from image.');
-    }
-  }
+  //     if (result?.getText()) {
+  //       const scannedRegId = result.getText();
+  //       this.form.patchValue({ regid: scannedRegId });
+  //       this.onRegisterIdSelect({ target: { value: scannedRegId } });
+  //     } else {
+  //       alert('No QR code detected in the image.');
+  //     }
+  //   } catch (error) {
+  //     alert('Unable to read QR code from image.');
+  //   }
+  // }
 
   /** Transfer Amount */
   Transfer() {
@@ -145,7 +146,8 @@ export class TransferAmountComponent {
     const payload = {
       regid: this.form.value.regid,
       amount: this.form.value.amount,
-      transactionpassword: this.form.value.transactionpassword,
+      wallettype: this.form.value.wallettype,
+      remark: this.form.value.remark,
     };
 
     this.api.TransferWallet(payload).subscribe(
@@ -154,7 +156,7 @@ export class TransferAmountComponent {
           this.form.reset();
           this.successMessage = '✅ Amount transferred successfully!';
           this.errorMessage = '';
-        this.getProfiledata();
+      
         this.loadTransferTransactions();
           setTimeout(() => {
             this.successMessage = '';
@@ -171,4 +173,6 @@ export class TransferAmountComponent {
       }
     );
   }
+
+
 }

@@ -1,31 +1,61 @@
-<!-- Bottom Navigation (hidden on login & signup) -->
-<div *ngIf="!hideBottomNav()" class="bottom-nav d-flex justify-content-around align-items-center shadow-lg">
-  <a routerLink="/home" 
-     routerLinkActive="active-link" 
-     [routerLinkActiveOptions]="{ exact: true }"
-     class="nav-item text-center">
-    <i class="bi bi-wallet2 fs-4"></i>
-    <span class="nav-label">Assets</span>
-  </a>
+<!-- Footer Navigation (Mobile Only) -->
+<footer class="footer-nav d-lg-none">
+  <button class="nav-btn" routerLink="/dashboard">
+    <i class="fas fa-home"></i>
+    <span>Home</span>
+  </button>
+  <button class="nav-btn" routerLink="/transfer">
+    <i class="fas fa-wallet"></i>
+    <span>Wallet</span>
+  </button>
+  <button class="nav-btn" (click)="toggleMenu()">
+    <i class="fas fa-bars"></i>
+    <span>Menu</span>
+  </button>
+  <button class="nav-btn" routerLink="/profile">
+    <i class="fas fa-user"></i>
+    <span>Profile</span>
+  </button>
+  <button class="nav-btn" (click)="signOut()">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Logout</span>
+  </button>
+</footer>
 
-  <a routerLink="/deposit" 
-     routerLinkActive="active-link" 
-     class="nav-item text-center">
-    <i class="bi bi-cash-coin fs-4"></i>
-    <span class="nav-label">Deposit</span>
-  </a>
+<!-- Slide-Up / Overlay Menu -->
+<div class="menu-overlay d-lg-none" *ngIf="menuOpen" (click)="toggleMenu()"></div>
 
-  <a routerLink="/team" 
-     routerLinkActive="active-link" 
-     class="nav-item text-center">
-    <i class="bi bi-people fs-4"></i>
-    <span class="nav-label">Team</span>
-  </a>
+<div
+  class="menu-drawer"
+  [class.show]="menuOpen || isDesktop"
+>
+  <div class="menu-header">
+    <h4><i class="fas fa-list"></i> Quick Menu</h4>
+    <button
+      class="close-btn"
+      (click)="closeMenuDesktop()"
+      [class.disabled]="isDesktop"
+    >
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
 
-  <a routerLink="/profile" 
-     routerLinkActive="active-link" 
-     class="nav-item text-center">
-    <i class="bi bi-person-circle fs-4"></i>
-    <span class="nav-label">Profile</span>
-  </a>
+  <div class="menu-body">
+    <button class="menu-item" routerLink="/transfer">💸 Transfer Wallet</button>
+    <button class="menu-item" routerLink="/deposit">🏦 Deposit Wallet</button>
+    <button class="menu-item" routerLink="/withdrawreport">💰 Withdraw Fund</button>
+    <button class="menu-item" routerLink="/received">📥 Received Wallet</button>
+    <button class="menu-item" routerLink="/myreferrals">👥 My Referrals</button>
+    <button class="menu-item" routerLink="/levelmembers">🎯 Level Members</button>
+    <button class="menu-item" routerLink="/report">📊 Wallet Report</button>
+
+    <div class="menu-group">
+      <h5>💎 Income</h5>
+      <button class="submenu-item m-1" routerLink="/levelincome">Level Income</button>
+      <button class="submenu-item m-1" routerLink="/boardincome">Board Income</button>
+      <button class="submenu-item m-1" routerLink="/referral-income">Referral Income</button>
+    </div>
+
+    <button class="menu-item" routerLink="/dashboard">🔁 Re-Birth IDs</button>
+  </div>
 </div>

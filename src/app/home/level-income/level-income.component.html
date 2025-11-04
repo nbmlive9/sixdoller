@@ -1,0 +1,36 @@
+<div class="dashboard-container">
+
+  <!-- Header -->
+  <app-header></app-header>
+
+  <!-- Transfer Transactions -->
+  <section class="extra-grid">
+    <div class="extra-card gradient-purple w-100">
+      <h5 class="text-center mb-3">Level Members</h5>
+      <div *ngIf="data1?.length > 0; else noTransactions">
+        <div class="txn-card" *ngFor="let row of data1">
+          <div class="txn-icon"><i class="bi bi-person"></i></div>
+          <div class="flex-grow-1">
+            <div class="d-flex justify-content-between">
+              <div class="txn-title">{{ row.userid }}</div>
+              <div class="txn-amt text-success">{{ row.amount | currency:'USD':true:'1.0-2' }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="txn-sub">{{ row.cdate | date:'dd/MMM/yyyy' }} - {{ row.ctime }}</div>
+              <span class="badge bg-success">Success</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #noTransactions>
+        <div class="text-center text-light">No transactions yet.</div>
+      </ng-template>
+    </div>
+  </section>
+
+  
+
+</div>
+
+<!-- Footer Navigation -->
+<app-footer></app-footer>

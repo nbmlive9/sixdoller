@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-const AUTH_API ='https://bitraze.org/BTRZ/BTRZ/User/'
+const AUTH_API ='https://orgaliv.store/SHNKM6/SHNKM6/User/'
 @Injectable({
   providedIn: 'root'
 })

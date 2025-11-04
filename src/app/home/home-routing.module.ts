@@ -18,16 +18,24 @@ import { WalletRoiReportComponent } from './wallet-roi-report/wallet-roi-report.
 import { PromotionBonusComponent } from './promotion-bonus/promotion-bonus.component';
 import { WithdrawReportsComponent } from './withdraw-reports/withdraw-reports.component';
 import { SupportTicketComponent } from './support-ticket/support-ticket.component';
+import { SignUpComponent } from '../sign-up/sign-up.component';
+import { ReceivedWalletComponent } from './received-wallet/received-wallet.component';
+import { BoardIncomeComponent } from './board-income/board-income.component';
+import { LevelIncomeComponent } from './level-income/level-income.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'home', component: HomeComponent },
+    { path: 'sign', component: SignUpComponent },
   { path: 'receive', component: ReceiveComponent },
   { path: 'transfer', component: TransferAmountComponent },
+    { path: 'received', component: ReceivedWalletComponent },
   { path: 'profile', component: ProfileComponent },
   { path: 'deposit', component: DepositComponent },
   { path: 'team', component: DirectTeamComponent },
   { path: 'report', component: ReportComponent },
+  { path: 'boardincome', component: BoardIncomeComponent },
+  { path: 'levelincome', component: LevelIncomeComponent },
   { path: 'bitraze-lite', component: BuyLiteComponent },
   { path: 'bitraze-pro', component: BuyProComponent },
   { path: 'bitraze-max', component: BuyMaxComponent },

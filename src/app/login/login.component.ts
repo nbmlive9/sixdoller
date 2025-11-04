@@ -4,56 +4,66 @@ import { Router } from '@angular/router';
 import { AuthService } from '../home/service/auth.service';
 import { TokenStorageService } from '../home/service/token-storage.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-form:FormGroup;
-  isLoggedIn: boolean = false;
-      successMessage: string = '';
-errorMessage: string = '';
-  constructor(private auth:AuthService, private router: Router, private fb:FormBuilder, private tokenStorage: TokenStorageService){
-        this.form = new FormGroup({
+  form: FormGroup;
+  isLoggedIn = false;
+  successMessage = '';
+  errorMessage = '';
+  isForgot = false;
+  isLoading = false;
+
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private fb: FormBuilder,
+    private tokenStorage: TokenStorageService
+  ) {
+    this.form = new FormGroup({
       regid: new FormControl('', [Validators.required]),
-      password: new FormControl('', [
-        Validators.required,
-        Validators.maxLength(20),
-      ]),
+      password: new FormControl('', [Validators.required, Validators.minLength(3)])
     });
   }
 
-  ngOnInit(){}
+   get f() {
+    return this.form.controls;
+  }
 
-   onSubmit(): void {
+  onLoginClick(event: Event) {
+    const button = event.target as HTMLButtonElement;
+    button.classList.add('active');
+    setTimeout(() => button.classList.remove('active'), 600);
+  }
+
+  onSubmit(): void {
+    if (this.form.invalid) return;
+
+    this.isLoading = true;
+    this.errorMessage = '';
+
     const f = this.form.value;
-    console.log(f);
-    this.auth.login(f.regid, f.password).subscribe((res:any) => {
+    this.auth.login(f.regid, f.password).subscribe({
+      next: (res: any) => {
         this.tokenStorage.saveToken(res.token);
         this.tokenStorage.saveUser(res);
-        console.log(res);
-        this.reloadPage();
-        // this.router.navigate(['/dashboard']);
-        // this.router.navigateByUrl('/dashboard');
+        this.isLoading = false;
+        this.router.navigateByUrl('/dashboard');
       },
-      (err) => {
-        // this.errorMessage = err.error.message;
-        this.isLoggedIn = false;
-               this.successMessage = '';
-        this.errorMessage = '❌ Login Credentials Wrong. Please try again.';
-        setTimeout(() => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/login']);
-        });
-      }, 2000);
+      error: () => {
+        this.isLoading = false;
+        this.errorMessage = '❌ Invalid credentials. Please try again.';
       }
-    );
+    });
   }
-  reloadPage(): void {
-    this.router.navigateByUrl('/dashboard');
-  }
-  // test
 
+  onForgot() {
+    if (this.form.valid) {
+      console.log('Forgot Password Email:', this.form.value);
+      // TODO: API integration
+    }
+  }
 }

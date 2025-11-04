@@ -16,10 +16,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-   {
-    path: 'sign',
-    component: SignUpComponent
-  },
+  //  {
+  //   path: 'sign',
+  //   component: SignUpComponent
+  // },
     {
     path: 'forgot',
     component: ForgotPasswordComponent

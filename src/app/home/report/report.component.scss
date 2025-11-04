@@ -1,47 +1,127 @@
-
-/* Back link */
-.back-link { cursor:pointer; color:#333; }
-.back-link i { font-size:.9rem; margin-right:4px; }
-
-/* Wallet Card */
-.balance-card { background:#fff; border-radius:1rem; }
-.balance-card h4 { color:#1aa84b; }
-
-/* Appbar */
-.appbar{
-  background: linear-gradient(135deg,#5f259f,#4a1c7c);
-  color:#fff; border-radius:0 0 1rem 1rem;
-  padding:1rem 0;
+/* ======== Global Crypto Theme ======== */
+.dashboard-container {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  color: #fff;
+  padding-bottom: 80px;
+  font-family: 'Poppins', sans-serif;
 }
-.avatar{ width:40px;height:40px;border-radius:50%;background:#fff2;
-  display:flex;align-items:center;justify-content:center;font-weight:600; }
 
-/* Transaction Cards */
-.txn-card{
-  background:#fff; border-radius:1rem;
-  padding:0.9rem; display:flex; align-items:center; gap:.8rem;
-  box-shadow:0 2px 6px rgba(0,0,0,.05);
+.crypto-bg {
+  background: linear-gradient(145deg, #0f0f1b, #1a1a2e);
 }
-.txn-icon{
-  width:46px;height:46px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  background:#f0eef4;font-size:1.25rem;
-}
-.txn-title{ font-weight:600; }
-.txn-sub{ font-size:.85rem; color:#6b6b6b; }
-.txn-amt{ font-weight:700; }
-.badge-success{ background:rgba(26,168,75,.12); color:#1aa84b; }
 
+.crypto-bg-dark {
+  background: #0d0d17;
+}
+
+// .text-gradient {
+//   background: linear-gradient(90deg, #00f5a0, #00d9f5);
+//   -webkit-background-clip: text;
+//   -webkit-text-fill-color: transparent;
+// }
+
+/* ======== Header ======== */
+.crypto-header {
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #fff;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ======== Glass Card ======== */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ======== Input ======== */
+.crypto-input {
+  background: rgba(255,255,255,0.05);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 8px;
+}
+.crypto-input:focus {
+  outline: none;
+  border-color: #00f5a0;
+  box-shadow: 0 0 5px #00f5a0;
+}
+
+/* ======== Button ======== */
+.btn-crypto {
+  background: linear-gradient(90deg, #00f5a0, #00d9f5);
+  border: none;
+  color: #000;
+  font-weight: 600;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+.btn-crypto:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 245, 160, 0.3);
+}
+
+/* ======== Transaction Card ======== */
+.txn-card {
+  color: #fff;
+  border-radius: 12px;
+}
+.text-success-glow {
+  color: #00f5a0;
+  text-shadow: 0 0 8px rgba(0,245,160,0.5);
+}
+.text-danger-glow {
+  color: #ff4b4b;
+  text-shadow: 0 0 8px rgba(255,75,75,0.5);
+}
+
+.bg-success-glass {
+  background: rgba(0, 245, 160, 0.15);
+}
+.bg-danger-glass {
+  background: rgba(255, 75, 75, 0.15);
+}
+
+/* ======== Scroll Container ======== */
 .scroll-container {
-  height: 500px; // set a fixed height
+  max-height: 70vh;
   overflow-y: auto;
   padding-right: 5px;
 }
 
+/* ======== Hover Animation ======== */
 .transition-hover {
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 }
 .transition-hover:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+}
+
+/* ======== Loader Animation ======== */
+.spin {
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ======== Responsive ======== */
+@media (max-width: 576px) {
+  .crypto-header h6 { font-size: 0.95rem; }
+  .txn-card { padding: 0.75rem; }
+  .glass-card { padding: 1rem; }
+  .scroll-container { max-height: 65vh; }
 }

@@ -1,49 +1,120 @@
-
-.input-wrapper {
-  position: relative;
+.dashboard-container {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  min-height: 100vh;
+  color: #fff;
+  padding-bottom: 80px;
+  font-family: 'Poppins', sans-serif;
 }
 
-.input-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #555;
-  font-size:1rem;
-  z-index: 2;
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  // height: 100vh;
+  background: linear-gradient(145deg, #141e30, #243b55);
+}
+
+.register-card {
+  background: #fff;
+  border-radius: 20px;
+  padding: 30px 25px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+h2 {
+  color: #1d3557;
+  font-weight: 600;
 }
 
 .form-control {
-  padding-left: 2.2rem; /* for icon */
+  border-radius: 10px;
+  padding: 10px 12px;
 }
 
-/* Extra space when country code is shown */
-.input-wrapper.has-code .form-control {
-  padding-left: 4.5rem; /* adjust based on code length */
+.btn-register {
+  background: #457b9d;
+  color: #fff;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: 0.3s ease;
 }
 
-.form-select {
-  padding-left: 2.2rem;
-  border-radius: 20px;
+.btn-register:hover {
+  background: #1d3557;
 }
-.form-label{
-  color: white;
+
+.text-info {
+  font-size: 13px;
+  display: block;
+  margin-top: 3px;
 }
-.form-box {
+
+.modal-content {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Compact Activation Fund Card */
+.highlight-fund-small {
+  background: linear-gradient(135deg, #00d4ff, #7c3aed);
+  color: #fff;
+  text-align: center;
+  padding: 12px 15px;
+  border-radius: 15px;
+  max-width: 220px;
+  margin: 15px auto;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  font-family: 'Poppins', sans-serif;
   position: relative;
-  width: 100%;
-  max-width: 380px;
-  background: rgba(255,255,255,0.1);
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 20px;
-  backdrop-filter: blur(15px);
-  padding: 2rem;
+  overflow: hidden;
+}
+
+.highlight-fund-small h5 {
+  font-size: 12px;
+  text-transform: uppercase;
+  opacity: 0.8;
+  margin-bottom: 3px;
+}
+
+.highlight-fund-small h3 {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 0 0 8px rgba(255,255,255,0.6);
+}
+
+/* Subtle glow animation */
+.highlight-fund-small::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, #00d4ff, #7c3aed, #00d4ff);
+  animation: animateGlowSmall 5s linear infinite;
+  z-index: 0;
+  filter: blur(40px);
+}
+
+.highlight-fund-small > * {
+  position: relative;
   z-index: 1;
 }
-.form-control{
-  color: aqua;
-  background-color: #7DB1F9;
+
+@keyframes animateGlowSmall {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-.fas{
-  color: white;
+
+/* Responsive adjustments */
+@media(max-width: 400px){
+  .highlight-fund-small h3 {
+    font-size: 18px;
+  }
 }

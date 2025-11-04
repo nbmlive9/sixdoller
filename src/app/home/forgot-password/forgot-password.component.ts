@@ -10,58 +10,39 @@ import { UserService } from 'src/app/user.service';
   styleUrls: ['./forgot-password.component.scss']
 })
 export class ForgotPasswordComponent {
-forgotForm:FormGroup;
-  isLoggedIn = false;
-  isForgotPassword = false;
+forgotForm: FormGroup;
+  submitted = false;
+  isLoading = false;
   successMessage = '';
   errorMessage = '';
-  constructor(private api:UserService, private fb:FormBuilder, private router:Router){
-        this.forgotForm = this.fb.group({
-          regid: ['', Validators.required],
-          email: ['', [Validators.required, Validators.email]]
-        });
+
+  constructor(private fb: FormBuilder) {
+    this.forgotForm = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
-  ngOnInit(){}
+  get f() {
+    return this.forgotForm.controls;
+  }
 
-  
-sendForgotPassword(){
-      // console.log(this.form.value);
-      if (this.forgotForm.valid) {
-        const val = {
-          regid: this.forgotForm.value.regid,
-          email:this.forgotForm.value.email
-        };
-        this.api.forgotPassword(val).subscribe(
-          (a:any) => {
-            if (a) {
-              // console.log(a);
-                 this.forgotForm.reset();
-                  this.successMessage = 'Successfully forgot Password';
-          this.errorMessage = '';
-            setTimeout(() => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/forgot']);
-        });
-      }, 1000);
-            } else {
-              // console.log(a);
-               this.forgotForm.markAllAsTouched();
-              this.successMessage = '';
-          this.errorMessage = '❌ forgot Password failed. Please try again.';
-            setTimeout(() => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/forgot']);
-        });
-      }, 1000);
-            }
-          },
-          (err: any) => {
-            // this.errorMessage = a.msg.message;
-          },
-        );
-      }
+  onSubmit() {
+    this.submitted = true;
+
+    if (this.forgotForm.invalid) {
+      return;
     }
+
+    this.isLoading = true;
+    this.successMessage = '';
+    this.errorMessage = '';
+
+    // Simulate API delay
+    setTimeout(() => {
+      this.isLoading = false;
+      this.successMessage = 'Password reset link sent to your email!';
+    }, 1500);
+  }
 
 
 }

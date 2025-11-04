@@ -29,6 +29,11 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { WithdrawFundComponent } from './withdraw-fund/withdraw-fund.component';
 import { WithdrawReportsComponent } from './withdraw-reports/withdraw-reports.component';
 import { SupportTicketComponent } from './support-ticket/support-ticket.component';
+import { SignUpComponent } from '../sign-up/sign-up.component';
+import { HeaderComponent } from './header/header.component';
+import { ReceivedWalletComponent } from './received-wallet/received-wallet.component';
+import { BoardIncomeComponent } from './board-income/board-income.component';
+import { LevelIncomeComponent } from './level-income/level-income.component';
 
 
 
@@ -39,7 +44,7 @@ import { SupportTicketComponent } from './support-ticket/support-ticket.componen
     HomeComponent,
     GTeamComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, GbonusIncomeComponent, WalletRoiReportComponent, PromotionBonusComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent,
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, BuyLiteComponent, BuyProComponent, BuyMaxComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, GbonusIncomeComponent, WalletRoiReportComponent, PromotionBonusComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent, SignUpComponent, HeaderComponent, ReceivedWalletComponent, BoardIncomeComponent, LevelIncomeComponent
   ],
   imports: [
     CommonModule,

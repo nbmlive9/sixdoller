@@ -1,35 +1,66 @@
+<div class="login-container">
+  <div class="login-card animate__animated animate__fadeInDown" [class.error-shake]="errorMessage">
+    <div class="logo-area">
+      <img src="assets/logo.png" alt="Crypto Logo" class="logo" />
+      <h2>Welcome to Yohan</h2>
+    </div>
 
+    <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
 
-<section style="background: url('assets/b.jpg') no-repeat center/cover;
-">
-  <div class="form-box">
-   <div *ngIf="successMessage" class="alert alert-success text-center">
-            {{ successMessage }}
-          </div>
-          <div *ngIf="errorMessage" class="alert alert-danger text-center">
-            {{ errorMessage }}
-          </div>
-           <div class="text-center">
-               <img src="assets/favicon.png" class="img-fluid" alt="" srcset="">
-             </div>
-    <form [formGroup]="form" (submit)="onSubmit()" novalidate>
-      <h2>Member Login</h2>
-      <div class="inputbox">
-        <input type="text" formControlName="regid" required>
-        <label>Username</label>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label>Email or Username *</label>
+        <input
+          type="text"
+          formControlName="regid"
+          placeholder="Enter email or username"
+          class="form-control"
+         [ngClass]="{ 'is-invalid': f['regid'].touched && f['regid'].invalid }" />
+            <div class="invalid-feedback" *ngIf="f['regid'].touched && f['regid'].hasError('required')">
+          Username is required.
+        </div>
+        <div class="invalid-feedback" *ngIf="f['regid'].touched && f['regid'].hasError('minlength')">
+          Minimum 4 characters required.
+        </div>
       </div>
-      <div class="inputbox">
-        <input type="password" formControlName="password" required>
-        <label>Password</label>
+
+      <div class="form-group">
+        <label>Password *</label>
+        <input
+          type="password"
+          formControlName="password"
+          placeholder="Enter password"
+          class="form-control"
+          [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }"
+        />
+           <div class="invalid-feedback" *ngIf="f['password'].touched && f['password'].hasError('required')">
+          Password is required.
+        </div>
+        <div class="invalid-feedback" *ngIf="f['password'].touched && f['password'].hasError('minlength')">
+          Minimum 3 characters required.
+        </div>
+        
       </div>
-      <div class="forget">
-        <label><input type="checkbox"> Remember Me</label>
-        <a routerLink="/forgot">Forgot password?</a>
+
+      <div class="action-area mt-3">
+        <button
+          type="submit"
+          class="btn-login w-100"
+          [disabled]="!form.valid"
+          (click)="onLoginClick($event)"
+        >
+          <span *ngIf="!isLoading">Login</span>
+          <div class="spinner" *ngIf="isLoading"></div>
+        </button>
       </div>
-      <button type="submit" [disabled]="!form.valid">Log in</button>
-      <div class="register">
-        <p>Don't have an account? <a href="#" routerLink="/sign">Register</a></p>
-      </div>
+
+     <div class="links mt-4 text-center">
+  <p>
+    <a routerLink="/forgot" class="forgot-link">
+      <i class="fa fa-key"></i> Forgot Password?
+    </a>
+  </p>
+</div>
     </form>
   </div>
-</section>
+</div>
