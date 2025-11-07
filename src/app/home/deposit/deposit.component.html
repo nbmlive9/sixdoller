@@ -113,14 +113,8 @@
 </div>
 
 <!-- ✅ Display calculated Yohan Coins -->
-<label for="yohan" class="form-label mt-3">Equivalent Yohan Coins</label>
-<input
-  id="yohan"
-  class="form-control"
-  type="text"
-  [value]="calculatedCoins | number:'1.2-2'"
-  readonly
-/>
+<label for="yohan" class="form-label mt-3">Yohan Coins</label>
+<input id="yohan" class="form-control" type="text"  [value]="calculatedCoins"  readonly />
 
 
   <!-- Hidden input for transaction hash -->

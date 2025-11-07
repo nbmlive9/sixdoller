@@ -481,24 +481,51 @@ GenerateOtp() {
   }
 
 
-  WithdrawFunds(value: {
-    amount: string;
-  }) {
-    const token1 = this.token.getToken();
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + token1
-      })
-    };
-    return this.http.post(
-      AUTH_API + 'Withdrawrequest',
-      { 
-        "amount":value.amount,
+  // WithdrawFunds(value: {
+  //   amount: string;
+  // }) {
+  //   const token1 = this.token.getToken();
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + token1
+  //     })
+  //   };
+  //   return this.http.post(
+  //     AUTH_API + 'Withdrawrequest',
+  //     { 
+  //       "amount":value.amount,
+  //     },
+  //     httpOptions
+  //   );
+  // }
+
+  withdrawToBlockchain(value: {
+  recipient: string;
+  amount:number;
+  flag:number;
+}) {
+
+  const token = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` })
+    }),
+  };
+
+  return this.http.post(
+    AUTH_API + 'Yohanpayout', 
+
+   {
+    recipient:value.recipient,
+        amount: value.amount,
+        flag:value.flag,
       },
-      httpOptions
-    );
-  }
+    httpOptions
+  );
+
+}
 
 PendingWithdraw() {
     const token1 = this.token.getToken();
