@@ -26,7 +26,7 @@ export class DashboardComponent {
   boards = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
     name: `Board ${i + 1}`,
-    status: i === 1 ? 'Active' : i === 0 ? 'Complete' : 'Pending' // Example status
+    status: i === 1 ? 'Waiting' : i === 0 ? 'Running' : 'Pending' // Example status
   }));
 
   selectedBoard: number = 1; // default board to show
@@ -137,6 +137,11 @@ copyReferralLink() {
     const modal = new bootstrap.Modal(modalElement!);
     modal.show();
   }
+
+      showDashboard = false; 
+    openDashboard() {
+      this.showDashboard = true;
+    }
 
   // shareTo(platform: string) {
   //   const regid = this.pfdata?.regid;

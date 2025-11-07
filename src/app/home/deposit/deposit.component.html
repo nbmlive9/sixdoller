@@ -8,6 +8,9 @@
     <div class="balance-card">
       <h6>Activation Fund</h6>
       <h3 class="mt-1">{{pfdata?.actwallet | currency:'USD':true:'1.2-2'}}</h3>
+          <div class="d-flex justify-content-end">
+                  <w3m-button></w3m-button>
+            </div>
       <button class="btn btn-glow mt-2" data-bs-toggle="modal" data-bs-target="#addFundModal">
         <i class="fas fa-plus-circle me-1"></i> Deposit Amount
       </button>
@@ -49,8 +52,13 @@
       <div *ngIf="ddata.length > 0; else noData">
         <div *ngFor="let wd of ddata" class="txn-card glass-card transition-hover p-3 mb-3 d-flex justify-content-between align-items-center">
           <div>
-            <div class="fw-semibold text-white fs-6">{{ wd.transno }}</div>
-            <div class="text-white-50 small">{{ wd.cdate | date:'dd/MM/yyyy' }}</div>
+           <div class="fw-semibold text-white fs-6 txn-number"
+                [class.full]="wd.showFullTransno"
+                (click)="wd.showFullTransno = !wd.showFullTransno">
+              {{ wd.transno }}
+            </div>
+
+            <div class="text-white-50 small">{{ wd.cdate | date:'dd/MM/yyyy' }} <br> ({{wd.ctime}})</div>
           </div>
           <div class="text-end">
             <div [ngClass]="wd.amount >= 0 ? 'text-success-glow' : 'text-danger-glow'" class="fw-bold fs-6">
@@ -90,29 +98,33 @@
       <div class="modal-body">
         <form [formGroup]="form" id="depositForm" (ngSubmit)="onSubmit()">
           <label for="amount" class="form-label">USDT Amount (BEP20 Only)</label>
-          <input
-            id="amount"
-            class="form-control styled-input"
-            type="number"
-            formControlName="amount"
-            placeholder="Enter Amount"
-            min="1"
-          />
-          <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
-            Amount is required and must be ≥ $1
-          </div>
+<input
+  id="amount"
+  class="form-control styled-input"
+  type="text"
+  formControlName="amount"
+  placeholder="Enter Amount"
+  min="1"
+  (input)="formatAmount($event)"  
+/>
 
-          <label for="yohan_amount" class="form-label mt-3">Yohan Coins</label>
-          <input
-            id="yohan_amount"
-            class="form-control styled-input"
-            type="number"
-            formControlName="yohan_amount"
-            readonly
-          />
+<div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
+  Amount is required and must be ≥ $1
+</div>
 
-          <!-- Hidden transaction hash -->
-          <input type="hidden" formControlName="transno" />
+<!-- ✅ Display calculated Yohan Coins -->
+<label for="yohan" class="form-label mt-3">Equivalent Yohan Coins</label>
+<input
+  id="yohan"
+  class="form-control"
+  type="text"
+  [value]="calculatedCoins | number:'1.2-2'"
+  readonly
+/>
+
+
+  <!-- Hidden input for transaction hash -->
+  <input type="hidden" id="transactionHashInput" formControlName="transno" />
 
           <button type="submit" class="btn btn-gradient w-100 mt-4" [disabled]="!form.valid">
             <i class="fas fa-paper-plane me-1"></i> Submit Deposit

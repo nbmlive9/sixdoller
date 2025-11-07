@@ -1,0 +1,165 @@
+<div class="dashboard-container">
+
+  <app-header></app-header>
+   <div class="mt-2 text-center">
+       <h5 class="text-warning">COMPANY DASHBOARD</h5>
+   </div>
+  <!-- Main Body -->
+  <section class="welcome-section">
+    <h4>Coin Value: <span>{{ ypdata?.coinvalue }}</span></h4>
+    <button class="btn btn-success" (click)="openUpdateModal()">Update</button>
+  </section>
+ 
+  <!-- Wallet Cards -->
+  <section class="stats-grid">
+  <div class="stat-card gradient-blue" routerLink="/allusers">
+    <h5>Total Users</h5>
+    <h3>{{ data1?.activeusers }}</h3>
+  </div>
+
+    <div class="stat-card gradient-blue" routerLink="/allusers">
+    <h5>Today Users</h5>
+    <h3>{{ data1?.todayactiveusers }}</h3>
+  </div>
+
+    <div class="extra-card gradient-level">
+    <h5>Total Credit</h5>
+    <h3>{{ data1?.activeusers * 6 | currency:'USD':true:'1.2-2' }}</h3>
+  </div>
+
+    <div class="extra-card gradient-level">
+    <h5>Today Credit</h5>
+    <h3>{{ data1?.todayactiveusers * 6 | currency:'USD':true:'1.2-2' }}</h3>
+  </div>
+
+ <div class="extra-card gradient-referal">
+  <h5>Total Referral Amount</h5>
+  <h3>{{ (data1?.levelcredit || 0) + (data1?.sponcercredit || 0)  | currency:'USD':true:'1.2-2'}}</h3>
+</div>
+
+
+   <div class="extra-card gradient-purple" routerLink="/cproyaltyusers">
+    <h5>Total Royalty</h5>
+    <h3>{{ data1?.totalroyalty | currency:'USD':true:'1.2-2'}}</h3>
+  </div>
+
+   <div class="extra-card gradient-orange" routerLink="/cpwithdraw">
+    <h5>Total Withdraw</h5>
+    <h3>{{ data1?.totalwithdraw | currency:'USD':true:'1.2-2'}}</h3>
+  </div>
+
+    <div class="extra-card gradient-blue">
+    <h5>Total Miscellaneous Amount</h5>
+    <h3> $0.00</h3>
+  </div>
+
+   <div class="extra-card gradient-blue">
+  <h5>Total Available Fund</h5>
+  <h3>
+    {{
+      (data1?.activeusers * 6 || 0) -
+      (
+        (data1?.levelcredit || 0) +
+        (data1?.sponcercredit || 0) +
+        (data1?.totalroyalty || 0) +
+        (data1?.totalwithdraw || 0)
+      )
+    | currency:'USD':true:'1.2-2'}}
+  </h3>
+</div>
+
+
+  <div class="extra-card gradient-referal">
+    <h5>Level Credit</h5>
+    <h3>{{ data1?.levelcredit | currency:'USD':true:'1.2-2'}}</h3>
+  </div>
+
+  <div class="extra-card gradient-royal">
+    <h5>Sponsor Credit</h5>
+    <h3>{{ data1?.sponcercredit | currency:'USD':true:'1.2-2'}}</h3>
+  </div>
+
+  <div class="extra-card gradient-blue" routerLink="/cpdeposit">
+    <h5>Total Deposit</h5>
+    <h3>{{ data1?.totaldeposite | currency:'USD':true:'1.2-2'}}</h3>
+  </div>
+
+  <div class="extra-card gradient-green" routerLink="/cptransfer">
+    <h5>Total Wallet Transfers</h5>
+    <h3>{{ data1?.totalwaltrans | currency:'USD':true:'1.2-2'}}</h3>
+  </div>
+
+ 
+
+  <div class="extra-card gradient-orange" routerLink="/adminsupport">
+    <h5>Support</h5>
+    <h3>View Tickets</h3>
+  </div>
+</section>
+
+<section class="table-responsive">
+  <table class="table table-striped table-hover text-white">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Board Name</th>
+        <th>Members</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of [].constructor(15); let idx = index">
+        <td>{{ idx + 1 }}</td>
+        <td>Board {{ idx + 1 }}</td>
+        <td>{{ data1?.['board' + (idx + 1) + 'mem'] || 0 }}</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+
+
+
+</div>
+
+
+<!-- Update Coin Value Modal -->
+<div class="modal fade" id="updateCoinModal" tabindex="-1" aria-labelledby="updateCoinModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content deposit-modal">
+      <div class="modal-header">
+        <h5 class="modal-title text-gradient" id="updateCoinModalLabel">
+          Update Coin Value
+        </h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="form" (ngSubmit)="submitCoinUpdate()">
+          <div class="mb-3">
+            <label for="coinvalue" class="form-label">Coin Value</label>
+            <input
+              type="number"
+              id="coinvalue"
+              class="form-control styled-input"
+              formControlName="coinvalue"
+              placeholder="Enter new coin value"
+              min="0"
+            />
+            <div *ngIf="form.get('coinvalue')?.invalid && form.get('coinvalue')?.touched" class="text-danger small">
+              Coin value is required and must be ≥ 0
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-success w-100" [disabled]="form.invalid || loadingModal">
+            {{ loadingModal ? 'Updating...' : 'Update Coin Value' }}
+          </button>
+        </form>
+        <div class="mt-2 text-success" *ngIf="successMessage">{{ successMessage }}</div>
+        <div class="mt-2 text-danger" *ngIf="errorMessage">{{ errorMessage }}</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Footer Navigation -->
+<app-footer></app-footer>

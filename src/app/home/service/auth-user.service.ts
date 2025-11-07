@@ -782,5 +782,331 @@ GetBoard1(){
     );
   }
 
+
+  //Company Dashboard
+
+  CompanyDashboard(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Dashboard',
+      httpOptions
+    );
+  }
+
+    YohanAdminPrice(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Get_ROidynamicpayment',
+    httpOptions
+  );   
+}
+
+UpdateCoinValueData(value: {
+  coinvalue:number;
+}) {
+  const token = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token && { Authorization: `Bearer ${token}` })
+    }),
+  };
+
+  return this.http.post(
+    AUTH_API + 'Roivalue_Update', 
+
+   {
+        coinvalue:value.coinvalue,
+      },
+    httpOptions
+  );
+}
+
+PendingTickets(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Pending_Supporttokens',
+    httpOptions
+  );
+}
+
+UpdateTicket(id: string, value: {
+  reply: string;
+}) {
+  const token = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    }),
+  };
+
+  return this.http.put(
+    `${AUTH_API}Supporttoken_update/${id}`,  
+    {
+      reply: value.reply,
+    },
+    httpOptions
+  );
+}
+
+CompletedTickets(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Completed_Supporttokens',
+    httpOptions
+  );
+}
+
+SearchUserData(id:any){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Get_Userdatabynameormobile/' + id,
+    httpOptions
+  );   
+}
+
+cupdateprofile(id: string, value: {
+   password: string;
+  name: string;
+  email: string;
+  wallet1: string;
+}) {
+  const token = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    }),
+  };
+
+  return this.http.put(
+    `${AUTH_API}Userprofile_Update/${id}`,  
+    {
+      password:value.password,
+      name: value.name,
+      email: value.email,
+      wallet1: value.wallet1
+    },
+    httpOptions
+  );
+}
+
+  totalusers(page: number = 1) {
+  const token = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      ...(token ? { Authorization: `Bearer ${token}` } : {})
+    }),
+  };
+
+  return this.http.get(`${AUTH_API}Total_users?page=${page}`, httpOptions);
+}
+
+DepositeReports(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Deposites',
+    httpOptions
+  );
+}
+
+TransferReportAdmin(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Transfers',
+    httpOptions
+  );
+}
+
+WithdrawReportAdmin(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Withdraws',
+    httpOptions
+  );
+}
+
+StarRoyalUsers(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Starroyal',
+    httpOptions
+  );
+}
+
+SilverRoyalUsers(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Silverroyal',
+    httpOptions
+  );
+}
+
+GoldRoyalUsers(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Goldroyal',
+    httpOptions
+  );
+}
+
+DiamondRoyalUsers(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Diamondroyal',
+    httpOptions
+  );
+}
+
+StarPay(value: {
+  amount: string;
+}){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  };
+  return this.http.post(
+    AUTH_API + 'Star_Pay',
+    { 
+    "amount":value.amount
+  },
+     httpOptions 
+  );
+}
+
+SilverPay(value: {
+  amount: string;
+}){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  };
+  return this.http.post(
+    AUTH_API + 'Silver_Pay',
+    { 
+    "amount":value.amount
+  },
+     httpOptions 
+  );
+}
+
+GoldPay(value: {
+  amount: string;
+}){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  };
+  return this.http.post(
+    AUTH_API + 'Gold_Pay',
+    { 
+    "amount":value.amount
+  },
+     httpOptions 
+  );
+}
+
+DiamondPay(value: {
+  amount: string;
+}){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  };
+  return this.http.post(
+    AUTH_API + 'Diamond_Pay',
+    { 
+    "amount":value.amount
+  },
+     httpOptions 
+  );
+}
+
  
 }

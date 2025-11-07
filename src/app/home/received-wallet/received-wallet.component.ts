@@ -11,7 +11,7 @@ export class ReceivedWalletComponent {
 
   constructor(private api: AuthUserService){}
 
-  ngOinIt(){
+  ngOnInit(){
     this.loadTransferTransactions();
   }
 

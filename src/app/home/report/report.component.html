@@ -35,18 +35,20 @@
 
     <div class="scroll-container" (scroll)="onScroll($event)">
       <div *ngIf="pro.length > 0; else noData">
-        <div *ngFor="let wd of pro" class="txn-card glass-card transition-hover p-3 mb-3 d-flex justify-content-between align-items-center">
+        <div *ngFor="let wd of pro; let i =index" class="txn-card glass-card transition-hover p-3 mb-3 d-flex justify-content-between align-items-center">
           <div>
-            <div class="fw-semibold text-white fs-6">{{ wd.remark }}</div>
+            <div class="fw-semibold text-white fs-6"> {{i+1}}. {{ wd.remark }}</div>
             <div class="text-white-50 small">{{ wd.cdate | date:'dd/MM/yyyy' }}</div>
           </div>
           <div class="text-end">
             <div [ngClass]="wd.amount >= 0 ? 'text-success-glow' : 'text-danger-glow'" class="fw-bold fs-6">
               {{ wd.amount | currency:'USD':true:'1.2-2' }}
             </div>
-            <span class="badge badge-crypto mt-1" 
-                  [ngClass]="wd.amount >= 0 ? 'bg-success-glass text-success-glow' : 'bg-danger-glass text-danger-glow'">
-              {{ wd.amount >= 0 ? 'Credit' : 'Debit' }}
+            <span *ngIf="wd.type ==='credit'" class="badge badge-crypto mt-1" 
+                  [ngClass]="wd.type ==='credit' ? 'bg-success-glass text-success-glow' : 'bg-danger-glass text-danger-glow'"> Credit
+            </span>
+             <span *ngIf="wd.type ==='debit'" class="badge badge-crypto mt-1" 
+                  [ngClass]="wd.type ==='debit' ? 'bg-danger-glass text-danger-glow' : 'bg-danger-glass text-danger-glow'"> Debit
             </span>
           </div>
         </div>

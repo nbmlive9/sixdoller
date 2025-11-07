@@ -1,5 +1,5 @@
-<!-- Footer Navigation (Mobile Only) -->
-<footer class="footer-nav d-lg-none">
+<!-- Footer Navigation -->
+<footer class="footer-nav">
   <button class="nav-btn" routerLink="/dashboard">
     <i class="fas fa-home"></i>
     <span>Home</span>
@@ -22,15 +22,17 @@
   </button>
 </footer>
 
-<!-- Slide-Up / Overlay Menu -->
-<div class="menu-overlay d-lg-none" *ngIf="menuOpen" (click)="toggleMenu()"></div>
+<!-- Overlay -->
+<div class="menu-overlay" *ngIf="menuOpen" (click)="closeMenu()"></div>
 
-<div class="menu-drawer" [class.show]="menuOpen || isDesktop">
+<!-- Drawer Menu -->
+<div class="menu-drawer" [class.show]="menuOpen">
   <div class="menu-header">
-    <h4><i class="fas fa-list"></i> Quick Menu</h4>
-    <button class="close-btn" (click)="closeMenuDesktop()" [class.disabled]="isDesktop">
-      <i class="fas fa-times"></i>
+    <h4><i class="fas fa-list"></i> Quick Menu
+    <button class="close-btn btn btn-danger" (click)="closeMenu()">
+      <i class="fas fa-times"></i> Close
     </button>
+  </h4>
   </div>
 
   <div class="menu-body">
@@ -44,9 +46,9 @@
 
     <div class="menu-group">
       <h5>💎 Income</h5>
-      <button class="submenu-item m-1" routerLink="/levelincome">Level Income</button>
-      <button class="submenu-item m-1" routerLink="/boardincome">Board Income</button>
-      <button class="submenu-item m-1" routerLink="/rfincome">Referral Income</button>
+      <button class="submenu-item" routerLink="/levelincome">Level Income</button>
+      <button class="submenu-item" routerLink="/boardincome">Board Income</button>
+      <button class="submenu-item" routerLink="/rfincome">Referral Income</button>
     </div>
   </div>
 </div>

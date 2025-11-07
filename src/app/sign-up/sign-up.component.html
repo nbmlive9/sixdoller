@@ -37,46 +37,54 @@
           <div class="invalid-feedback d-block" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">Enter valid email</div>
         </div>
 
-        <button class="btn-register w-100 mt-2" type="submit" [disabled]="form.invalid">Register Now</button>
+       <button class="btn-register w-100 mt-2"
+        type="submit"
+        [disabled]="form.invalid || loading">
+  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+  {{ loading ? 'Processing...' : 'Register Now' }}
+</button>
+
       </form>
     </div>
   </div>
 
   <!-- ✅ Success Modal -->
-  <!-- ✅ Success Modal -->
+  
+<!-- ✅ Success Modal -->
 <div class="modal fade" id="successModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-center p-3">
-      <h4 class="text-success">Registration Successful 🎉</h4>
-      <p class="mt-2">Here are your details:</p>
 
-      <div *ngIf="udata">
+      <!-- ✅ Loader Before Data Arrives -->
+      <div *ngIf="loading">
+        <h4 class="text-success">Registration Processing...</h4>
+
+        <div class="my-3">
+          <div class="spinner-border text-success"></div>
+          <p class="mt-2">Please wait, fetching your registration details...</p>
+        </div>
+      </div>
+
+      <!-- ✅ Data Appears After API Response -->
+      <div *ngIf="!loading && udata">
+        <h4 class="text-success">Registration Successful 🎉</h4>
+        <p class="mt-2">Here are your details:</p>
+
         <p><strong>Reg ID:</strong> {{ udata.regid }}</p>
+        <p><strong>Password:</strong> {{ udata.password }}</p>
         <p><strong>Name:</strong> {{ udata.name }}</p>
         <p><strong>Email:</strong> {{ udata.email }}</p>
         <p><strong>Sponsor ID:</strong> {{ udata.sponcerid }}</p>
         <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
-        <!-- <p><strong>Date:</strong> {{ udata.cdate }}</p>
-        <p><strong>Time:</strong> {{ udata.ctime }}</p>
-        <p><strong>Join Time:</strong> {{ udata.jointime }}</p> -->
+
+        <!-- <button class="btn btn-success mt-3" (click)="successModal.hide()">OK</button> -->
+         <button class="btn btn-success mt-3" (click)="refreshPage()">OK</button>
       </div>
 
-      <button class="btn btn-success mt-3" (click)="successModal.hide()">OK</button>
     </div>
   </div>
 </div>
 
-
-  <!-- ❌ Error Modal -->
-  <div class="modal fade" id="errorModal" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content text-center p-3">
-        <h5 class="text-danger mb-2">Error</h5>
-        <p>{{ errorMessage }}</p>
-        <button class="btn btn-danger mt-2" (click)="errorModal.hide()">Close</button>
-      </div>
-    </div>
-  </div>
 
 </div>
 

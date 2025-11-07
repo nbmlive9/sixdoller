@@ -12,11 +12,11 @@
           <div class="txn-icon"><i class="bi bi-person"></i></div>
           <div class="flex-grow-1">
             <div class="d-flex justify-content-between">
-              <div class="txn-title">{{ row.userid }}</div>
-              <div class="txn-amt text-success">{{ row.amount | currency:'USD':true:'1.0-2' }}</div>
+              <div class="txn-title">{{ row.remark }}</div>
+              <div class="txn-amt text-white">{{ row.amount | currency:'USD':true:'1.0-2' }}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-              <div class="txn-sub">{{ row.cdate | date:'dd/MMM/yyyy' }} - {{ row.ctime }}</div>
+              <div class="txn-sub">{{ row.cdate | date:'dd/MMM/yyyy' }} <br>({{ row.ctime }}) </div>
               <span class="badge bg-success">Success</span>
             </div>
           </div>

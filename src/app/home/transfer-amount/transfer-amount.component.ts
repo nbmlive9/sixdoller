@@ -30,6 +30,9 @@ export class TransferAmountComponent {
     facingMode: { exact: 'environment' } // Use back camera
   };
 
+  successTransferModal: any;
+loadingModal: boolean = false;
+
   constructor(
     private location: Location,
     private api: AuthUserService,
@@ -139,40 +142,60 @@ export class TransferAmountComponent {
   //   }
   // }
 
-  /** Transfer Amount */
-  Transfer() {
-    if (this.form.invalid) return;
-
-    const payload = {
-      regid: this.form.value.regid,
-      amount: this.form.value.amount,
-      wallettype: this.form.value.wallettype,
-      remark: this.form.value.remark,
-    };
-
-    this.api.TransferWallet(payload).subscribe(
-      (res: any) => {
-        if (res) {
-          this.form.reset();
-          this.successMessage = '✅ Amount transferred successfully!';
-          this.errorMessage = '';
-      
-        this.loadTransferTransactions();
-          setTimeout(() => {
-            this.successMessage = '';
-            this.router.navigateByUrl('/transfer');
-          }, 1500);
-        }
-      },
-      (err: any) => {
-        this.errorMessage = '❌ Transfer failed. Please try again.';
-          setTimeout(() => {
-            this.successMessage = '';
-            this.router.navigateByUrl('/transfer');
-          }, 1500);
-      }
-    );
+  ngAfterViewInit() {
+  const modalEl = document.getElementById('successTransferModal');
+  if (modalEl) {
+    this.successTransferModal = new bootstrap.Modal(modalEl);
   }
+}
+
+  /** Transfer Amount */
+ Transfer() {
+  if (this.form.invalid) return;
+
+  const payload = {
+    regid: this.form.value.regid,
+    amount: this.form.value.amount,
+    wallettype: this.form.value.wallettype,
+    remark: this.form.value.remark,
+  };
+
+  this.loadingModal = true;
+  this.successMessage = '';
+  this.errorMessage = '';
+
+  this.successTransferModal.show(); // ✅ Open modal immediately
+
+  this.api.TransferWallet(payload).subscribe(
+    (res: any) => {
+      this.loadingModal = false;
+      this.successMessage = 'Amount transferred successfully! ✅';
+      this.form.reset();
+      this.loadTransferTransactions();
+
+      setTimeout(() => {
+        this.successTransferModal.hide();
+        this.reloadComponent();
+      }, 1500); // ✅ Auto close after 3 sec
+    },
+    (err: any) => {
+      this.loadingModal = false;
+      this.errorMessage = 'Transfer failed. Please try again. ❌';
+
+      setTimeout(() => {
+        this.successTransferModal.hide();
+        this.reloadComponent();
+      }, 1500);
+    }
+  );
+}
+
+
+  reloadComponent() {
+  this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    this.router.navigate(['/transfer']);
+  });
+}
 
 
 }

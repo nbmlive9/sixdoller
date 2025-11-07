@@ -26,7 +26,7 @@ export class LevelIncomeComponent implements OnInit {
 
   loadLevelData() {
     this.api.LevelMembersReport().subscribe((res: any) => {
-      console.log(res);
+      console.log('levelmem',res);
       if (!res?.data) return;
 
       this.rawData = Array.isArray(res.data) ? res.data[0] : res.data;
@@ -34,7 +34,7 @@ export class LevelIncomeComponent implements OnInit {
 
       this.levelMembers = [];
 
-      for (let i = 1; i <= 15; i++) {
+      for (let i = 1; i <= 12; i++) {
         const levelKey = `level${i}`;
         const levelData = this.rawData[levelKey];
 
@@ -57,12 +57,17 @@ export class LevelIncomeComponent implements OnInit {
     });
   }
 
-  getBoardStatus(member: any): string {
-    for (let i = 1; i <= 15; i++) {
-      if (member[`board${i}`] === '1') return `Board ${i} `;
+ getBoardStatus(member: any): string {
+  let lastBoard = 0;
+  // Loop all boards from 1 to 15
+  for (let i = 1; i <= 15; i++) {
+    if (member[`board${i}`] === '1') {
+      lastBoard = i; // keep updating to the last board with '1'
     }
-    return 'Running';
   }
+  return lastBoard ? `Board ${lastBoard}` : 'Running';
+}
+
 
   selectLevel(level: number) {
     this.selectedLevel = level;

@@ -1,0 +1,153 @@
+<div class="dashboard-container">
+
+  <!-- Header -->
+  <app-header></app-header>
+
+<app-search-users-by-admin></app-search-users-by-admin>
+
+ <h4 class="mb-3 fw-bold mx-3">Total Users</h4>
+
+  <div class="container-fluid mt-3">
+    <div class="transaction-table">
+      <div class="table-responsive">
+        <table class="table align-middle text-nowrap">
+          <thead>
+            <tr>
+              <th>S.no</th>
+              <th>Date</th>
+              <th>Registration ID</th>
+              <th>Name</th>
+              <th>Act Wallet</th>
+              <th>wallet</th>
+
+              <th>Edit</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of tuser?.data; let i = index">
+  <td>{{ (currentPage - 1) * pageSize + i + 1 }}</td>
+  <td>{{ item.cdate }} <br> <small>{{item.ctime}}</small></td>
+  <td>{{ item.regid }}</td>
+  <td>{{ item.name }}</td>
+  <td>{{ item.actwallet | currency:'USD':true:'1.2-2' }}</td>
+  <td>{{ item.walletamount | currency:'USD':true:'1.2-2'}}</td>
+  <td (click)="openProfile(item)" data-bs-toggle="modal" data-bs-target="#exampleModal12">
+    <i class="fa fa-pencil-square-o" aria-hidden="true" style="color: #0C227D;"></i>
+  </td>
+</tr>
+
+
+          </tbody>
+        
+          
+        </table>
+        Total Users: {{tuser.count}}
+      </div>
+    </div>
+  </div>
+  
+  <div class="d-flex justify-content-between align-items-center mt-3">
+  <ul class="pagination mb-0">
+    <li class="page-item" [class.disabled]="currentGroupStart === 1">
+      <a class="page-link" (click)="prevGroup()">
+        <i class="fa fa-angle-double-left"></i>
+      </a>
+    </li>
+    <li
+      *ngFor="let page of pageArray"
+      [class.active]="page === currentPage"
+      class="page-item"
+    >
+      <a class="page-link" (click)="gotoPage(page)">{{ page }}</a>
+    </li>
+    <li
+      class="page-item"
+      [class.disabled]="currentGroupStart + pageGroupSize > totalPages"
+    >
+      <a class="page-link" (click)="nextGroup()">
+        <i class="fa fa-angle-double-right"></i>
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+
+  <div class="modal fade" id="exampleModal12" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger">Profile Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-primary">
+          <form [formGroup]="profileform">
+            <div class="form-card" *ngIf="pffdata">
+              <h5 >User details</h5>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                    <label>User ID</label>
+                    <input type="text" class="form-control" [value]="pffdata.regid" readonly>
+                  </div>
+                  <div class="col-md-6">
+                    <label>Password ID</label>
+                    <input type="text" class="form-control" [value]="pffdata.password" readonly>
+                  </div>
+              </div>
+              <h5>Sponsor Details</h5>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label>Sponsor ID</label>
+                  <input type="text" class="form-control" [value]="pffdata.refid" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label>Sponsor Name</label>
+                  <input type="text" class="form-control" [value]="pffdata.name" readonly>
+                </div>
+              </div>
+  
+              <h5 class="mt-4">Basic Details</h5>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label>Name</label>
+                  <input *ngIf="isEdit" type="text" class="form-control" formControlName="name">
+                  <input *ngIf="!isEdit" type="text" class="form-control" [value]="pffdata.name" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label>Email</label>
+                  <input *ngIf="isEdit" type="email" class="form-control" formControlName="email">
+                  <input *ngIf="!isEdit" type="email" class="form-control" [value]="pffdata.email" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label>Password</label>
+                  <input *ngIf="isEdit" type="text" class="form-control" formControlName="password">
+                  <input *ngIf="!isEdit" type="text" class="form-control" [value]="pffdata.password" readonly>
+                </div>
+              </div>
+  
+              <div class="row mb-3">
+               
+  
+                <div class="col-md-12">
+                  <label>Wallet Address (USDT BEP20)</label>
+                  <input *ngIf="isEdit" type="text" formControlName="wallet1" class="form-control">
+                  <input *ngIf="!isEdit" type="text" class="form-control" [value]="pffdata.wallet1" readonly>
+                </div>
+              </div>
+              <div class="text-end">
+                <button class="btn btn-danger me-2" type="button" (click)="edit()" *ngIf="!isEdit">Edit</button>
+                <button class="btn btn-success me-2" type="button"  data-bs-dismiss="modal"  (click)="save()" 
+                        [disabled]="!profileform.valid || !profileform.dirty" *ngIf="isEdit">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<app-footer></app-footer>

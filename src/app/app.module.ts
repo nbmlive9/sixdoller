@@ -11,7 +11,6 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -22,7 +21,7 @@ import { ReferralLinkShareComponent } from './referral-link-share/referral-link-
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule, HttpClientModule,QRCodeModule,ZXingScannerModule,   
-    CommonModule        
+    CommonModule,    
   ],
   providers: [],
   bootstrap: [AppComponent]

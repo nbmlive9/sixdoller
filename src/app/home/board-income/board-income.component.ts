@@ -12,7 +12,7 @@ export class BoardIncomeComponent {
   
     constructor(private api: AuthUserService){}
   
-    ngOinIt(){
+    ngOnInit(){
       this.loadTransferTransactions();
     }
   

@@ -2,16 +2,24 @@
 
   <!-- Header -->
   <app-header></app-header>
-  <!-- Transfer Transactions -->
+
   <section class="extra-grid">
     <div class="extra-card gradient-blue w-100">
       <h5 class="text-center mb-3">Referral Income</h5>
-      <div *ngIf="data1?.length > 0; else noTransactions">
+
+      <!-- Loading State -->
+      <div *ngIf="loading" class="text-center my-4">
+        <img src="assets/logo.png" width="50" height="50" class="logo-spin" alt="Loading...">
+        <p class="text-white mt-2">Loading...</p>
+      </div>
+
+      <!-- Data -->
+      <div *ngIf="!loading && data1?.length > 0; else noTransactions">
         <div class="txn-card m-1" *ngFor="let row of data1">
           <div class="txn-icon"><i class="bi bi-person"></i></div>
           <div class="flex-grow-1">
             <div class="d-flex justify-content-between">
-              <div class="txn-title">{{ row.userid }}</div>
+              <div class="txn-title">{{ row.forid }}</div>
               <div class="txn-amt text-white">{{ row.amount | currency:'USD':true:'1.0-2' }}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
@@ -21,13 +29,13 @@
           </div>
         </div>
       </div>
+
       <ng-template #noTransactions>
         <div class="text-center text-light">No transactions yet.</div>
       </ng-template>
+
     </div>
   </section>
-
-  
 
 </div>
 

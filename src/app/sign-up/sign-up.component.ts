@@ -21,7 +21,7 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   successModal: any;
  errorModal: any;
   pfdata: any;
-
+loading: boolean = false;
   constructor(private fb: FormBuilder, private api: AuthUserService, private router: Router) {
     this.form = this.fb.group({
       sponcerid: new FormControl('', [Validators.required]),
@@ -73,48 +73,43 @@ export class SignUpComponent implements OnInit, AfterViewInit {
   }
 
   // 🔹 Submit form
-  userSubmit() {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    const val = this.form.value;
-
-    this.api.UserRegistration(val).subscribe(
-      (res: any) => {
-        console.log('regdata',res);
-        if (res?.adddata) {
-          this.udata = res.adddata;
-          this.form.reset();
-          this.successModal.show();
-       setTimeout(() => {
-    this.successModal.hide(); // ✅ Hide modal properly
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/sign']);
-    });
-  }, 10000);
-        } else {
-          this.showErrorModal('Registration failed. Please try again.');
-       setTimeout(() => {
-    this.successModal.hide(); // ✅ Hide modal properly
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/sign']);
-    });
-  }, 3000);
-        }
-      },
-      (err: any) => {
-        this.showErrorModal(err.error?.message || 'Registration failed');
-    setTimeout(() => {
-    this.successModal.hide(); // ✅ Hide modal properly
-    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['/sign']);
-    });
-  }, 2000);
-      }
-    );
+ userSubmit() {
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
   }
+
+  this.loading = true;  // Start loader
+  this.udata = null;    // Reset data
+
+  this.successModal.show();  // ✅ Show modal immediately
+
+  const val = this.form.value;
+
+  this.api.UserRegistration(val).subscribe(
+    (res: any) => {
+
+      if (res?.adddata) {
+        this.udata = res.adddata;   // ✅ Assign data
+      } else {
+        this.showErrorModal("Registration failed. Please try again.");
+      }
+
+      this.loading = false;  // ✅ Stop loader
+      this.form.reset();
+    },
+    (err: any) => {
+      this.loading = false;
+      this.showErrorModal(err.error?.message || "Registration failed");
+    }
+  );
+}
+
+refreshPage() {
+  this.successModal.hide();
+  window.location.reload();
+}
+
 
   showErrorModal(message: string) {
     this.errorMessage = message;

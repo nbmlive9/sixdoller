@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { HomeComponent } from './home.component';
@@ -48,6 +48,14 @@ import { Board13Component } from './Boards/board13/board13.component';
 import { Board14Component } from './Boards/board14/board14.component';
 import { Board15Component } from './Boards/board15/board15.component';
 import { ReferralIncomeComponent } from './referral-income/referral-income.component';
+import { CpAllUsersComponent } from './company/cp-all-users/cp-all-users.component';
+import { CpSupportComponent } from './company/cp-support/cp-support.component';
+import { CpdashboardComponent } from './company/cpdashboard/cpdashboard.component';
+import { CpDepositsComponent } from './company/cp-deposits/cp-deposits.component';
+import { CpTransferComponent } from './company/cp-transfer/cp-transfer.component';
+import { CpWithdrawsComponent } from './company/cp-withdraws/cp-withdraws.component';
+import { SearchUsersByAdminComponent } from './company/search-users-by-admin/search-users-by-admin.component';
+import { RoyaltyUsersDataComponent } from './company/royalty-users-data/royalty-users-data.component';
 
 
 
@@ -57,12 +65,13 @@ import { ReferralIncomeComponent } from './referral-income/referral-income.compo
   declarations: [
     HomeComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, WalletRoiReportComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent, SignUpComponent, HeaderComponent, ReceivedWalletComponent, BoardIncomeComponent, LevelIncomeComponent, Board1Component, Board2Component, Board3Component, Board4Component, Board5Component, Board6Component, Board7Component, Board8Component, Board9Component, Board10Component, Board11Component, Board12Component, Board13Component, Board14Component, Board15Component, ReferralIncomeComponent
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, WalletRoiReportComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent, SignUpComponent, HeaderComponent, ReceivedWalletComponent, BoardIncomeComponent, LevelIncomeComponent, Board1Component, Board2Component, Board3Component, Board4Component, Board5Component, Board6Component, Board7Component, Board8Component, Board9Component, Board10Component, Board11Component, Board12Component, Board13Component, Board14Component, Board15Component, ReferralIncomeComponent, CpdashboardComponent, CpSupportComponent, CpAllUsersComponent, CpDepositsComponent, CpTransferComponent, CpWithdrawsComponent, SearchUsersByAdminComponent, RoyaltyUsersDataComponent
   ],
   imports: [
     CommonModule,
     HomeRoutingModule, HttpClientModule, ReactiveFormsModule, FormsModule,
     QRCodeModule,ZXingScannerModule
-]
+],
+schemas: [CUSTOM_ELEMENTS_SCHEMA]  // ✅ allow <w3m-button>
 })
 export class HomeModule { }

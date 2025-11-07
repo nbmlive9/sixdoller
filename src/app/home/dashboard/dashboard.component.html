@@ -5,9 +5,24 @@
   <!-- Main Body -->
   <section class="welcome-section">
     <h4>👋 Welcome, <span>{{ pfdata?.name }}</span></h4>
-    <p>{{pfdata?.regid}}</p>
+    <p>{{pfdata?.regid}} (<span class="text-warning" *ngIf="pfdata?.board==='1'">Board 1 Running</span>
+      <span class="text-warning" *ngIf="pfdata?.board==='2'"> Board 2 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='3'"> Board 3 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='4'"> Board 4 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='5'"> Board 5 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='6'"> Board 6 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='7'"> Board 7 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='8'"> Board 8 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='9'"> Board 9 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='10'"> Board 10 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='11'"> Board 11 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='12'"> Board 12 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='13'"> Board 13 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='14'"> Board 14 Running  </span>
+      <span class="text-warning" *ngIf="pfdata?.board==='15'"> Board 15 Running  </span>)
+    </p>
   </section>
-
+   <button type="button" class="btn btn-success" *ngIf="pfdata?.regid === '115599'" routerLink="/cpdashboard">  Company Dashboard </button>
   <!-- Wallet Cards -->
   <section class="stats-grid">
     <div class="stat-card gradient-blue">
@@ -39,8 +54,8 @@
     </div>
 
     <div class="extra-card gradient-pink">
-      <h5>Holding Wallet</h5>
-      <h3>{{ pfdata?.purchasewallet | currency:'USD':true:'1.2-2' }}</h3>
+      <h5>Team Count</h5>
+      <h3>{{ pfdata?.purchasewallet }}</h3>
     </div>
 
     <div class="extra-card gradient-referal">
@@ -50,8 +65,7 @@
 
      <div class="stat-card gradient-royal">
       <h5>Royalty Earning</h5>
-      <!-- <h3>{{ hdata?.referalincome | currency:'USD':true:'1.2-2' }}</h3> -->
-       <h3>$0.00</h3>
+      <h3>{{ hdata?.royalincome | currency:'USD':true:'1.2-2' }}</h3>
     </div>
 
      <div class="extra-card gradient-level">

@@ -71,6 +71,7 @@ export class DepositComponent {
   DepositeData() {
     this.api.DepositeData().subscribe({
       next: (res: any) => {
+        console.log('dpreport',res);
         this.ddata = res.data || [];
       },
       error: (err) => {
@@ -93,26 +94,29 @@ export class DepositComponent {
   }
 
   formatAmount(event: any) {
-    let value = event.target.value;
-    value = value.replace(/[^0-9.]/g, '');
+  let value = event.target.value;
+  value = value.replace(/[^0-9.]/g, '');
 
-    if ((value.match(/\./g) || []).length > 1) {
-      value = value.substring(0, value.length - 1);
-    }
-
-    if (value.includes('.')) {
-      const [intPart, decPart] = value.split('.');
-      if (decPart.length > 2) {
-        value = intPart + '.' + decPart.substring(0, 2);
-      }
-    }
-
-    event.target.value = value;
-    this.form.get('amount')?.setValue(value, { emitEvent: false });
-
-    const amount = parseFloat(value);
-    this.calculatedCoins = (!isNaN(amount) && this.coinValue > 0) ? amount / this.coinValue : 0;
+  if ((value.match(/\./g) || []).length > 1) {
+    value = value.substring(0, value.length - 1);
   }
+
+  if (value.includes('.')) {
+    const [intPart, decPart] = value.split('.');
+    if (decPart.length > 2) {
+      value = intPart + '.' + decPart.substring(0, 2);
+    }
+  }
+
+  event.target.value = value;
+  this.form.get('amount')?.setValue(value, { emitEvent: false });
+
+  const amount = parseFloat(value);
+  this.calculatedCoins = (!isNaN(amount) && this.coinValue > 0)
+    ? amount / this.coinValue
+    : 0;
+}
+
 
   onSubmit() {
     if (!this.form.valid) return;

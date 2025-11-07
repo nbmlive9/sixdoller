@@ -8,39 +8,19 @@ import { TokenStorageService } from '../service/token-storage.service';
   styleUrls: ['./footer.component.scss']
 })
 export class FooterComponent {
-menuOpen = false;
- isDesktop = false;
+  menuOpen = false;
 
-
-  constructor(public router: Router, private token:TokenStorageService) {}
-
-  ngOnInit(){
-      this.checkScreen();
-  }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: any) {
-    this.checkScreen();
-  }
-
-    checkScreen() {
-    this.isDesktop = window.innerWidth >= 992; // bootstrap lg breakpoint
-    if (this.isDesktop) {
-      this.menuOpen = false; // mobile menu hidden on desktop
-    }
-  }
+  constructor(public router: Router, private token: TokenStorageService) {}
 
   toggleMenu() {
-  this.menuOpen = !this.menuOpen;
-}
-
-   closeMenuDesktop() {
-    if (!this.isDesktop) this.menuOpen = false;
+    this.menuOpen = !this.menuOpen;
   }
-  
-      signOut() {
+
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
+  signOut() {
     this.token.signOut();
   }
-
-
 }

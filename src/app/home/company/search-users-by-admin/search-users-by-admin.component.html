@@ -1,0 +1,126 @@
+<div class=" my-4">
+  <div class="shadow border-0 rounded-4">
+    <div class="">
+      <h4 class="text-primary mb-3">Search User</h4>
+
+      <!-- Search Box -->
+      <div class="input-group mb-3">
+        <input type="text" [(ngModel)]="searchInput" class="form-control"
+               placeholder="Enter UserID / Name " />
+        <button class="btn btn-primary" (click)="onSearch()">
+          <i class="pi pi-search"></i> Search
+        </button>
+      </div>
+
+      <!-- If no result -->
+      <div *ngIf="noData" class="alert alert-warning text-center">
+        No user found. Try again!
+      </div>
+
+      <!-- User Data Table -->
+      <div *ngIf="userData" class="table-responsive">
+        <table class="table table-bordered text-center align-middle">
+          <thead class="table-dark">
+            <tr>
+            <th>S.No</th>
+              <th>UserID</th>
+                <th>Password</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Act Wallet</th>
+              <th>Wallet</th>
+                    <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of userData; let i=index;">
+                  <td>{{ i+1 }}</td>
+              <td>{{ row.regid }}</td>
+              <td>{{ row.password }}</td>
+              <td>{{ row.name }}</td>
+              <td>{{ row.email }}</td>
+              <td>{{ row.actwallet | currency:'USD':'symbol':'1.2-2' }}</td>
+              <td>{{row.walletamount | currency:'USD':'symbol':'1.2-2'}}</td>
+              <!-- <td>
+                            <span style="cursor: pointer">
+                                <ng-container *ngIf="row.topupstatus=='1'">
+                                    <i class="pi pi-check-circle mb-2 text-success" title="Pin Active"></i> Topup
+                                </ng-container>
+                                <ng-container *ngIf="row.topupstatus=='0'">
+                                    <i class="pi pi-times-circle mb-2 text-danger" title="Pin InActive"></i> Free
+                                </ng-container>
+                            </span>
+                          
+                        </td> -->
+                        <td (click)="openProfile(row)" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa fa-pencil-square-o" aria-hidden="true" style="color: #0C227D;"></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title text-danger">Profile Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body text-primary">
+          <form [formGroup]="form">
+            <div class="form-card" *ngIf="pffdata">
+              <h5>Sponsor Details</h5>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label>Sponsor ID</label>
+                  <input type="text" class="form-control" [value]="pffdata.refid" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label>Sponsor Name</label>
+                  <input type="text" class="form-control" [value]="pffdata.name" readonly>
+                </div>
+              </div>
+  
+              <h5 class="mt-4">Basic Details</h5>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label>Name</label>
+                  <input *ngIf="isEdit" type="text" class="form-control" formControlName="name">
+                  <input *ngIf="!isEdit" type="text" class="form-control" [value]="pffdata.name" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label>Email</label>
+                  <input *ngIf="isEdit" type="email" class="form-control" formControlName="email">
+                  <input *ngIf="!isEdit" type="email" class="form-control" [value]="pffdata.email" readonly>
+                </div>
+                <div class="col-md-6">
+                  <label>Password</label>
+                  <input *ngIf="isEdit" type="text" class="form-control" formControlName="password">
+                  <input *ngIf="!isEdit" type="text" class="form-control" [value]="pffdata.password" readonly>
+                </div>
+              </div>
+  
+              <div class="row mb-3">
+                
+  
+                <div class="col-md-12">
+                  <label>Wallet Address (USDT BEP20)</label>
+                  <input *ngIf="isEdit" type="text" formControlName="wallet1" class="form-control">
+                  <input *ngIf="!isEdit" type="text" class="form-control" [value]="pffdata.wallet1" readonly>
+                </div>
+              </div>
+              <div class="text-end">
+                <button class="btn btn-danger me-2" type="button" (click)="edit()" *ngIf="!isEdit">Edit</button>
+                <button class="btn btn-success me-2" type="button"  data-bs-dismiss="modal"  (click)="save()" 
+                        [disabled]="!form.valid || !form.dirty" *ngIf="isEdit">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>

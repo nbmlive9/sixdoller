@@ -20,6 +20,13 @@ import { ReceivedWalletComponent } from './received-wallet/received-wallet.compo
 import { BoardIncomeComponent } from './board-income/board-income.component';
 import { LevelIncomeComponent } from './level-income/level-income.component';
 import { ReferralIncomeComponent } from './referral-income/referral-income.component';
+import { CpdashboardComponent } from './company/cpdashboard/cpdashboard.component';
+import { CpSupportComponent } from './company/cp-support/cp-support.component';
+import { CpAllUsersComponent } from './company/cp-all-users/cp-all-users.component';
+import { CpDepositsComponent } from './company/cp-deposits/cp-deposits.component';
+import { CpTransferComponent } from './company/cp-transfer/cp-transfer.component';
+import { CpWithdrawsComponent } from './company/cp-withdraws/cp-withdraws.component';
+import { RoyaltyUsersDataComponent } from './company/royalty-users-data/royalty-users-data.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -44,6 +51,15 @@ const routes: Routes = [
 
   { path: 'withdrawreport', component: WithdrawReportsComponent },
     { path: 'support', component: SupportTicketComponent },
+
+    //Company Dashboard
+  { path: 'cpdashboard', component: CpdashboardComponent },
+   { path: 'adminsupport', component: CpSupportComponent },    
+   { path: 'allusers', component: CpAllUsersComponent },  
+   { path: 'cpdeposit', component: CpDepositsComponent }, 
+  { path: 'cptransfer', component: CpTransferComponent },   
+{ path: 'cpwithdraw', component: CpWithdrawsComponent }, 
+{ path: 'cproyaltyusers', component: RoyaltyUsersDataComponent }, 
 
 ];
 

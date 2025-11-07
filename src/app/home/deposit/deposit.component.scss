@@ -52,6 +52,71 @@
   overflow: hidden;
   color: #fff;
 }
+
+.txn-card {
+  background: rgba(255,255,255,0.08);
+  border-radius: 15px;
+  padding: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  flex-wrap: wrap; /* allow wrapping on small screens */
+}
+
+/* Left part (transno and date) */
+.txn-card > div:first-child {
+  flex: 1 1 60%; /* grow/shrink */
+  min-width: 150px; /* prevent being too small */
+  overflow: hidden;
+}
+
+/* Transaction number responsive */
+.txn-card .fw-semibold {
+  white-space: nowrap;         /* keep in one line */
+  overflow: hidden;            /* hide overflow */
+  text-overflow: ellipsis;     /* show ... */
+  font-size: 0.95rem;          /* slightly smaller on small screens */
+}
+
+/* Date below transno */
+.txn-card .text-white-50 {
+  font-size: 0.8rem;
+  word-wrap: break-word; /* break if necessary */
+}
+
+/* Right part (amount and badge) */
+.txn-card > div:last-child {
+  flex: 0 0 auto;
+  text-align: right;
+  min-width: 100px;
+}
+
+/* Credit / Debit badges */
+.badge {
+  font-size: 0.75rem;
+  padding: 2px 6px;
+}
+
+.txn-number {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+/* When full display toggled */
+.txn-number.full {
+  white-space: normal; /* allow wrapping */
+  word-break: break-all; /* break long strings */
+}
+
+/* Optional: hover effect */
+.txn-number:hover {
+  opacity: 0.8;
+}
+
+
 .table thead th {
   color: #a8d0ff;
   font-size: 0.85rem;
@@ -124,5 +189,12 @@
   }
   .deposit-modal {
     padding: 10px;
+  }
+}
+
+@media (max-width: 576px) {
+  .txn-number {
+    white-space: normal;
+    word-break: break-all;
   }
 }

@@ -13,10 +13,16 @@
         <div class="row">
           <div class="col-md-6 mb-2">
             <input type="text" class="form-control" placeholder="Amount ($)" formControlName="amount">
+              <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
+                Amount is required 
+              </div>
           </div>
           <div class="col-md-6 mb-2">
             <input type="text" class="form-control" placeholder="Enter User ID" formControlName="regid" (keyup)="onRegisterIdSelect($event)">
-            <small class="text-success"> {{idselectmsg}} </small>
+            <small class="text-white"> {{idselectmsg}} </small>
+            <div *ngIf="form.get('regid')?.invalid && form.get('regid')?.touched" class="text-danger small">
+                Userid is required 
+              </div>
           </div>
           <div class="col-md-6 mb-2">
             <select class="form-control" formControlName="wallettype">
@@ -24,10 +30,13 @@
               <option value="dwallet">Activation Fund ({{ pfdata?.actwallet | currency:'USD':true:'1.2-2' }})</option>
               <option value="ewallet">Main Wallet ({{ pfdata?.walletamount | currency:'USD':true:'1.2-2' }})</option>
             </select>
+            <div *ngIf="form.get('wallettype')?.invalid && form.get('wallettype')?.touched" class="text-danger small">
+                wallettype is required 
+              </div>
           </div>
         </div>
         <div class="text-center mt-3">
-          <button class="btn register-btn" type="button" (click)="Transfer()">Transfer</button>
+          <button class="btn register-btn" type="button" (click)="Transfer()" [disabled]="!form.valid">Transfer</button>
         </div>
       </form>
     </div>
@@ -35,18 +44,18 @@
 
   <!-- Transfer Transactions -->
   <section class="extra-grid">
-    <div class="extra-card gradient-purple w-100">
+    <div class="w-100">
       <h5 class="text-center mb-3">Transfer Transactions</h5>
       <div *ngIf="tdata?.length > 0; else noTransactions">
-        <div class="txn-card" *ngFor="let row of tdata">
+        <div class="txn-card m-2" *ngFor="let row of tdata">
           <div class="txn-icon"><i class="bi bi-person"></i></div>
           <div class="flex-grow-1">
             <div class="d-flex justify-content-between">
               <div class="txn-title">{{ row.userid }}</div>
-              <div class="txn-amt text-success">{{ row.amount | currency:'USD':true:'1.0-2' }}</div>
+              <div class="txn-amt text-white">{{ row.amount | currency:'USD':true:'1.0-2' }}</div>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-              <div class="txn-sub">{{ row.cdate | date:'dd/MMM/yyyy' }} - {{ row.ctime }}</div>
+              <div class="txn-sub">{{ row.cdate | date:'dd/MMM/yyyy' }} <br> ({{ row.ctime }}) </div>
               <span class="badge bg-success">Success</span>
             </div>
           </div>
@@ -61,6 +70,35 @@
   
 
 </div>
+
+<!-- ✅ Transfer Success Modal -->
+<div class="modal fade" id="successTransferModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+
+      <!-- Spinner before message -->
+      <div *ngIf="loadingModal">
+        <h4 class="text-success">Processing Transfer...</h4>
+        <div class="spinner-border text-success mt-2"></div>
+        <p class="mt-2">Please wait...</p>
+      </div>
+
+      <!-- Success message -->
+      <div *ngIf="!loadingModal && successMessage">
+        <h4 class="text-success">✅ Success</h4>
+        <p class="mt-2">{{ successMessage }}</p>
+      </div>
+
+      <!-- Error message -->
+      <div *ngIf="!loadingModal && errorMessage">
+        <h4 class="text-danger">❌ Failed</h4>
+        <p class="mt-2">{{ errorMessage }}</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
 
 <!-- Footer Navigation -->
 <app-footer></app-footer>
