@@ -45,6 +45,7 @@ loadingModal: boolean = false;
       amount: new FormControl('', [Validators.required, Validators.min(5)]),
       wallettype: new FormControl('', [Validators.required]),
       remark:new FormControl('User Transfer'),
+      securepin: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
     });
   }
 
@@ -149,6 +150,13 @@ loadingModal: boolean = false;
   }
 }
 
+   onPinInput(event: any) {
+  const input = event.target as HTMLInputElement;
+  // Remove all non-digit characters and trim to 4 digits
+  const cleanValue = input.value.replace(/[^0-9]/g, '').slice(0, 4);
+  this.form.get('securepin')?.setValue(cleanValue, { emitEvent: false });
+}
+
   /** Transfer Amount */
  Transfer() {
   if (this.form.invalid) return;
@@ -158,6 +166,8 @@ loadingModal: boolean = false;
     amount: this.form.value.amount,
     wallettype: this.form.value.wallettype,
     remark: this.form.value.remark,
+    securepin:this.form.value.securepin,
+    
   };
 
   this.loadingModal = true;

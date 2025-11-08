@@ -37,6 +37,23 @@
                 wallettype is required 
               </div>
           </div>
+
+            <div class="col-md-6 mb-2">
+           <!-- <label class="form-label fw-semibold text-white">Secure Pin *</label> -->
+                <input type="number" class="form-control crypto-input" placeholder="4 Digit PIN" formControlName="securepin"  (input)="onPinInput($event)" />
+
+              <!-- Validation messages -->
+              <div *ngIf="form.get('securepin')?.touched && form.get('securepin')?.invalid" class="text-danger small mt-1">
+                <div *ngIf="form.get('securepin')?.errors?.['required']">
+                  Secure PIN is required.
+                </div>
+                <div *ngIf="form.get('securepin')?.errors?.['pattern']">
+                  Secure PIN must be exactly 4 digits.
+                </div>
+              </div>
+          </div>
+
+
         </div>
         <div class="text-center mt-3">
           <button class="btn register-btn" type="button" (click)="Transfer()" [disabled]="!form.valid">Transfer</button>

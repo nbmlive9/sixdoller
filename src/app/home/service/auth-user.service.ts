@@ -256,6 +256,7 @@ TransferWallet(value: {
   regid: string;
   wallettype:string;
   remark:string;
+     securepin:number;
 }){
   const token1 = this.token.getToken();
   const httpOptions = {
@@ -271,6 +272,7 @@ TransferWallet(value: {
     "regid":value.regid,  
      "wallettype":value.wallettype,  
      "remark":value.remark,
+         "securepin":value.securepin
   },
      httpOptions 
   );
