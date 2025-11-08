@@ -93,16 +93,20 @@ totalMembers: number = 0;
     this.getDashboarddata();
     this.gwalletReport();
   
-      this.subscriptions.push(
+        this.sharedService.loadLevelData();
+
+    // Subscribe to reactive updates
+    this.subscriptions.push(
       this.sharedService.totalMembers$.subscribe(val => this.totalMembers = val)
     );
+
     this.subscriptions.push(
       this.sharedService.levelCounts$.subscribe(val => this.levelCounts = val)
     );
 
   }
 
-    ngOnDestroy() {
+ ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
