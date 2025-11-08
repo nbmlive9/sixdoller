@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthUserService } from '../service/auth-user.service';
+import { SharedService } from '../service/shared.service';
 
 interface LevelMember {
   regid: string;
@@ -17,8 +18,9 @@ export class LevelIncomeComponent implements OnInit {
   levelMembers: { level: number; members: LevelMember[] }[] = [];
   selectedLevel: number = 1;
   rankBoard: string = 'N/A'; // ✅ define rankBoard
-
-  constructor(private api: AuthUserService) {}
+ totalMembers: number = 0;
+  levelCounts: { level: number; count: number }[] = [];
+  constructor(private api: AuthUserService, private sharedService:SharedService) {}
 
   ngOnInit() {
     this.loadLevelData();
@@ -33,21 +35,32 @@ export class LevelIncomeComponent implements OnInit {
       if (!this.rawData) return;
 
       this.levelMembers = [];
-
+       this.totalMembers = 0;
+          this.levelCounts = [];
+          
       for (let i = 1; i <= 12; i++) {
         const levelKey = `level${i}`;
         const levelData = this.rawData[levelKey];
 
         let members: LevelMember[] = [];
+          let count = 0;
         if (Array.isArray(levelData)) {
           members = levelData.map((m: any) => ({
             regid: m.regid,
             name: m.name,
             boardStatus: this.getBoardStatus(m)
+            
           }));
+            count = members.length;
         }
 
         this.levelMembers.push({ level: i, members });
+         this.totalMembers += count;
+         this.sharedService.totalMembers = this.totalMembers;
+           if (i <= 4) {
+            this.levelCounts.push({ level: i, count });
+          }
+          this.sharedService.levelCounts = this.levelCounts;
       }
 
       // ✅ Set initial rankBoard based on first member in first level
@@ -56,6 +69,7 @@ export class LevelIncomeComponent implements OnInit {
       console.error('Error fetching level data', err);
     });
   }
+  
 
  getBoardStatus(member: any): string {
   let lastBoard = 0;

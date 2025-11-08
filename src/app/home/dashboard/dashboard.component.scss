@@ -172,3 +172,12 @@
   border-color: #044957;
   box-shadow: 0 0 5px #00d4ff;
 }
+
+.table {
+  th, td {
+    vertical-align: middle;
+  }
+}
+.modal-title {
+  font-weight: 600;
+}

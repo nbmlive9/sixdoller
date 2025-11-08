@@ -145,3 +145,35 @@
 .forgot-link i {
   margin-right: 6px;
 }
+
+/* ✅ Highlighted Signup Button */
+.signup-link {
+  display: inline-block;
+  padding: 12px 20px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 10px;
+
+  background: linear-gradient(90deg, #ff0055, #7c3aed);
+  box-shadow: 0 0 12px rgba(0, 216, 255, 0.6);
+
+  transition: 0.3s ease;
+  text-decoration: none;
+}
+
+/* ✅ Hover / Tap animation */
+.signup-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0 18px rgba(255, 0, 149, 0.9);
+}
+
+/* ✅ Mobile Friendly */
+@media (max-width: 480px) {
+  .signup-link {
+    font-size: 17px;
+    padding: 14px 22px;
+    width: 100%;
+  }
+}

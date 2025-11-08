@@ -55,7 +55,7 @@
 
     <div class="extra-card gradient-pink">
       <h5>Team Count</h5>
-      <h3>{{ pfdata?.purchasewallet }}</h3>
+      <h3>{{ totalMembers }}</h3>
     </div>
 
     <div class="extra-card gradient-referal">
@@ -73,6 +73,13 @@
       <h3>{{ hdata?.levelincome | currency:'USD':true:'1.2-2' }}</h3>
     </div>
   </section>
+
+<section>
+  <div class="text-center">
+    <button class="btn btn-primary" (click)="openRoyaltyModal()">Royalty View</button>
+  </div>
+</section>
+
 
   <!-- <app-board1></app-board1> -->
 <div class="board-display mt-4">
@@ -112,6 +119,51 @@
   <!-- Display selected board component -->
   
 </section>
+
+<!-- Royalty View Modal -->
+<div class="modal fade" id="royaltyModal" tabindex="-1" aria-labelledby="royaltyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="royaltyModalLabel">Royalty View (Level Summary)</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      
+      <div class="modal-body">
+        <table class="table table-bordered text-center">
+          <thead class="table-dark">
+            <tr>
+              <th>S.No</th>
+              <th>Rank</th>
+              <th>Level</th>
+              <th>Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let lvl of levelCounts.slice(0, 4); let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>
+                {{
+                  lvl.level === 1 ? 'Star' :
+                  lvl.level === 2 ? 'Silver' :
+                  lvl.level === 3 ? 'Gold' :
+                  lvl.level === 4 ? 'Diamond' :
+                  'N/A'
+                }}
+              </td>
+              <td>Level {{ lvl.level }}</td>
+              <td>{{ lvl.count }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 </div>

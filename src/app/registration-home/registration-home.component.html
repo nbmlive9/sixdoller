@@ -1,0 +1,132 @@
+<div class="register-container">
+  <div
+    class="register-card animate__animated animate__fadeInDown"
+    [class.error-shake]="errorMessage"
+  >
+    <!-- Profile Wallet (Top Small Card) -->
+    <!-- <div class="highlight-fund-small animate__animated animate__fadeInDown">
+      <h5>Activation Fund</h5>
+      <h3>{{ pfdata?.actwallet | currency: 'USD': true: '1.2-2' }}</h3>
+    </div> -->
+
+    <div class="logo-area">
+      <img src="assets/logo.png" class="logo" />
+      <h2>User Registration</h2>
+    </div>
+
+    <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <!-- ✅ Connect Wallet -->
+<div class="wallet-box text-center mb-3">
+  <button class="btn btn-primary w-100" (click)="connectWallet()" [disabled]="walletConnected">
+    {{ walletConnected ? 'Wallet Connected ✅' : 'Connect Crypto Wallet' }}
+  </button>
+
+  <p *ngIf="walletAddress" class="text-info mt-2">
+    Connected: {{ walletAddress }}
+  </p>
+</div>
+
+<!-- ✅ Payment Button -->
+<div class="wallet-box text-center mb-3" *ngIf="walletConnected">
+  <button class="btn btn-success w-100" (click)="makePayment()" [disabled]="paymentDone">
+    {{ paymentDone ? 'Payment Completed ✅' : 'Pay Registration Amount' }}
+  </button>
+</div>
+
+
+    <form [formGroup]="form" (ngSubmit)="userSubmit()" [class.disabled]="!paymentDone">
+      <!-- Sponsor ID -->
+      <div class="form-group">
+        <label>Sponsor ID *</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter Sponsor ID"
+          formControlName="sponcerid"
+          (blur)="onRegisterIdSelect($event)"
+          [ngClass]="{ 'is-invalid': form.get('sponcerid')?.touched && form.get('sponcerid')?.invalid }"
+        />
+        <small class="text-info" *ngIf="idselectmsg">{{ idselectmsg }}</small>
+        <div
+          class="invalid-feedback"
+          *ngIf="form.get('sponcerid')?.touched && form.get('sponcerid')?.invalid"
+        >
+          Sponsor ID is required
+        </div>
+      </div>
+
+      <!-- Name -->
+      <div class="form-group">
+        <label>Name *</label>
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter your name"
+          formControlName="name"
+          [ngClass]="{ 'is-invalid': form.get('name')?.touched && form.get('name')?.invalid }"
+        />
+        <div class="invalid-feedback" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+          Name is required
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label>Email *</label>
+        <input
+          type="email"
+          class="form-control"
+          placeholder="Enter your email"
+          formControlName="email"
+          [ngClass]="{ 'is-invalid': form.get('email')?.touched && form.get('email')?.invalid }"
+        />
+        <div class="invalid-feedback" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+          Enter valid email
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="btn-login w-100 mt-3" type="submit" [disabled]="form.invalid || loading">
+        <span *ngIf="!loading">Register & Deposit</span>
+        <div class="spinner" *ngIf="loading"></div>
+      </button>
+    </form>
+    <div class="links mt-4 text-center">
+          <a routerLink="/login" class="forgot-link mt-2 d-block text-white">
+            <i class="fa fa-key"></i> Back to Login?
+          </a>
+        </div>
+  </div>
+
+       
+
+</div>
+
+<!-- ✅ Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center p-3">
+      <!-- Loader -->
+      <div *ngIf="loading">
+        <h4 class="text-success">Processing Registration...</h4>
+        <div class="spinner-border text-success my-3"></div>
+        <p>Please wait...</p>
+      </div>
+
+      <!-- After Success -->
+      <div *ngIf="!loading && udata">
+        <h4 class="text-success">Registration Successful 🎉</h4>
+
+        <p><strong>Reg ID:</strong> {{ udata.regid }}</p>
+        <p><strong>Password:</strong> {{ udata.password }}</p>
+        <p><strong>Name:</strong> {{ udata.name }}</p>
+        <p><strong>Email:</strong> {{ udata.email }}</p>
+        <p><strong>Sponsor ID:</strong> {{ udata.sponcerid }}</p>
+        <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
+
+        <button class="btn btn-success mt-3" (click)="refreshPage()">OK</button>
+      </div>
+    </div>
+  </div>
+</div>

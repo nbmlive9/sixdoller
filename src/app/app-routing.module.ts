@@ -5,6 +5,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './home/service/auth.guard';
 import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
 import { ForgotPasswordComponent } from './home/forgot-password/forgot-password.component';
+import { RegistrationHomeComponent } from './registration-home/registration-home.component';
 
 const routes: Routes = [
   
@@ -16,10 +17,10 @@ const routes: Routes = [
     path: 'login',
     component: LoginComponent
   },
-  //  {
-  //   path: 'sign',
-  //   component: SignUpComponent
-  // },
+   {
+    path: 'register',
+    component: RegistrationHomeComponent
+  },
     {
     path: 'forgot',
     component: ForgotPasswordComponent

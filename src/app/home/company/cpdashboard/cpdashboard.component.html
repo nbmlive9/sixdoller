@@ -48,9 +48,9 @@
     <h3>{{ data1?.totalwithdraw | currency:'USD':true:'1.2-2'}}</h3>
   </div>
 
-    <div class="extra-card gradient-blue">
+    <div class="extra-card gradient-blue" routerLink="/addexpensive">
     <h5>Total Miscellaneous Amount</h5>
-    <h3> $0.00</h3>
+    <h3> {{ data1?.totalmiscellaneous | currency:'USD':true:'1.2-2'}}</h3>
   </div>
 
    <div class="extra-card gradient-blue">
@@ -62,7 +62,7 @@
         (data1?.levelcredit || 0) +
         (data1?.sponcercredit || 0) +
         (data1?.totalroyalty || 0) +
-        (data1?.totalwithdraw || 0)
+        (data1?.totalwithdraw || 0) + (data1?.totalmiscellaneous || 0)
       )
     | currency:'USD':true:'1.2-2'}}
   </h3>

@@ -12,10 +12,13 @@
       <form [formGroup]="form" novalidate>
         <div class="row">
           <div class="col-md-6 mb-2">
-            <input type="text" class="form-control" placeholder="Amount ($)" formControlName="amount">
-              <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
+            <input type="text" class="form-control" min="5" placeholder="Amount ($)" formControlName="amount">
+              <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
+          Minimum Transfer Amount is $5
+        </div>
+              <!-- <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
                 Amount is required 
-              </div>
+              </div> -->
           </div>
           <div class="col-md-6 mb-2">
             <input type="text" class="form-control" placeholder="Enter User ID" formControlName="regid" (keyup)="onRegisterIdSelect($event)">

@@ -32,7 +32,7 @@ export class WithdrawFundComponent {
     private router: Router
   ) {
     this.form = this.fb.group({
-      amount: new FormControl('', [Validators.required, Validators.min(10)])
+      amount: new FormControl('', [Validators.required, Validators.min(5)])
     });
   }
 

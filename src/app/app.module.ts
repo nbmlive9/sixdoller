@@ -9,13 +9,15 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { CommonModule } from '@angular/common';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { ReferralLinkShareComponent } from './referral-link-share/referral-link-share.component';
+import { RegistrationHomeComponent } from './registration-home/registration-home.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    ReferralLinkShareComponent
+    ReferralLinkShareComponent,
+    RegistrationHomeComponent
   ],
   imports: [
     BrowserModule,

@@ -27,10 +27,11 @@ export class ProfileComponent implements OnInit {
     private router: Router
   ) {
     this.form = this.fb.group({
-      name: ['', Validators.required],
+      name: ['',],
       password: [''],
-      email: ['', [Validators.required, Validators.email]],
-      wallet1: ['', Validators.required]
+      email: ['', ],
+      wallet1: ['', ],
+      securepin: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],
     });
 
     this.formOtp = this.fb.group({
@@ -57,10 +58,11 @@ export class ProfileComponent implements OnInit {
     this.showOtpForm = false;
     this.form.disable(); // lock fields
     this.form.patchValue({
-      name: this.pfdata.name,
-      password: '',
-      wallet1: this.pfdata.wallet1,
-      email: this.pfdata.email
+       name: this.pfdata?.name,
+      email: this.pfdata?.email,
+      wallet1: this.pfdata?.wallet1,
+      password: this.pfdata?.password,
+      securepin: this.pfdata?.securepin,
     });
   }
 
@@ -107,6 +109,13 @@ export class ProfileComponent implements OnInit {
         this.showAlert(err.error?.message || 'OTP verification failed', 'danger');
     }
   });
+}
+
+    onPinInput(event: any) {
+  const input = event.target as HTMLInputElement;
+  // Remove all non-digit characters and trim to 4 digits
+  const cleanValue = input.value.replace(/[^0-9]/g, '').slice(0, 4);
+  this.form.get('securepin')?.setValue(cleanValue, { emitEvent: false });
 }
 
 

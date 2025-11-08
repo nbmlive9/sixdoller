@@ -12,6 +12,13 @@ export class AuthUserService {
 
   constructor(private http:HttpClient, public token: TokenStorageService) { }
 
+HomeRegistration(value: any){
+    return this.http.post(
+      AUTH_API + 'Register_Front', value, {
+        responseType: 'json',
+      });
+  }
+
   UserRegistration(value: {
     email: string;
     sponcerid: string;
@@ -80,6 +87,7 @@ export class AuthUserService {
     password: string;
     name: string;
     wallet1: string;
+       securepin:number;
   }) {
     const token1 = this.token.getToken();
     const httpOptions = {
@@ -95,6 +103,7 @@ export class AuthUserService {
         "password":value.password, 
         "name":value.name, 
         "wallet1":value.wallet1, 
+          "securepin":value.securepin, 
       },
       httpOptions
     );
@@ -1134,6 +1143,75 @@ DiamondPay(value: {
      httpOptions 
   );
 }
+
+SecurePinUpdate(value: {
+        securepin: number;
+  }) {
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    };
+    return this.http.post(
+      AUTH_API + 'Securepinupdate',
+      { 
+          "securepin":value.securepin, 
+      },
+      httpOptions
+    );
+  }
+
+  RoyaltyIncome(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Royalty_income',
+    httpOptions
+  );
+}
+
+ AddMislliance(value: {
+    amount: number;
+    remark: string;
+  }) {
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    };
+    return this.http.post(
+      AUTH_API + 'AddMiscellaneous',
+      { 
+        "amount":value.amount, 
+        "remark":value.remark,
+      },
+      httpOptions
+    );
+  }
+
+    GetMisllianceData(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Get_Miscellaneous',
+    httpOptions
+  );
+}
+
 
  
 }

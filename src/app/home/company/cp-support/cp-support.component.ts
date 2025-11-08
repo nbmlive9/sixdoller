@@ -118,7 +118,7 @@ submitReplay() {
 
 reloadPage() {
   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    this.router.navigate(['/cpdash']);
+    this.router.navigate(['/adminsupport']);
   });
 }
 

@@ -3,6 +3,7 @@ import { AuthUserService } from '../service/auth-user.service';
 
 import { BarcodeFormat } from '@zxing/library';   // 👈 important
 import { TokenStorageService } from '../service/token-storage.service';
+import { SharedService } from '../service/shared.service';
 
 declare var bootstrap: any;
 
@@ -17,7 +18,8 @@ export class DashboardComponent {
   team:any;
   walletAddress: string = '';
   copied: boolean = false;
-
+totalMembers: number = 0; 
+  levelCounts: { level: number; count: number }[] = [];
   // boards = Array.from({ length: 15 }, (_, i) => ({
   //   name: `Board ${i + 1}`,
   //   status: Math.random() > 0.5 ? 'Active' : 'Inactive'
@@ -26,7 +28,7 @@ export class DashboardComponent {
   boards = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
     name: `Board ${i + 1}`,
-    status: i === 1 ? 'Waiting' : i === 0 ? 'Running' : 'Pending' // Example status
+    status: i === 1 ? 'Completed' : i === 0 ? 'Completed' : 'Pending' // Example status
   }));
 
   selectedBoard: number = 1; // default board to show
@@ -69,15 +71,26 @@ export class DashboardComponent {
     this.showSection2('withdraw');  // set gbonus true
   }
 
+  openRoyaltyModal() {
+  const modalElement = document.getElementById('royaltyModal');
+  if (modalElement) {
+    const modal = new bootstrap.Modal(modalElement);
+    modal.show();
+  }
+}
+
+
   wdata:any;
    permissionDenied: boolean = false;
    loadingWallet: boolean = false;
-  constructor(private api:AuthUserService, private token:TokenStorageService){}
+  constructor(private api:AuthUserService, private token:TokenStorageService, private sharedService: SharedService){}
 
   ngOnInit(){
     this.getProfiledata();
     this.getDashboarddata();
     this.gwalletReport();
+    this.totalMembers = this.sharedService.totalMembers;
+       this.levelCounts = this.sharedService.levelCounts;
   }
 
 

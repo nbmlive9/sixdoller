@@ -1,20 +1,16 @@
 import { Component } from '@angular/core';
-import { Location } from '@angular/common';
-import { AuthUserService } from '../service/auth-user.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AuthUserService } from '../../service/auth-user.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { BarcodeFormat } from '@zxing/library';
-import { BrowserQRCodeReader } from '@zxing/browser';
-
 declare var bootstrap: any;
-
 @Component({
-  selector: 'app-transfer-amount',
-  templateUrl: './transfer-amount.component.html',
-  styleUrls: ['./transfer-amount.component.scss']
+  selector: 'app-add-missliance',
+  templateUrl: './add-missliance.component.html',
+  styleUrls: ['./add-missliance.component.scss']
 })
-export class TransferAmountComponent {
-  pfdata: any;
+export class AddMisslianceComponent {
+
+   pfdata: any;
   idselectmsg: string = '';
   regname: any;
   successMessage: string = '';
@@ -22,43 +18,25 @@ export class TransferAmountComponent {
   form: FormGroup;
   tdata: any = [];
 
-  // QR Scanner Config
-  qrCodeValue: string = '';
-  allowedFormats = [BarcodeFormat.QR_CODE];
-
-  videoConstraints = {
-    facingMode: { exact: 'environment' } // Use back camera
-  };
 
   successTransferModal: any;
 loadingModal: boolean = false;
 
   constructor(
-    private location: Location,
     private api: AuthUserService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router
   ) {
     this.form = this.fb.group({
-      regid: new FormControl('', [Validators.required]),
-      amount: new FormControl('', [Validators.required, Validators.min(5)]),
-      wallettype: new FormControl('', [Validators.required]),
-      remark:new FormControl('User Transfer'),
+      amount: new FormControl('', [Validators.required]),
+      remark:new FormControl('',[Validators.required]),
     });
   }
 
-  Back() {
-    this.location.back();
-  }
 
   ngOnInit() {
-    // Get QR Code value from URL
-    this.qrCodeValue = this.route.snapshot.paramMap.get('id') || '';
-    if (this.qrCodeValue) {
-      this.form.patchValue({ regid: this.qrCodeValue });
-    }
-
+ 
     this.getProfiledata();
     this.loadTransferTransactions();
   }
@@ -72,7 +50,7 @@ loadingModal: boolean = false;
 
   /** Load Transfer Transactions */
   loadTransferTransactions() {
-    this.api.TransferWalletReport().subscribe((res: any) => {
+    this.api.GetMisllianceData().subscribe((res: any) => {
       this.tdata = res.data;
     });
   }
@@ -101,46 +79,6 @@ loadingModal: boolean = false;
     );
   }
 
-  /** Open QR Scanner Modal */
-  // openScanner() {
-  //   const modalElement = document.getElementById('qrScannerModal');
-  //   const modal = new bootstrap.Modal(modalElement);
-  //   modal.show();
-  // }
-
-  /** When QR Code is successfully scanned */
-  // onScanSuccess(result: string) {
-  //   this.form.patchValue({ regid: result });
-  //   this.onRegisterIdSelect({ target: { value: result } });
-
-  //   // Close modal automatically
-  //   const modalElement = document.getElementById('qrScannerModal');
-  //   const modal = bootstrap.Modal.getInstance(modalElement);
-  //   modal.hide();
-  // }
-
-  /** Upload Image & Decode QR Code */
-  // async onFileSelected(event: any) {
-  //   const file = event.target.files[0];
-  //   if (!file) return;
-
-  //   try {
-  //     const codeReader = new BrowserQRCodeReader();
-  //     const imgUrl = URL.createObjectURL(file);
-
-  //     const result = await codeReader.decodeFromImageUrl(imgUrl);
-
-  //     if (result?.getText()) {
-  //       const scannedRegId = result.getText();
-  //       this.form.patchValue({ regid: scannedRegId });
-  //       this.onRegisterIdSelect({ target: { value: scannedRegId } });
-  //     } else {
-  //       alert('No QR code detected in the image.');
-  //     }
-  //   } catch (error) {
-  //     alert('Unable to read QR code from image.');
-  //   }
-  // }
 
   ngAfterViewInit() {
   const modalEl = document.getElementById('successTransferModal');
@@ -154,9 +92,7 @@ loadingModal: boolean = false;
   if (this.form.invalid) return;
 
   const payload = {
-    regid: this.form.value.regid,
     amount: this.form.value.amount,
-    wallettype: this.form.value.wallettype,
     remark: this.form.value.remark,
   };
 
@@ -166,10 +102,10 @@ loadingModal: boolean = false;
 
   this.successTransferModal.show(); // ✅ Open modal immediately
 
-  this.api.TransferWallet(payload).subscribe(
+  this.api.AddMislliance(payload).subscribe(
     (res: any) => {
       this.loadingModal = false;
-      this.successMessage = 'Amount transferred successfully! ✅';
+      this.successMessage = 'Amount Add successfully! ✅';
       this.form.reset();
       this.loadTransferTransactions();
 
@@ -193,9 +129,8 @@ loadingModal: boolean = false;
 
   reloadComponent() {
   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    this.router.navigate(['/transfer']);
+    this.router.navigate(['/addexpensive']);
   });
 }
-
 
 }

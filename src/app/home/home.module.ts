@@ -56,6 +56,8 @@ import { CpTransferComponent } from './company/cp-transfer/cp-transfer.component
 import { CpWithdrawsComponent } from './company/cp-withdraws/cp-withdraws.component';
 import { SearchUsersByAdminComponent } from './company/search-users-by-admin/search-users-by-admin.component';
 import { RoyaltyUsersDataComponent } from './company/royalty-users-data/royalty-users-data.component';
+import { RoyaltyIncomeComponent } from './royalty-income/royalty-income.component';
+import { AddMisslianceComponent } from './company/add-missliance/add-missliance.component';
 
 
 
@@ -65,7 +67,7 @@ import { RoyaltyUsersDataComponent } from './company/royalty-users-data/royalty-
   declarations: [
     HomeComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, WalletRoiReportComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent, SignUpComponent, HeaderComponent, ReceivedWalletComponent, BoardIncomeComponent, LevelIncomeComponent, Board1Component, Board2Component, Board3Component, Board4Component, Board5Component, Board6Component, Board7Component, Board8Component, Board9Component, Board10Component, Board11Component, Board12Component, Board13Component, Board14Component, Board15Component, ReferralIncomeComponent, CpdashboardComponent, CpSupportComponent, CpAllUsersComponent, CpDepositsComponent, CpTransferComponent, CpWithdrawsComponent, SearchUsersByAdminComponent, RoyaltyUsersDataComponent
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, WalletRoiReportComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent, SignUpComponent, HeaderComponent, ReceivedWalletComponent, BoardIncomeComponent, LevelIncomeComponent, Board1Component, Board2Component, Board3Component, Board4Component, Board5Component, Board6Component, Board7Component, Board8Component, Board9Component, Board10Component, Board11Component, Board12Component, Board13Component, Board14Component, Board15Component, ReferralIncomeComponent, CpdashboardComponent, CpSupportComponent, CpAllUsersComponent, CpDepositsComponent, CpTransferComponent, CpWithdrawsComponent, SearchUsersByAdminComponent, RoyaltyUsersDataComponent, RoyaltyIncomeComponent, AddMisslianceComponent
   ],
   imports: [
     CommonModule,

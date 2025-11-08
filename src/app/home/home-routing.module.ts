@@ -27,6 +27,8 @@ import { CpDepositsComponent } from './company/cp-deposits/cp-deposits.component
 import { CpTransferComponent } from './company/cp-transfer/cp-transfer.component';
 import { CpWithdrawsComponent } from './company/cp-withdraws/cp-withdraws.component';
 import { RoyaltyUsersDataComponent } from './company/royalty-users-data/royalty-users-data.component';
+import { RoyaltyIncomeComponent } from './royalty-income/royalty-income.component';
+import { AddMisslianceComponent } from './company/add-missliance/add-missliance.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -42,6 +44,7 @@ const routes: Routes = [
   { path: 'boardincome', component: BoardIncomeComponent },
   { path: 'levelincome', component: LevelIncomeComponent },
    { path: 'rfincome', component: ReferralIncomeComponent },
+  { path: 'royaltyincome', component: RoyaltyIncomeComponent },
 
   { path: 'myreferrals', component: ReferralsComponent },
   { path: 'allreferrals', component: ReferralsAllDataComponent },
@@ -60,6 +63,7 @@ const routes: Routes = [
   { path: 'cptransfer', component: CpTransferComponent },   
 { path: 'cpwithdraw', component: CpWithdrawsComponent }, 
 { path: 'cproyaltyusers', component: RoyaltyUsersDataComponent }, 
+{ path: 'addexpensive', component: AddMisslianceComponent },
 
 ];
 
