@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthUserService } from '../home/service/auth-user.service';
 import { Router } from '@angular/router';
+import { ethers } from 'ethers';
+import Web3Modal from 'web3modal';
+
 declare var bootstrap: any;
+
 @Component({
   selector: 'app-registration-home',
   templateUrl: './registration-home.component.html',
@@ -14,55 +18,46 @@ export class RegistrationHomeComponent {
   regname: any = '';
   idselectmsg = '';
   errorMessage = '';
-
+  walletAddress = '';
+  provider: any;
+  signer: any;
+  txHash = '';
+  paymentDone = false;
+  loading = false;
   successModal: any;
- errorModal: any;
-  pfdata: any;
-loading: boolean = false;
-  lastTxId: any;
+  coinValue = 0; // Yohan coin price
   ypdata: any;
-  coinValue: number = 0;
+
+  ownerWallet = '0xYOUR_RECEIVE_WALLET';
+
   constructor(private fb: FormBuilder, private api: AuthUserService, private router: Router) {
     this.form = this.fb.group({
-      sponcerid: new FormControl('', [Validators.required]),
-      name: new FormControl('', [Validators.required]),
-      email: new FormControl('', [Validators.required, Validators.email]),
+      sponcerid: ['', Validators.required],
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]]
     });
   }
-  
-    ngOnInit() {
-  this.getProfiledata();
-  this.YohanPriceData();
+
+  ngOnInit() {
+    this.YohanPriceData();
   }
 
-    getProfiledata(){
-    this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res);
-      this.pfdata=res.data[0];
-    })
+  ngAfterViewInit() {
+    this.successModal = new bootstrap.Modal(document.getElementById('successModal'));
   }
 
-YohanPriceData() {
-  this.api.YohanPrice().subscribe({
-    next: (res: any) => {
-      this.ypdata = res.data;
-      this.coinValue = Number(this.ypdata.coinvalue); // ✅ Convert to number
-      console.log("Yohan Price:", this.coinValue);
-    },
-    error: (err) => {
-      console.error('Error fetching Yohan price:', err);
-    }
-  });
-}
+  YohanPriceData() {
+    this.api.YohanPrice().subscribe({
+      next: (res: any) => {
+        this.ypdata = res.data;
+        this.coinValue = Number(this.ypdata.coinvalue); // convert to number
+        console.log('Yohan price:', this.coinValue);
+      },
+      error: (err) => console.error(err)
+    });
+  }
 
-
-
-ngAfterViewInit() {
-  const successEl = document.getElementById('successModal');
-  if (successEl) this.successModal = new bootstrap.Modal(successEl);
-}
-
-onRegisterIdSelect(event: any) {
+  onRegisterIdSelect(event: any) {
     const id = event.target.value;
     if (!id) return;
 
@@ -84,124 +79,101 @@ onRegisterIdSelect(event: any) {
     );
   }
 
-  walletConnected: boolean = false;
-walletAddress: string = '';
-paymentDone: boolean = false;
-
-// ✅ Connect Wallet
-async connectWallet() {
-  try {
-    if (!(window as any).tronWeb) {
-      alert("Tron/Yohan Wallet not detected! Please open in DApp browser.");
+  async startRegistration() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
       return;
     }
 
-    const tron = (window as any).tronWeb;
+    // 1️⃣ Connect wallet
+    await this.connectWallet();
+    if (!this.walletAddress) {
+      alert('Wallet not connected!');
+      return;
+    }
 
-    this.walletAddress = tron.defaultAddress.base58;
-    this.walletConnected = true;
+    // 2️⃣ Pay with Yohan coins
+    await this.payYohanCoin();
+    if (!this.paymentDone) {
+      alert('Payment failed. Registration canceled.');
+      return;
+    }
 
-    console.log("Wallet Connected:", this.walletAddress);
-  } 
-  catch (err) {
-    console.error("Wallet Connect Error:", err);
+    // 3️⃣ Register user after payment
+    this.registerUser();
   }
-}
 
-// ✅ PAYMENT LOGIC
-async makePayment() {
+  // Connect wallet using Web3Modal
+  async connectWallet() {
+    try {
+      const web3Modal = new Web3Modal({
+        cacheProvider: false, // optional
+      });
+      this.provider = await web3Modal.connect();
+      const ethersProvider = new ethers.BrowserProvider(this.provider);
+      this.signer = await ethersProvider.getSigner();
+      this.walletAddress = await this.signer.getAddress();
+      console.log('Wallet connected:', this.walletAddress);
+    } catch (err) {
+      console.error('Wallet connect error:', err);
+      alert('Wallet connection failed');
+    }
+  }
+
+  // Pay Yohan coins (6$ = 6 / coinValue)
+  async payYohanCoin() {
   try {
-    if (!this.walletConnected) {
-      alert("Please connect wallet first");
-      return;
-    }
+    if (!this.signer) return alert('Wallet not connected');
+    if (!this.coinValue || this.coinValue <= 0) return alert('Invalid Yohan coin price');
 
-    if (!this.coinValue || this.coinValue <= 0) {
-      alert("Invalid Yohan price. Try again.");
-      return;
-    }
+    const amountYohan = 6 / this.coinValue;
 
-    const tron = (window as any).tronWeb;
+    const contractAddress = '0xYOHANCOINCONTRACT'; // replace
+    const abi = ['function transfer(address to, uint256 amount) public returns (bool)'];
+    const contract = new ethers.Contract(contractAddress, abi, this.signer);
 
-    const amount = this.coinValue;  // ✅ dynamic amount
-    const receivingWallet = "TSxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"; // Replace with your wallet
-
-    const tx = await tron.transactionBuilder.sendTrx(
-      receivingWallet,
-      amount * 1e6  // ✅ convert TRX/Yohan to Sun
+    // ✅ Use bracket notation
+    const tx = await contract['transfer'](
+      this.ownerWallet,
+      ethers.parseUnits(amountYohan.toFixed(6), 6)
     );
 
-    const signedTx = await tron.trx.sign(tx);
-    const broadcast = await tron.trx.sendRawTransaction(signedTx);
-
-    if (broadcast?.result) {
-      this.paymentDone = true;
-      this.lastTxId = broadcast.txid;  // ✅ save for backend
-      alert(`✅ Payment Successful!\nTX: ${broadcast.txid}`);
-    } 
-    else {
-      alert("❌ Payment failed");
-    }
-  }
-  catch (err) {
+    const receipt = await tx.wait();
+    this.txHash = receipt.transactionHash;
+    this.paymentDone = true;
+    alert(`✅ Payment successful! ${amountYohan.toFixed(6)} YOHAN sent.`);
+  } catch (err) {
     console.error(err);
-    alert("Payment error");
+    this.paymentDone = false;
+    alert('Payment failed');
   }
 }
 
 
+  registerUser() {
+    this.loading = true;
+    this.successModal.show();
 
-  // 🔹 Submit form
-userSubmit() {
-  if (!this.paymentDone) {
-    alert("Please complete payment first!");
-    return;
-  }
+    const data = {
+      ...this.form.value,
+      walletaddress: this.walletAddress,
+      txid: this.txHash
+    };
 
-  if (this.form.invalid) {
-    this.form.markAllAsTouched();
-    return;
-  }
-
-  this.loading = true;
-  this.udata = null;
-
-  this.successModal.show();
-
-  const val = {
-    ...this.form.value,
-    walletaddress: this.walletAddress,   // ✅ Save wallet
-    txid: this.lastTxId                  // ✅ Save blockchain tx
-  };
-
-  this.api.HomeRegistration(val).subscribe(
-    (res: any) => {
-      if (res?.adddata) {
+    this.api.HomeRegistration(data).subscribe({
+      next: (res: any) => {
         this.udata = res.adddata;
-      } else {
-        this.showErrorModal("Registration failed");
+        this.loading = false;
+      },
+      error: () => {
+        this.loading = false;
+        alert('Registration failed');
       }
-
-      this.loading = false;
-      this.form.reset();
-    },
-    (err: any) => {
-      this.loading = false;
-      this.showErrorModal(err.error?.message || "Registration failed");
-    }
-  );
-}
-
-
-refreshPage() {
-  this.successModal.hide();
-  window.location.reload();
-}
-
-
-  showErrorModal(message: string) {
-    this.errorMessage = message;
-    if (this.errorModal) this.errorModal.show();
+    });
   }
 
+  refreshPage() {
+    this.successModal.hide();
+    window.location.reload();
+  }
 }

@@ -56,11 +56,11 @@ export class LevelIncomeComponent implements OnInit {
 
         this.levelMembers.push({ level: i, members });
          this.totalMembers += count;
-         this.sharedService.totalMembers = this.totalMembers;
+        this.sharedService.setTotalMembers(this.totalMembers);
            if (i <= 4) {
             this.levelCounts.push({ level: i, count });
           }
-          this.sharedService.levelCounts = this.levelCounts;
+         this.sharedService.setLevelCounts(this.levelCounts);
       }
 
       // ✅ Set initial rankBoard based on first member in first level

@@ -4,7 +4,7 @@ import { AuthUserService } from '../service/auth-user.service';
 import { BarcodeFormat } from '@zxing/library';   // 👈 important
 import { TokenStorageService } from '../service/token-storage.service';
 import { SharedService } from '../service/shared.service';
-
+import { Subscription } from 'rxjs';
 declare var bootstrap: any;
 
 @Component({
@@ -20,6 +20,7 @@ export class DashboardComponent {
   copied: boolean = false;
 totalMembers: number = 0; 
   levelCounts: { level: number; count: number }[] = [];
+  private subscriptions: Subscription[] = [];
   // boards = Array.from({ length: 15 }, (_, i) => ({
   //   name: `Board ${i + 1}`,
   //   status: Math.random() > 0.5 ? 'Active' : 'Inactive'
@@ -28,7 +29,7 @@ totalMembers: number = 0;
   boards = Array.from({ length: 15 }, (_, i) => ({
     id: i + 1,
     name: `Board ${i + 1}`,
-    status: i === 1 ? 'Completed' : i === 0 ? 'Completed' : 'Pending' // Example status
+    // status: i === 1 ? 'Completed' : i === 0 ? 'Completed' : 'Pending'
   }));
 
   selectedBoard: number = 1; // default board to show
@@ -83,16 +84,61 @@ totalMembers: number = 0;
   wdata:any;
    permissionDenied: boolean = false;
    loadingWallet: boolean = false;
+
+   
   constructor(private api:AuthUserService, private token:TokenStorageService, private sharedService: SharedService){}
 
   ngOnInit(){
     this.getProfiledata();
     this.getDashboarddata();
     this.gwalletReport();
-    this.totalMembers = this.sharedService.totalMembers;
-       this.levelCounts = this.sharedService.levelCounts;
+  
+      this.subscriptions.push(
+      this.sharedService.totalMembers$.subscribe(val => this.totalMembers = val)
+    );
+    this.subscriptions.push(
+      this.sharedService.levelCounts$.subscribe(val => this.levelCounts = val)
+    );
+
   }
 
+    ngOnDestroy() {
+    this.subscriptions.forEach(sub => sub.unsubscribe());
+  }
+
+copiedLink: boolean = false;
+
+copyReferralLink() {
+  const referralUrl = `https://yohanrise.com/yohan/referral/${this.pfdata?.regid}`;
+  navigator.clipboard.writeText(referralUrl).then(() => {
+    this.copiedLink = true;
+    setTimeout(() => this.copiedLink = false, 2000);
+  });
+}
+
+shareTo(platform: string) {
+  const regid = this.pfdata?.regid;
+  const message = `Welcome to Yohan! 🚀 Join here: https://yohanrise.com/yohan/referral/${regid}`;
+  const encodedMessage = encodeURIComponent(message);
+
+  let url = '';
+  switch(platform) {
+    case 'whatsapp':
+      url = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+      break;
+    case 'telegram':
+      url = `https://t.me/share/url?url=https://yohanrise.com/yohan/referral/${regid}&text=${encodedMessage}`;
+      break;
+    case 'facebook':
+      url = `https://www.facebook.com/sharer/sharer.php?u=https://yohanrise.com/yohan/referral/${regid}`;
+      break;
+    case 'copy':
+      this.copyReferralLink();
+      return;
+  }
+
+  window.open(url, '_blank');
+}
 
 
   gwalletReport(){
@@ -117,22 +163,6 @@ totalMembers: number = 0;
     })
   }
 
-  copiedLink: boolean = false;
-
-copyReferralLink() {
-  const referralUrl = `https://sixdoller.live/btz/referral/${this.pfdata?.regid}`;
-  if (!referralUrl) return;
-
-  navigator.clipboard.writeText(referralUrl).then(() => {
-    this.copiedLink = true;
-
-    // Hide the message after 2 seconds
-    setTimeout(() => {
-      this.copiedLink = false;
-    }, 2000);
-  });
-}
-
 
   onRegister() {
     alert('Redirecting to registration page...');
@@ -155,38 +185,6 @@ copyReferralLink() {
     openDashboard() {
       this.showDashboard = true;
     }
-
-  // shareTo(platform: string) {
-  //   const regid = this.pfdata?.regid;
-  //   const message = `Welcome to Bitraze! 🚀 Join for free: https://sixdoller.live/btz/referral/${regid}`;
-  //   const encodedMessage = encodeURIComponent(message);
-
-  //   let url = '';
-
-  //   switch (platform) {
-  //     case 'whatsapp':
-  //       url = `https://api.whatsapp.com/send?text=${encodedMessage}`;
-  //       break;
-  //     case 'telegram':
-  //       url = `https://t.me/share/url?url=https://sixdoller.live/btz/referral/${regid}&text=${encodedMessage}`;
-  //       break;
-  //     case 'imo':
-  //       if (navigator.share) {
-  //         navigator.share({
-  //           title: 'Bitraze Invite',
-  //           text: message,
-  //           url: `https://sixdoller.live/btz/referral/${regid}`,
-  //         }).catch(err => console.error('Sharing failed:', err));
-  //         return;
-  //       } else {
-  //         alert('Sharing not supported on this device');
-  //         return;
-  //       }
-  //   }
-
-  //   window.open(url, '_blank');
-  // }
-
 
 
 

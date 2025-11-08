@@ -15,27 +15,31 @@
     </div>
 
     <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
-
+    <!-- <div class="d-flex justify-content-end">
+                  <w3m-button></w3m-button>
+            </div> -->
+    <!-- <button class="btn btn-warning w-100" (click)="payUSDT()">Pay 6 USDT</button> -->
     <!-- ✅ Connect Wallet -->
+<!-- 
 <div class="wallet-box text-center mb-3">
   <button class="btn btn-primary w-100" (click)="connectWallet()" [disabled]="walletConnected">
-    {{ walletConnected ? 'Wallet Connected ✅' : 'Connect Crypto Wallet' }}
+    {{ walletConnected ? 'Wallet Connected ✅' : 'Connect Wallet' }}
   </button>
 
   <p *ngIf="walletAddress" class="text-info mt-2">
-    Connected: {{ walletAddress }}
+    Connected: {{ walletAddress }} (BSC)
   </p>
 </div>
 
-<!-- ✅ Payment Button -->
+
 <div class="wallet-box text-center mb-3" *ngIf="walletConnected">
   <button class="btn btn-success w-100" (click)="makePayment()" [disabled]="paymentDone">
     {{ paymentDone ? 'Payment Completed ✅' : 'Pay Registration Amount' }}
   </button>
-</div>
+</div> -->
 
 
-    <form [formGroup]="form" (ngSubmit)="userSubmit()" [class.disabled]="!paymentDone">
+    <form [formGroup]="form">
       <!-- Sponsor ID -->
       <div class="form-group">
         <label>Sponsor ID *</label>
@@ -87,7 +91,7 @@
       </div>
 
       <!-- Submit Button -->
-      <button class="btn-login w-100 mt-3" type="submit" [disabled]="form.invalid || loading">
+      <button class="btn-login w-100 mt-3" type="submit" [disabled]="form.invalid || loading" (click)="startRegistration()">
         <span *ngIf="!loading">Register & Deposit</span>
         <div class="spinner" *ngIf="loading"></div>
       </button>

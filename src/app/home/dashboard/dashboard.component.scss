@@ -181,3 +181,117 @@
 .modal-title {
   font-weight: 600;
 }
+
+.share-section {
+  background: linear-gradient(135deg, #1e2a38, #0f2027);
+  color: #fff;
+  font-family: 'Poppins', sans-serif;
+
+  h5 {
+    font-weight: 600;
+    color: #00d4ff;
+  }
+
+  .referral-link {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 12px;
+    border-radius: 12px;
+
+    p {
+      font-size: 0.9rem;
+      color: #f0f0f0;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .btn-copy {
+      background: #00d4ff;
+      border: none;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 0 8px #00d4ff;
+      }
+
+      i {
+        font-size: 0.9rem;
+      }
+    }
+  }
+
+  .share-buttons {
+    button.btn-share {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      padding: 8px 14px;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      color: #fff;
+
+      &.whatsapp {
+        background: #25d366;
+        &:hover {
+          background: #1ebe57;
+        }
+      }
+
+      &.telegram {
+        background: #0088cc;
+        &:hover {
+          background: #006699;
+        }
+      }
+
+      &.facebook {
+        background: #4267b2;
+        &:hover {
+          background: #314e86;
+        }
+      }
+
+      &.copy-link {
+        background: #00d4ff;
+        &:hover {
+          background: #00aee6;
+        }
+      }
+
+      i {
+        font-size: 1rem;
+      }
+    }
+  }
+
+  // Responsive for mobile
+  @media (max-width: 576px) {
+    .referral-link {
+      flex-direction: column;
+      gap: 5px;
+
+      p {
+        max-width: 100%;
+        font-size: 0.85rem;
+      }
+    }
+
+    .share-buttons {
+      button.btn-share {
+        flex: 1 1 45%;
+        font-size: 0.8rem;
+        padding: 6px 10px;
+      }
+    }
+  }
+}
+
