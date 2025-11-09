@@ -199,6 +199,58 @@
   </div>
 </div>
 
+<!-- securepin update modal -->
+
+<div #securePinModal class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title">Setup Secure PIN</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="securePinForm">
+          <div class="form-group mb-3">
+            <label for="securepin">Enter New Secure PIN</label>
+            <input type="text"
+                   id="securepin"
+                   class="form-control text-center fw-bold"
+                   maxlength="4"
+                   formControlName="securepin"
+                   placeholder="Enter 4-digit PIN"
+                   (input)="onPinInput($event)" />
+            <small class="text-muted">
+              This PIN is required for Profile Update & Wallet Transfers.
+            </small>
+            <div *ngIf="securePinForm.get('securepin')?.invalid && securePinForm.get('securepin')?.touched" class="text-danger small mt-1">
+              Please enter exactly 4 digits.
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-success" (click)="updateSecurePin()" [disabled]="securePinForm.invalid">Save PIN</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+ <div #messageModal class="modal fade" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-danger">Notice</h5>
+        <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body text-success">
+        <p>{{ modalMessage }}</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
 

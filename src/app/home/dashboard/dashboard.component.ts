@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild } from '@angular/core';
 import { AuthUserService } from '../service/auth-user.service';
 
 import { BarcodeFormat } from '@zxing/library';   // 👈 important
 import { TokenStorageService } from '../service/token-storage.service';
 import { SharedService } from '../service/shared.service';
 import { Subscription } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var bootstrap: any;
 
 @Component({
@@ -13,7 +14,8 @@ declare var bootstrap: any;
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-
+  @ViewChild('securePinModal') securePinModal!: ElementRef;
+  @ViewChild('messageModal') messageModal!: ElementRef;
   back: any;
   team:any;
   walletAddress: string = '';
@@ -84,9 +86,13 @@ totalMembers: number = 0;
   wdata:any;
    permissionDenied: boolean = false;
    loadingWallet: boolean = false;
-
-   
-  constructor(private api:AuthUserService, private token:TokenStorageService, private sharedService: SharedService){}
+ modalMessage: string = '';
+   securePinForm:FormGroup;
+  constructor(private api:AuthUserService, private token:TokenStorageService, private sharedService: SharedService, private fb:FormBuilder){
+        this.securePinForm = this.fb.group({
+      securepin: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]]
+    });
+  }
 
   ngOnInit(){
     this.getProfiledata();
@@ -103,6 +109,8 @@ totalMembers: number = 0;
     this.subscriptions.push(
       this.sharedService.levelCounts$.subscribe(val => this.levelCounts = val)
     );
+    
+    
 
   }
 
@@ -164,9 +172,57 @@ shareTo(platform: string) {
     this.api.Profile().subscribe((res:any)=>{
       console.log('profile',res);
       this.pfdata=res.data[0];
+
+          if (!this.pfdata.securepin || this.pfdata.securepin.trim() === '') {
+        this.openSecurePinModal();
+      }
+
     })
   }
 
+  openSecurePinModal() {
+    const modal = new bootstrap.Modal(this.securePinModal.nativeElement, {
+      backdrop: 'static',
+      keyboard: false
+    });
+    modal.show();
+  }
+
+ onPinInput(event: any) {
+    const input = event.target as HTMLInputElement;
+    const cleanValue = input.value.replace(/[^0-9]/g, '').slice(0, 4);
+    this.securePinForm.get('securepin')?.setValue(cleanValue, { emitEvent: false });
+  }
+
+   updateSecurePin() {
+    if (this.securePinForm.invalid) {
+      this.showMessage('Please enter exactly 4 digits for Secure PIN.');
+      return;
+    }
+
+    const formValue = this.securePinForm.value;
+    this.api.SecurePinUpdate(formValue).subscribe({
+      next: (res: any) => {
+        this.pfdata.securepin = formValue.securepin;
+
+        // Close modal manually
+        const modalEl = bootstrap.Modal.getInstance(this.securePinModal.nativeElement);
+        modalEl.hide();
+
+        this.showMessage('Secure PIN updated successfully!');
+      },
+      error: (err) => {
+        console.error(err);
+        this.showMessage('Failed to update Secure PIN. Try again.');
+      }
+    });
+  }
+
+  showMessage(msg: string) {
+    this.modalMessage = msg;
+    const modal = new bootstrap.Modal(this.messageModal.nativeElement, { centered: true });
+    modal.show();
+  }
 
   onRegister() {
     alert('Redirecting to registration page...');

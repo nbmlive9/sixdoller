@@ -97,7 +97,7 @@ HomeRegistration(value: any){
       })
     };
     return this.http.post(
-      AUTH_API + 'Profile_Update',
+      AUTH_API + 'Userprofile_Update',
       { 
         "email":value.email, 
         "password":value.password, 
