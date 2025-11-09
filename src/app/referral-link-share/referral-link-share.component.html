@@ -15,7 +15,9 @@
     </div>
 
     <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
-  
+      <div class="d-flex justify-content-end">
+                  <w3m-button></w3m-button>
+            </div>
     <form [formGroup]="form">
       <!-- Sponsor ID -->
       <div class="form-group">
