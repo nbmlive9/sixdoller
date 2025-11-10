@@ -53,7 +53,7 @@
         />
         <small class="text-info" *ngIf="idselectmsg">{{ idselectmsg }}</small>
         <div
-          class="invalid-feedback"
+          class="invalid-feedback text-white"
           *ngIf="form.get('sponcerid')?.touched && form.get('sponcerid')?.invalid"
         >
           Sponsor ID is required
@@ -70,7 +70,7 @@
           formControlName="name"
           [ngClass]="{ 'is-invalid': form.get('name')?.touched && form.get('name')?.invalid }"
         />
-        <div class="invalid-feedback" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
+        <div class="invalid-feedback text-white" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
           Name is required
         </div>
       </div>
@@ -85,7 +85,7 @@
           formControlName="email"
           [ngClass]="{ 'is-invalid': form.get('email')?.touched && form.get('email')?.invalid }"
         />
-        <div class="invalid-feedback" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+        <div class="invalid-feedback text-white" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
           Enter valid email
         </div>
       </div>

@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { TokenStorageService } from './token-storage.service';
 import { Observable } from 'rxjs';
 
-const AUTH_API ='https://orgaliv.store/SHNKM6/SHNKM6/User/'
+//const AUTH_API ='https://orgaliv.store/SHNKM6/SHNKM6/User/'
+const AUTH_API ='https://yohanrise.com/SHNKM6/SHNKM6/User/'
 
 @Injectable({
   providedIn: 'root'
@@ -97,7 +98,7 @@ HomeRegistration(value: any){
       })
     };
     return this.http.post(
-      AUTH_API + 'Userprofile_Update',
+      AUTH_API + 'Profile_Update',
       { 
         "email":value.email, 
         "password":value.password, 

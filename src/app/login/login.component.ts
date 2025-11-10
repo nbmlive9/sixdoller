@@ -25,7 +25,7 @@ export class LoginComponent {
   ) {
     this.form = new FormGroup({
       regid: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.minLength(3)])
+      password: new FormControl('', [Validators.required])
     });
   }
 
@@ -55,7 +55,7 @@ export class LoginComponent {
       },
       error: () => {
         this.isLoading = false;
-        this.errorMessage = '❌ Invalid credentials. Please try again.';
+        this.errorMessage = 'Invalid credentials. Please try again.';
       }
     });
   }

@@ -118,22 +118,38 @@ export class DepositComponent {
 }
 
 
-  onSubmit() {
-    if (!this.form.valid) return;
+ onSubmit() {
+  if (!this.form.valid) return;
 
-    const payload = {
-      amount: this.form.value.amount,
-      transno: this.form.value.transno,
-      note: this.form.value.note
-    };
+  this.submitting = true;
+  this.errorMessage = "";
 
-    console.log('🛠 Payload:', payload);
+  // ✅ Check if transno is empty
+  const tx = this.form.value.transno?.trim();
+  if (!tx || tx.length === 0) {
+    this.errorMessage = "Transaction hash is required before deposit.";
+    this.submitting = false;
+    return;
+  }
 
-    this.api.DepositWallet(payload).subscribe({
-      next: (res: any) => {
-         this.form.reset();
+  const payload = {
+    amount: this.form.value.amount,
+    transno: this.form.value.transno,
+    note: this.form.value.note
+  };
+
+  console.log('🛠 Payload:', payload);
+
+  this.api.DepositWallet(payload).subscribe({
+    next: (res: any) => {
+
+      // ✅ Check API success flag
+      if (res?.status === true || res?.code === 200) {
+
+        this.form.reset();
         this.idData = null;
 
+        // ✅ Show success modal ONLY on valid API success
         const modalElement = new bootstrap.Modal(this.successModal.nativeElement);
         modalElement.show();
 
@@ -143,12 +159,24 @@ export class DepositComponent {
             this.router.navigate(['/deposit']);
           });
         }, 2000);
-      },
-      error: (err) => {
-        this.errorMessage = err?.error?.message || 'Deposit failed.';
+
+      } else {
+        // ✅ API returned fail
+        this.errorMessage = res?.message || "Deposit failed. Please try again.";
       }
-    });
-  }
+
+      this.submitting = false;
+    },
+
+    error: (err) => {
+      // ✅ Backend / Network failure
+      this.errorMessage = err?.error?.message || "Deposit request failed.";
+      this.submitting = false;
+    }
+  });
+}
+
+
 
   updateTxHashFromOutside(hash: string) {
     this.form.get('transno')?.setValue(hash);

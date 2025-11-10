@@ -16,12 +16,12 @@
           placeholder="Enter userid"
           class="form-control"
          [ngClass]="{ 'is-invalid': f['regid'].touched && f['regid'].invalid }" />
-            <div class="invalid-feedback" *ngIf="f['regid'].touched && f['regid'].hasError('required')">
+            <div class="invalid-feedback text-white" *ngIf="f['regid'].touched && f['regid'].hasError('required')">
           Username is required.
         </div>
-        <div class="invalid-feedback" *ngIf="f['regid'].touched && f['regid'].hasError('minlength')">
+        <!-- <div class="invalid-feedback" *ngIf="f['regid'].touched && f['regid'].hasError('minlength')">
           Minimum 4 characters required.
-        </div>
+        </div> -->
       </div>
 
       <div class="form-group">
@@ -33,12 +33,12 @@
           class="form-control"
           [ngClass]="{ 'is-invalid': f['password'].touched && f['password'].invalid }"
         />
-           <div class="invalid-feedback" *ngIf="f['password'].touched && f['password'].hasError('required')">
+           <div class="invalid-feedback text-white" *ngIf="f['password'].touched && f['password'].hasError('required')">
           Password is required.
         </div>
-        <div class="invalid-feedback" *ngIf="f['password'].touched && f['password'].hasError('minlength')">
+        <!-- <div class="invalid-feedback" *ngIf="f['password'].touched && f['password'].hasError('minlength')">
           Minimum 3 characters required.
-        </div>
+        </div> -->
         
       </div>
 

@@ -34,7 +34,7 @@ export class RegistrationHomeComponent {
   ypdata: any;
 
   // Receiver Wallet
-  ownerWallet = "0xa6b27E7774C31551E5758384F66f5e219Af49E1F";
+  ownerWallet = "0xe48384589Af4491B63cAD19f053e9cF648CdF206";
 
   // USDT / Token Contract
   tokenContract = "0x55d398326f99059fF775485246999027B3197955";

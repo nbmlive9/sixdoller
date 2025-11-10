@@ -23,6 +23,10 @@
     <main class="p-3 pb-5 mb-5">
       <form [formGroup]="form" class="profile-card shadow-sm p-4 rounded bg-gradient">
         <h5 class="mb-4 fw-bold text-white">Edit Profile</h5>
+    <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show mt-3" role="alert">
+        {{ alertMessage }}
+        <button type="button" class="btn-close" (click)="alertMessage = ''"></button>
+      </div>
 
         <!-- User ID -->
         <div class="mb-3">
@@ -90,11 +94,7 @@
       </div> -->
 
       <!-- Alert -->
-      <div *ngIf="alertMessage" class="alert alert-{{alertType}} alert-dismissible fade show mt-3" role="alert">
-        {{ alertMessage }}
-        <button type="button" class="btn-close" (click)="alertMessage = ''"></button>
-      </div>
-
+  
     
     </main>
   </div>

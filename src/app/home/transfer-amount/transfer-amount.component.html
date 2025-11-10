@@ -12,23 +12,7 @@
       <form [formGroup]="form" novalidate>
         <div class="row">
           <div class="col-md-6 mb-2">
-            <input type="text" class="form-control" min="5" placeholder="Amount ($)" formControlName="amount">
-              <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
-          Minimum Transfer Amount is $5
-        </div>
-              <!-- <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
-                Amount is required 
-              </div> -->
-          </div>
-          <div class="col-md-6 mb-2">
-            <input type="text" class="form-control" placeholder="Enter User ID" formControlName="regid" (keyup)="onRegisterIdSelect($event)">
-            <small class="text-white"> {{idselectmsg}} </small>
-            <div *ngIf="form.get('regid')?.invalid && form.get('regid')?.touched" class="text-danger small">
-                Userid is required 
-              </div>
-          </div>
-          <div class="col-md-6 mb-2">
-            <select class="form-control" formControlName="wallettype">
+            <select class="form-control" formControlName="wallettype"  (change)="onWalletTypeChange()">
               <option value="" disabled>Select Wallet Type</option>
               <option value="dwallet">Activation Fund ({{ pfdata?.actwallet | currency:'USD':true:'1.2-2' }})</option>
               <option value="ewallet">Main Wallet ({{ pfdata?.walletamount | currency:'USD':true:'1.2-2' }})</option>
@@ -37,6 +21,29 @@
                 wallettype is required 
               </div>
           </div>
+
+          <div class="col-md-6 mb-2">
+            <input type="number" class="form-control" min="5" placeholder="Amount ($)" formControlName="amount" (keyup)="onAmountChange()">
+              <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
+          Minimum Transfer Amount is $5
+        </div>
+              <!-- <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
+                Amount is required 
+              </div> -->
+              <div *ngIf="deductedAmount > 0 && form.get('wallettype')?.value === 'ewallet'"
+                  class="text-danger fw-semibold mt-1">
+               User will receive after 10% deduction: 
+               <span class="text-primary">{{ deductedAmount | currency:'USD':true:'1.2-2' }}</span> 
+              </div>
+          </div>
+          <div class="col-md-6 mb-2">
+            <input type="text" class="form-control" placeholder="Enter User ID" formControlName="regid" (keyup)="onRegisterIdSelect($event)">
+            <small class="text-white"> {{idselectmsg}} </small>
+            <div *ngIf="form.get('regid')?.invalid && form.get('regid')?.touched" class="text-danger small">
+                Userid is required 
+              </div>
+          </div>
+          
 
             <div class="col-md-6 mb-2">
            <!-- <label class="form-label fw-semibold text-white">Secure Pin *</label> -->

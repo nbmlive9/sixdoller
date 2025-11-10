@@ -107,7 +107,14 @@ loading: boolean = false;
 
 refreshPage() {
   this.successModal.hide();
-  window.location.reload();
+  // window.location.reload();
+   // this.router.navigateByUrl('/sign');
+      setTimeout(() => {
+            // this.modalRef.hide();
+            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+              this.router.navigate(['/sign']);
+            });
+          },);
 }
 
 

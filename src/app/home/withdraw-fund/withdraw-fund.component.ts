@@ -26,6 +26,7 @@ export class WithdrawFundComponent {
   calculatedCoins: number = 0;
     data2: any;
   data1: any;
+
   constructor(
     private api: AuthUserService,
     private fb: FormBuilder,
@@ -63,16 +64,27 @@ export class WithdrawFundComponent {
   }
 
 
-  calculateNetAmount() {
-    const amount = this.form.value.amount || 0;
-    if (amount >= 10) {
-      this.charges = amount * 0.1; // 10% charge
-      this.netAmount = amount - this.charges;
+calculateNetAmount() {
+  const amount = parseFloat(this.form.value.amount) || 0;
+
+  if (amount >= 5) {
+    this.charges = amount * 0.10;        // 10% deduction
+    this.netAmount = amount - this.charges;
+
+    // Convert net amount to Yohan coins
+    if (this.coinValue > 0) {
+      this.calculatedCoins = this.netAmount / this.coinValue;
     } else {
-      this.charges = 0;
-      this.netAmount = 0;
+      this.calculatedCoins = 0;
     }
+
+  } else {
+    this.charges = 0;
+    this.netAmount = 0;
+    this.calculatedCoins = 0;
   }
+}
+
 
     YohanPriceData() {
     this.api.YohanPrice().subscribe({

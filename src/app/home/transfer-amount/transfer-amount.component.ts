@@ -21,7 +21,7 @@ export class TransferAmountComponent {
   errorMessage: string = '';
   form: FormGroup;
   tdata: any = [];
-
+deductedAmount: number = 0;
   // QR Scanner Config
   qrCodeValue: string = '';
   allowedFormats = [BarcodeFormat.QR_CODE];
@@ -63,6 +63,22 @@ loadingModal: boolean = false;
     this.getProfiledata();
     this.loadTransferTransactions();
   }
+
+  onAmountChange() {
+  const amount = Number(this.form.get('amount')?.value);
+  const wtype = this.form.get('wallettype')?.value;
+
+  if (wtype === 'ewallet' && amount > 0) {
+    this.deductedAmount = amount - (amount * 0.10); // 10% deduction
+  } else {
+    this.deductedAmount = 0;
+  }
+}
+
+onWalletTypeChange() {
+  this.onAmountChange(); // recalc when changing type
+}
+
 
   /** Load Profile Data */
   getProfiledata() {
