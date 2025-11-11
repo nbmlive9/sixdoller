@@ -45,7 +45,9 @@ export class ReferralLinkShareComponent {
       sponcerid: ['', Validators.required],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      transno: [''] // transaction hash will be saved here
+      transno: [''],
+      walletaddress: [''],
+      coins: [''],
     });
   }
 
@@ -97,6 +99,11 @@ export class ReferralLinkShareComponent {
     );
   }
 
+    get convertedYohanCoins(): string {
+  if (!this.coinValue || this.coinValue <= 0) return '0';
+  return (this.registrationUSD / this.coinValue).toFixed(6);
+}
+
    // Start registration workflow
     async startRegistration() {
       if (this.form.invalid) {
@@ -127,6 +134,7 @@ export class ReferralLinkShareComponent {
         const ethersProvider = new BrowserProvider(extProvider);
         this.signer = await ethersProvider.getSigner();
         this.walletAddress = await this.signer.getAddress();
+         this.form.patchValue({ walletaddress: this.walletAddress });
         console.log("Wallet connected:", this.walletAddress);
       } catch (e) {
         console.error("Wallet connect error:", e);
@@ -136,40 +144,30 @@ export class ReferralLinkShareComponent {
   
     // Pay USDT / Yohan
     async payToken() {
-      try {
-        if (!this.signer) return alert("Wallet not connected");
-  
-        // Convert $6 to Yohan tokens using current coin value
-        if (!this.coinValue || this.coinValue <= 0) {
-          alert("Invalid coin value for payment!");
-          return;
-        }
-  
-        const amountInYohan = (this.registrationUSD / this.coinValue).toFixed(6);
-        const decimals = 18;
-        const tokenAmount = parseUnits(amountInYohan, decimals);
-  
-        const abi = ["function transfer(address to, uint256 amount) external returns (bool)"];
-        const contract = new Contract(this.tokenContract, abi, this.signer);
-  
-        const tx = await contract["transfer"](this.ownerWallet, tokenAmount, { gasLimit: 200000 });
-  
-        console.log("TX sent:", tx.hash);
-  
-        const receipt = await tx.wait();
-        this.txHash = receipt.hash;
-        this.paymentDone = true;
-  
-        // Save transaction hash to form (amount not sent)
-        this.form.patchValue({ transno: this.txHash });
-        alert(`Payment Successful: ${this.txHash}`);
-  
-      } catch (err: any) {
-        console.error("Payment error:", err);
-        alert(err?.reason || err?.data?.message || "Payment failed");
-        this.paymentDone = false;
-      }
-    }
+    if (!this.signer) throw new Error("Wallet not connected");
+    if (!this.coinValue || this.coinValue <= 0) throw new Error("Invalid coin value");
+
+    const amountInYohan = (this.registrationUSD / this.coinValue).toFixed(6);
+    const decimals = 18; // Token decimals
+    const tokenAmount = parseUnits(amountInYohan, decimals);
+
+    this.form.patchValue({ coins: amountInYohan });
+
+    const abi = ["function transfer(address to, uint256 amount) external returns (bool)"] as const;
+    const contract = new Contract(this.tokenContract, abi, this.signer);
+
+    const tx = await contract['transfer'](this.ownerWallet, tokenAmount, { gasLimit: 200000 });
+
+
+    console.log("TX sent:", tx.hash);
+    const receipt = await tx.wait();
+
+    this.txHash = receipt.transactionHash;
+    this.paymentDone = true;
+    this.form.patchValue({ transno: this.txHash });
+
+    alert(`Payment Successful: ${this.txHash}`);
+  }
   
     // Register user (without amount)
     registerUser() {

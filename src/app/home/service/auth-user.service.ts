@@ -24,6 +24,7 @@ HomeRegistration(value: any){
     email: string;
     sponcerid: string;
     name: string;
+    coins:number;
   }) {
     const token1 = this.token.getToken();
     const httpOptions = {
@@ -38,6 +39,7 @@ HomeRegistration(value: any){
         "email":value.email, 
         "sponcerid":value.sponcerid, 
         "name":value.name, 
+        "coins":value.coins, 
       },
       httpOptions
     );

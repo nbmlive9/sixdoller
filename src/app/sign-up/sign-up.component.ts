@@ -22,16 +22,31 @@ export class SignUpComponent implements OnInit, AfterViewInit {
  errorModal: any;
   pfdata: any;
 loading: boolean = false;
+  ypdata: any;
+    coinValue = 0;
   constructor(private fb: FormBuilder, private api: AuthUserService, private router: Router) {
     this.form = this.fb.group({
       sponcerid: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      coins: [''],
     });
   }
 
   ngOnInit() {
   this.getProfiledata();
+      this.YohanPriceData();
+  }
+
+    YohanPriceData() {
+    this.api.YohanPrice().subscribe({
+      next: (res: any) => {
+        this.ypdata = res.data;
+        this.coinValue = Number(this.ypdata.coinvalue);
+        console.log("Coin Value:", this.coinValue);
+      },
+      error: (err) => console.error(err)
+    });
   }
 
     getProfiledata(){
@@ -72,30 +87,38 @@ loading: boolean = false;
     );
   }
 
-  // 🔹 Submit form
- userSubmit() {
+  
+userSubmit() {
   if (this.form.invalid) {
     this.form.markAllAsTouched();
     return;
   }
 
-  this.loading = true;  // Start loader
-  this.udata = null;    // Reset data
+  this.loading = true; // Start loader
+  this.udata = null;   // Reset data
 
-  this.successModal.show();  // ✅ Show modal immediately
+  // ✅ Convert $6 into Yohan Coin based on current coinValue
+  const usdAmount = 6;
+  const yohanCoinAmount = (usdAmount / this.coinValue).toFixed(6); // keep precision
+
+  // ✅ Update coins field in the form
+  this.form.patchValue({ coins: yohanCoinAmount });
+
+  console.log("Converted Coin Value:", yohanCoinAmount);
+
+  this.successModal.show(); // Show modal immediately
 
   const val = this.form.value;
 
   this.api.UserRegistration(val).subscribe(
     (res: any) => {
-
       if (res?.adddata) {
-        this.udata = res.adddata;   // ✅ Assign data
+        this.udata = res.adddata; // Assign data
       } else {
         this.showErrorModal("Registration failed. Please try again.");
       }
 
-      this.loading = false;  // ✅ Stop loader
+      this.loading = false;
       this.form.reset();
     },
     (err: any) => {
@@ -104,6 +127,7 @@ loading: boolean = false;
     }
   );
 }
+
 
 refreshPage() {
   this.successModal.hide();

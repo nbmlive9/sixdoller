@@ -1,6 +1,7 @@
 <!-- Withdraw Form (unchanged) -->
 <div class="buy-crypto-group">
   <h5>Withdraw Fund</h5>
+    <h5 class="text-warning text-center">{{data2?.walletamount | currency:'USD':true:'1.2-2'}}</h5>
   <form [formGroup]="form" (ngSubmit)="Withdraw()">
   <div class="row">
     <!-- Amount Input -->
