@@ -3,8 +3,9 @@ import { Injectable } from '@angular/core';
 import { TokenStorageService } from './token-storage.service';
 import { Observable } from 'rxjs';
 
-//const AUTH_API ='https://orgaliv.store/SHNKM6/SHNKM6/User/'
+
 const AUTH_API ='https://yohanrise.com/SHNKM6/SHNKM6/User/'
+
 
 @Injectable({
   providedIn: 'root'

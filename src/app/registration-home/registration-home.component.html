@@ -9,16 +9,6 @@
     <!-- Error message -->
     <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
 
-    <!-- ✅ Connect Wallet -->
-    <div class="d-flex justify-content-end mb-3">
-      <w3m-button></w3m-button>
-    </div>
-
-    <!-- Display connected wallet -->
-    <p *ngIf="walletAddress" class="text-info mt-2">
-      Connected Wallet: {{ walletAddress }}
-    </p>
-
     <form [formGroup]="form">
       <div class="form-group">
         <label>Sponsor ID *</label>
@@ -38,10 +28,16 @@
       </div>
 
         <input type="text" class="form-control" value="{{this.walletAddress}}" hidden>
-         <input type="text" class="form-control" value="{{convertedYohanCoins}}" hidden>
+        <input type="text" class="form-control" [value]="convertedYohanCoins" hidden>
+
+<div class="form-group mt-2">
+  <label>Yohan Coins</label>
+  <input type="text" class="form-control" [value]="convertedYohanCoins" disabled>
+</div>
+
     
 
-      <button class="btn-login w-100 mt-3" type="button" (click)="startRegistration()">
+      <button class="btn-login w-100 mt-3" type="button" (click)="registerUser()">
         Register & Deposit
       </button>
     </form>
