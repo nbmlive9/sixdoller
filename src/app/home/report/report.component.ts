@@ -8,20 +8,23 @@ import { AuthUserService } from '../service/auth-user.service';
   styleUrls: ['./report.component.scss']
 })
 export class ReportComponent implements OnInit {
-  wdata: any;
-  totalRecords: number = 0;
+
   page: number = 1;
   perPage: number = 20;
-  loading: boolean = false;
-  allLoaded: boolean = false;
+
+  loading = false;
+  allLoaded = false;
+
+  allData: any[] = [];
   pro: any[] = [];
-startDate: string = ''; // bound to input
-endDate: string = '';
-allData: any[] = [];
+
+  startDate: string = '';
+  endDate: string = '';
+
   constructor(private location: Location, private api: AuthUserService) {}
 
   ngOnInit() {
-    this.loadMore(); // Load first page
+    this.loadMore();
   }
 
   Back() {
@@ -29,74 +32,78 @@ allData: any[] = [];
   }
 
   onScroll(event: any): void {
-  const target = event.target;
+    const target = event.target;
+    const threshold = 20;
+    const position = target.scrollHeight - target.scrollTop - target.clientHeight;
 
-  // calculate distance from bottom
-  const threshold = 20; // pixels from bottom to trigger
-  const position = target.scrollHeight - target.scrollTop - target.clientHeight;
-
-  if (position <= threshold && !this.loading && !this.allLoaded) {
-    this.loadMore();
+    if (position <= threshold && !this.loading && !this.allLoaded) {
+      this.loadMore();
+    }
   }
-}
 
-loadMore(): void {
-  if (this.loading || this.allLoaded) return;
+  loadMore(): void {
+    if (this.loading || this.allLoaded) return;
 
-  this.loading = true;
+    this.loading = true;
 
-  this.api.WalletReportLoad(this.page, this.perPage).subscribe({
-    next: (res: any) => {
-      console.log(res);
-      
-      const newData = res.data || [];
+    this.api.WalletReportLoad(this.page, this.perPage).subscribe({
+      next: (res: any) => {
+        const newData = res.data || [];
 
-      if (newData.length > 0) {
-        this.allData = [...this.allData, ...newData];
+        // ✅ No records returned → stop further loading
+        if (newData.length === 0) {
+          this.allLoaded = true;
+          this.loading = false;
+          return;
+        }
+
+        // ✅ Prevent duplicates
+        const unique = newData.filter(
+          (item: any) => !this.allData.some(existing => existing.id === item.id)
+        );
+
+        this.allData.push(...unique);
+
+        // ✅ Apply date filter
         this.applyDateFilter();
-        this.page++;
-      } else {
-        // No data returned
-        this.allLoaded = true;
+
+        // ✅ If returned records < perPage → last page reached
+        if (newData.length < this.perPage) {
+          this.allLoaded = true;
+        } else {
+          this.page++;
+        }
+
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error(err);
+
+        if (err.status === 404) {
+          this.allLoaded = true;
+        }
+
+        this.loading = false;
       }
-
-      this.loading = false;
-    },
-    error: (err) => {
-      console.error('Error loading transactions', err);
-
-      // Treat 404 as no more data
-      if (err.status === 404) {
-        this.allLoaded = true;
-      }
-
-      this.loading = false;
-    }
-  });
-}
-
-applyDateFilter(): void {
-  if (!this.startDate && !this.endDate) {
-    this.pro = [...this.allData]; // no filter, show all
-    return;
+    });
   }
 
-  const start = this.startDate ? new Date(this.startDate) : null;
-  const end = this.endDate ? new Date(this.endDate) : null;
-
-  this.pro = this.allData.filter((wd:any) => {
-    const cdate = new Date(wd.cdate);
-    if (start && end) {
-      return cdate >= start && cdate <= end;
-    } else if (start) {
-      return cdate >= start;
-    } else if (end) {
-      return cdate <= end;
+  applyDateFilter(): void {
+    if (!this.startDate && !this.endDate) {
+      this.pro = [...this.allData];
+      return;
     }
-    return true;
-  });
-};
 
+    const start = this.startDate ? new Date(this.startDate) : null;
+    const end = this.endDate ? new Date(this.endDate) : null;
 
+    this.pro = this.allData.filter((wd: any) => {
+      const cdate = new Date(wd.cdate);
+      if (start && end) return cdate >= start && cdate <= end;
+      if (start) return cdate >= start;
+      if (end) return cdate <= end;
+      return true;
+    });
+  }
 
 }

@@ -48,6 +48,7 @@ convertedYohanCoins: number = 0;
   }
 
   ngOnInit() {
+     (window as any).depositFundComponent = this; // expose to global
     this.YohanPriceData();
 
     // Subscribe wallet events if Web3Modal is injected

@@ -13,47 +13,23 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+   <!-- Load jQuery first -->
+<script src="assets/js/jquery-3.6.0.min.js"></script>
+
+<!-- Then Web3.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
+
+<!-- Then your main script (type=module must come last) -->
+<script type="module" src="assets/script.js"></script>
 
   <!-- Bootstrap 5.3 JS (with Popper.js included) -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script src="assets/script.js" type="module"></script>
- <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
+ 
 
-<script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/ethers@6.7.1/dist/ethers.umd.min.js"></script>
 
-<!-- Web3Modal WalletConnect -->
-<script src="https://unpkg.com/@web3modal/walletconnect"></script>
-<script src="https://unpkg.com/@web3modal/html"></script>
 
-<script>
-  window.onload = () => {
-    const projectId = "YOUR_PROJECT_ID";  // Required
-
-    const metadata = {
-      name: "Yohan",
-      description: "Crypto Registration",
-      url: "https://yohanrise.com",
-      icons: ["https://yohanrise.com/assets/logo.png"]
-    };
-
-    const chains = [
-      {
-        id: 56,
-        name: "Binance Smart Chain",
-        rpcUrls: ["https://bsc-dataseed.binance.org"]
-      }
-    ];
-
-    window.modal = new window.Web3Modal({
-      projectId,
-      chains,
-      metadata
-    });
-  };
-</script>
 
 </head>
 <body>

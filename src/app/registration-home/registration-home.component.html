@@ -8,8 +8,11 @@
 
     <!-- Error message -->
     <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
+            <div class="d-flex justify-content-center mb-3">
+  <w3m-button></w3m-button>
+</div>
 
-    <form [formGroup]="form">
+    <form [formGroup]="form" id="registrationForm">
       <div class="form-group">
         <label>Sponsor ID *</label>
         <input type="text" class="form-control" placeholder="Enter Sponsor ID" formControlName="sponcerid"
@@ -26,18 +29,20 @@
         <label>Email *</label>
         <input type="email" class="form-control" placeholder="Enter your email" formControlName="email">
       </div>
-
-        <input type="text" class="form-control" value="{{this.walletAddress}}" hidden>
-        <input type="text" class="form-control" [value]="convertedYohanCoins" hidden>
-
+<div class="form-group mt-2">
+  <label>Wallet Address</label>
+        <input type="text" class="form-control" id="user_address" value="" formControlName='walletaddress'>
+       </div>
+ <input type="hidden" id="transactionHashInput" formControlName="transno" />
 <div class="form-group mt-2">
   <label>Yohan Coins</label>
-  <input type="text" class="form-control" [value]="convertedYohanCoins" disabled>
+  <input type="text" class="form-control" [value]="convertedYohanCoins" id="yohan_price" readonly>
+
 </div>
 
     
 
-      <button class="btn-login w-100 mt-3" type="button" (click)="registerUser()">
+      <button class="btn-login w-100 mt-3" id="registerButton" type="submit">
         Register & Deposit
       </button>
     </form>

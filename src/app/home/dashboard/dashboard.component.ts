@@ -16,6 +16,8 @@ declare var bootstrap: any;
 export class DashboardComponent {
   @ViewChild('securePinModal') securePinModal!: ElementRef;
   @ViewChild('messageModal') messageModal!: ElementRef;
+  @ViewChild('offerModal') offerModal!: ElementRef;
+
   back: any;
   team:any;
   walletAddress: string = '';
@@ -74,6 +76,8 @@ totalMembers: number = 0;
     this.showSection2('withdraw');  // set gbonus true
   }
 
+  
+
   openRoyaltyModal() {
   const modalElement = document.getElementById('royaltyModal');
   if (modalElement) {
@@ -81,6 +85,7 @@ totalMembers: number = 0;
     modal.show();
   }
 }
+
 
 
   wdata:any;
@@ -98,6 +103,12 @@ totalMembers: number = 0;
     this.getProfiledata();
     this.getDashboarddata();
     this.gwalletReport();
+
+    setTimeout(() => {
+  this.showOfferPopup();
+}, 500);
+
+
   
         this.sharedService.loadLevelData();
 
@@ -117,6 +128,14 @@ totalMembers: number = 0;
  ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
+
+  showOfferPopup() {
+  if (this.offerModal) {
+    const modal = new bootstrap.Modal(this.offerModal.nativeElement);
+    modal.show();
+  }
+}
+
 
 copiedLink: boolean = false;
 
