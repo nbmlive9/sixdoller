@@ -101,3 +101,17 @@
 //   opacity: 0.4;
 //   pointer-events: none;
 // }
+
+.preloader {
+  background-color: #fff;
+  text-align: center;
+}
+
+.rotate-logo {
+  animation: rotate360 5s linear infinite;
+}
+
+@keyframes rotate360 {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

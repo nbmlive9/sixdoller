@@ -1,4 +1,12 @@
-<div class="register-container">
+<div
+  *ngIf="isLoading"
+  class="preloader d-flex flex-column align-items-center justify-content-center vh-100 bg-white"
+>
+  <img src="assets/logo.png" alt="Logo" width="120" height="120" class="mb-3 rotate-logo">
+  <h5 class="text-muted">Please wait for load page...</h5>
+</div>
+
+<div class="register-container" *ngIf="!isLoading">
   <div class="register-card">
 
     <div class="logo-area">
