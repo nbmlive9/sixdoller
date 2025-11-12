@@ -17,7 +17,7 @@ export class ReceivedWalletComponent {
 
    loadTransferTransactions() {
     this.api.RecivedWalletReport().subscribe((res: any) => {
-      console.log('recevd',res);
+      // console.log('recevd',res);
       this.data1 = res.data;
     });
   }

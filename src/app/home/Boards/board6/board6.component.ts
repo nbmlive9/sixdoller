@@ -24,7 +24,7 @@ export class Board6Component {
         getboardonedata() {
           this.api.GetBoard6().subscribe(
             (res: any) => {
-              console.log('board', res);
+              // console.log('board', res);
               this.bp = res.data?.[0]; // ✅ access safely
               if (this.bp) {
                 this.buildTree(); // ✅ now bp is defined

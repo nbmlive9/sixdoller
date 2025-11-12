@@ -14,9 +14,9 @@ export class SharedService {
 
   constructor(private api: AuthUserService) {}
 
-  loadLevelData() {
-    // Only fetch once
-    if (this.dataLoaded) return;
+  loadLevelData(forceReload: boolean = false) {
+    // Allow reload if forced (e.g. after new login)
+    if (this.dataLoaded && !forceReload) return;
 
     this.api.LevelMembersReport().subscribe((res: any) => {
       if (!res?.data) return;
@@ -38,7 +38,15 @@ export class SharedService {
       this.totalMembersSubject.next(totalMembers);
       this.levelCountsSubject.next(levelCounts);
 
-      this.dataLoaded = true; // mark loaded
+      this.dataLoaded = true;
     });
   }
+
+  /** ✅ Call this on logout to clear cached data **/
+  resetLevelData() {
+    this.totalMembersSubject.next(0);
+    this.levelCountsSubject.next([]);
+    this.dataLoaded = false;
+  }
 }
+

@@ -61,7 +61,7 @@ export class DepositComponent {
 
     getProfiledata(){
     this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res);
+      // console.log('profile',res);
       this.pfdata=res.data[0];
     })
   }
@@ -71,7 +71,7 @@ export class DepositComponent {
   DepositeData() {
     this.api.DepositeData().subscribe({
       next: (res: any) => {
-        console.log('dpreport',res);
+        // console.log('dpreport',res);
         this.ddata = res.data || [];
       },
       error: (err) => {
@@ -138,7 +138,7 @@ export class DepositComponent {
     note: this.form.value.note
   };
 
-  console.log('🛠 Payload:', payload);
+  // console.log('🛠 Payload:', payload);
 
   this.api.DepositWallet(payload).subscribe({
     next: (res: any) => {
@@ -180,7 +180,7 @@ export class DepositComponent {
 
   updateTxHashFromOutside(hash: string) {
     this.form.get('transno')?.setValue(hash);
-    console.log('Transaction Hash updated in form:', hash);
+    // console.log('Transaction Hash updated in form:', hash);
   }
 
 }

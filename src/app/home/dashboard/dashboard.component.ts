@@ -189,7 +189,7 @@ shareTo(platform: string) {
 
   getProfiledata(){
     this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res);
+      // console.log('profile',res);
       this.pfdata=res.data[0];
 
           if (!this.pfdata.securepin || this.pfdata.securepin.trim() === '') {

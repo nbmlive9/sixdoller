@@ -1218,6 +1218,12 @@ SecurePinUpdate(value: {
   );
 }
 
+forgotPassword(value: { regid: string; email: string }): Observable<any> {
+  return this.http.post(AUTH_API + 'Forget_password', {
+    regid: value.regid,
+    email: value.email
+  });
+}
 
  
 }

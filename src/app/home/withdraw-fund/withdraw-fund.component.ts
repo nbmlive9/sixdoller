@@ -51,14 +51,14 @@ export class WithdrawFundComponent {
 
   getProfileData() {
     this.api.Profile().subscribe((res: any) => {
-      console.log('profile',res);
+      // console.log('profile',res);
       this.data2 = res.data[0];
     });
   }
 
     GetDashboardData() {
     this.api.DashboardData().subscribe((res: any) => {
-      console.log('dash',res);
+      // console.log('dash',res);
       this.data1 = res.data;
     });
   }

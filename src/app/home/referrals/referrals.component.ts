@@ -20,7 +20,7 @@ export class ReferralsComponent {
     this.isLoading = true; // Start loading before API call
     this.api.Referrals().subscribe({
       next: (res: any) => {
-        console.log(res);
+        // console.log(res);
         this.data1 = res.data;
         this.isLoading = false; // Stop loading once data is received
       },

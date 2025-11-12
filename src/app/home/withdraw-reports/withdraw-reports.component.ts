@@ -22,7 +22,7 @@ export class WithdrawReportsComponent {
     this.loading = true;
     this.api.CompletedWithdraw().subscribe({
       next: (res: any) => {
-        console.log('completed', res);
+        // console.log('completed', res);
         this.data1 = res?.data || [];
         this.loading = false;
       },

@@ -18,7 +18,7 @@ export class BoardIncomeComponent {
   
      loadTransferTransactions() {
       this.api.BoardIncomeReport().subscribe((res: any) => {
-        console.log('recevd',res);
+        // console.log('recevd',res);
         this.data1 = res.data;
       });
     }

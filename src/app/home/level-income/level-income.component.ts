@@ -29,7 +29,7 @@ export class LevelIncomeComponent implements OnInit {
 
   loadLevelData() {
     this.api.LevelMembersReport().subscribe((res: any) => {
-      console.log('levelmem',res);
+      // console.log('levelmem',res);
       if (!res?.data) return;
 
       this.rawData = Array.isArray(res.data) ? res.data[0] : res.data;
