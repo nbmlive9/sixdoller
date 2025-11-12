@@ -153,12 +153,17 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
   // ------------------------------------------------------------------
   // 💾 Save registration to backend
   // ------------------------------------------------------------------
-  registerUser(): void {
-    const data = this.form.value;
-    console.log('📦 Registration Payload:', data);
+  // ------------------------------------------------------------------
+// 💾 Save registration to backend (with 2-second loader delay)
+// ------------------------------------------------------------------
+registerUser(): void {
+  const data = this.form.value;
+  console.log('📦 Registration Payload:', data);
 
-    this.loading = true;
+  this.loading = true; // show loader
 
+  // ⏳ Wait for 2 seconds before calling API
+  setTimeout(() => {
     this.api.HomeRegistration(data).subscribe({
       next: (res: any) => {
         this.loading = false;
@@ -172,7 +177,9 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
         alert('Registration failed. Please try again.');
       }
     });
-  }
+  }, 2000); // 2 seconds delay
+}
+
 
   // ------------------------------------------------------------------
   // 🔁 Refresh page after success
