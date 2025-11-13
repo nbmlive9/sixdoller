@@ -34,12 +34,12 @@ export class ReferralLinkShareComponent {
 convertedYohanCoins: number = 0;
   constructor(private fb: FormBuilder, private api: AuthUserService, private router: Router, private activeroute:ActivatedRoute) {
     this.form = this.fb.group({
-      sponcerid: ['', Validators.required],
+      sponcerid: ['',],
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
       transno: [''],
       walletaddress: [''],
-      coins: [''],
+      coins: [0],
     });
   }
 
@@ -69,34 +69,26 @@ convertedYohanCoins: number = 0;
 
   }
 
- ngAfterViewInit(): void {
-    // Initialize Bootstrap modal after view loaded
+
+  ngAfterViewInit(): void {
     this.successModal = new bootstrap.Modal(
       document.getElementById('successModal')
     );
   }
 
   ngOnDestroy(): void {
-    // Cleanup global reference when component destroyed
     delete (window as any).depositFundComponent;
   }
-
-  // ------------------------------------------------------------------
-  // 💰 Fetch current Yohan Coin price
-  // ------------------------------------------------------------------
+  // Fetch Yohan coin price
   YohanPriceData(): void {
     this.api.YohanPrice().subscribe({
       next: (res: any) => {
         this.ypdata = res.data;
         this.coinValue = Number(this.ypdata.coinvalue);
-
         if (this.coinValue > 0) {
           this.convertedYohanCoins = Number((this.registrationUSD / this.coinValue).toFixed(6));
           this.form.patchValue({ coins: this.convertedYohanCoins });
         }
-
-        console.log('🪙 Coin Value:', this.coinValue);
-        console.log('💰 Converted Yohan:', this.convertedYohanCoins);
       },
       error: (err) => console.error('Error fetching Yohan price:', err)
     });
@@ -139,48 +131,43 @@ convertedYohanCoins: number = 0;
   // 🚀 External JS triggers this after deposit complete
   // ------------------------------------------------------------------
   onSubmit(): void {
-    console.log('✅ onSubmit() triggered from JS');
-
-    if (!this.form.valid) {
-      alert('Please fill all required fields before submitting.');
-      return;
-    }
-
-    if (!this.form.value.transno) {
-      alert('Transaction hash missing!');
-      return;
-    }
-
-    this.registerUser();
+  if (!this.form.valid) {
+    alert('Please fill all required fields before submitting.');
+    return;
   }
+
+  if (!this.form.value.transno) {
+    alert('Welcome to Yohan!');
+    // Automatically reload the current page after showing the alert
+    setTimeout(() => {
+      window.location.reload(); // full page reload
+    }, 500);
+    return;
+  }
+
+  this.registerUser();
+}
 
   // ------------------------------------------------------------------
   // 💾 Save registration to backend
   // ------------------------------------------------------------------
   registerUser(): void {
     const data = this.form.value;
-    console.log('📦 Registration Payload:', data);
-
     this.loading = true;
-
     this.api.HomeRegistration(data).subscribe({
       next: (res: any) => {
         this.loading = false;
         this.udata = res.adddata;
-        console.log('✅ Registration Success:', res);
         this.successModal.show();
       },
       error: (err) => {
         this.loading = false;
-        console.error('❌ Registration failed:', err);
         alert('Registration failed. Please try again.');
       }
     });
   }
 
-  // ------------------------------------------------------------------
-  // 🔁 Refresh page after success
-  // ------------------------------------------------------------------
+  // Refresh page after success
   refreshPage(): void {
     this.successModal.hide();
     window.location.reload();

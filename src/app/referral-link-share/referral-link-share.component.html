@@ -10,10 +10,10 @@
       <h2>User Registration</h2>
     </div>
 
-    <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
+      <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
             <div class="d-flex justify-content-center mb-3">
-  <w3m-button></w3m-button>
-</div>
+         <w3m-button></w3m-button>
+    </div>
     <form [formGroup]="form">
       <!-- Sponsor ID -->
       <div class="form-group">
@@ -65,7 +65,7 @@
 </div>
 
       <!-- Submit Button -->
-       <button class="btn-login w-100 mt-3" id="registerButton" type="submit">
+       <button class="btn-login w-100 mt-3" id="registerButton" type="submit" (click)="onSubmit()">
         Register & Deposit
       </button>
     </form>
