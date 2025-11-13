@@ -98,37 +98,23 @@
       <div class="modal-body">
         <form [formGroup]="form" id="depositForm">
           <label for="amount" class="form-label">USDT Amount (BEP20 Only)</label>
-<input
-  id="amount"
-  class="form-control styled-input"
-  type="text"
-  formControlName="amount"
-  placeholder="Enter Amount"
-  min="1"
-  (input)="formatAmount($event)"  
-/>
+          <input id="amount"  class="form-control styled-input" type="text" formControlName="amount"
+            placeholder="Enter Amount" min="1" (input)="formatAmount($event)" />
 
-<div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
-  Amount is required and must be ≥ $1
-</div>
+          <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
+            Amount is required and must be ≥ $1
+          </div>
 
-<!-- ✅ Display calculated Yohan Coins -->
-<label for="yohan" class="form-label mt-3">Yohan Coins</label>
-<input id="yohan_amount" class="form-control" type="text"  [value]="calculatedCoins"  readonly />
+          <!-- ✅ Display calculated Yohan Coins -->
+          <label for="yohan" class="form-label mt-3">Yohan Coins</label>
+          <input id="yohan_amount" class="form-control" type="text" [value]="calculatedCoins" readonly />
+            <!-- Hidden input for transaction hash -->
+            <input type="hidden" id="transactionHashInput" formControlName="transno" />
+            <input type="hidden" formControlName="userid" value="{{pfdata?.regid}}" />
 
-
-  <!-- Hidden input for transaction hash -->
-  <input type="hidden" id="transactionHashInput" formControlName="transno" />
-
-          <button
-    class="btn btn-gradient w-100 mt-3"
-    id="depositButton"
-    type="submit"  
-  >
-  <i class="fas fa-paper-plane me-1"></i> Submit Deposit
- 
-   
-  </button> 
+                    <button class="btn btn-gradient w-100 mt-3" id="depositButton" type="submit"  >
+            <i class="fas fa-paper-plane me-1"></i> Submit Deposit
+            </button> 
         </form>
       </div>
     </div>

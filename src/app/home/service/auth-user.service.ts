@@ -415,7 +415,7 @@ GetPckagesById(id:any){
   );   
 }
 
-DepositWallet(value: { amount: string, note: string, transno: string }) {
+DepositWallet(value: { amount: string, note: string, transno: string, userid:string; }) {
    const token1 = this.token.getToken();
   const httpOptions = {
     headers: new HttpHeaders({
@@ -429,6 +429,7 @@ DepositWallet(value: { amount: string, note: string, transno: string }) {
       amount: value.amount,
       note: value.note,
       transno: value.transno,
+      userid:value.userid
     },
     httpOptions
   );

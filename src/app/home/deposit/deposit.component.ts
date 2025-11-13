@@ -48,7 +48,8 @@ export class DepositComponent {
     this.form = this.fb.group({
       amount: ['', [Validators.required, Validators.min(1)]],
       transno: [''],
-      note: ['Yohan Coins']
+      note: ['Yohan Coins'],
+      userid:[''],
     });
   }
 
@@ -135,7 +136,8 @@ export class DepositComponent {
   const payload = {
     amount: this.form.value.amount,
     transno: this.form.value.transno,
-    note: this.form.value.note
+    note: this.form.value.note,
+    userid: this.form.value.userid
   };
 
   console.log('🛠 Payload:', payload);

@@ -104,25 +104,13 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   // Form submit
-onSubmit(): void {
-  if (!this.form.valid) {
-    alert('Please fill all required fields before submitting.');
-    return;
+onSubmit(): void { 
+    if (!this.form.valid) { alert('Please fill all required fields before submitting.'); return; } 
+    if (!this.form.value.transno) {
+      alert('Welcome to Yohan!'); return; 
+    } 
+    this.registerUser(); 
   }
-
-  if (!this.form.value.transno) {
-    alert('Welcome to Yohan!');
-    // Automatically reload the current page after showing the alert
-    setTimeout(() => {
-      window.location.reload(); // full page reload
-    }, 500);
-    return;
-  }
-
-  this.registerUser();
-}
-
-
 
   // Register user
   registerUser(): void {
