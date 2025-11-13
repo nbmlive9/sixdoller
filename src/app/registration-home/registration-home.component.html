@@ -1,14 +1,5 @@
-<div
-  *ngIf="isLoading"
-  class="preloader d-flex flex-column align-items-center justify-content-center vh-100 bg-white"
->
-  <img src="assets/logo.png" alt="Logo" width="120" height="120" class="mb-3 rotate-logo">
-  <h5 class="text-muted">Please wait for load page...</h5>
-</div>
-
-<div class="register-container" *ngIf="!isLoading">
+<div class="register-container">
   <div class="register-card">
-
     <div class="logo-area">
       <img src="assets/logo.png" class="logo" />
       <h2>User Registration</h2>
@@ -16,9 +7,11 @@
 
     <!-- Error message -->
     <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
-            <div class="d-flex justify-content-center mb-3">
-  <w3m-button></w3m-button>
-</div>
+
+    <!-- Wallet connect button -->
+    <div class="d-flex justify-content-center mb-3">
+      <w3m-button></w3m-button>
+    </div>
 
     <form [formGroup]="form" id="registrationForm">
       <div class="form-group">
@@ -37,28 +30,29 @@
         <label>Email *</label>
         <input type="email" class="form-control" placeholder="Enter your email" formControlName="email">
       </div>
-<div class="form-group mt-2">
-  <label>Wallet Address</label>
-        <input type="text" class="form-control" id="user_address" value="" formControlName='walletaddress' readonly>
-       </div>
- <input type="hidden" id="transactionHashInput" formControlName="transno" />
-<div class="form-group mt-2">
-  <label>Yohan Coins</label>
-  <input type="text" class="form-control" [value]="convertedYohanCoins" id="yohan_price" readonly>
 
-</div>
+      <div class="form-group mt-2">
+        <label>Wallet Address</label>
+        <input type="text" class="form-control" id="user_address" formControlName="walletaddress" readonly>
+      </div>
 
-    
+      <input type="hidden" id="transactionHashInput" formControlName="transno" />
 
-      <button class="btn-login w-100 mt-3" id="registerButton" type="submit">
+      <div class="form-group mt-2">
+        <label>Yohan Coins</label>
+        <input type="text" class="form-control" [value]="convertedYohanCoins" id="yohan_price" readonly>
+      </div>
+
+      <button class="btn-login w-100 mt-3" id="registerButton" type="submit" (click)="onSubmit()">
         Register & Deposit
       </button>
     </form>
-        <div class="links mt-4 text-center">
-          <a routerLink="/login" class="forgot-link mt-2 d-block text-white">
-            <i class="fa fa-key"></i> Back to Login?
-          </a>
-        </div>
+
+    <div class="links mt-4 text-center">
+      <a routerLink="/login" class="forgot-link mt-2 d-block text-white">
+        <i class="fa fa-key"></i> Back to Login?
+      </a>
+    </div>
   </div>
 
   <!-- Success Modal -->

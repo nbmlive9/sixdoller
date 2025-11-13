@@ -28,8 +28,6 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
   registrationUSD = 6;
   loading: boolean = false;
 
-  isLoading: boolean = true; // ✅ Preloader visibility
-
   constructor(
     private fb: FormBuilder,
     private api: AuthUserService,
@@ -46,13 +44,11 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
   }
 
   ngOnInit(): void {
+    // Expose component to global JS if needed
     (window as any).depositFundComponent = this;
 
-    // ✅ Show preloader for 30 seconds
-    setTimeout(() => {
-      this.isLoading = false;
-      this.YohanPriceData();
-    }, 30000); // 30 seconds
+    // Load coin price
+    this.YohanPriceData();
   }
 
   ngAfterViewInit(): void {
@@ -65,6 +61,7 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
     delete (window as any).depositFundComponent;
   }
 
+  // Fetch Yohan coin price
   YohanPriceData(): void {
     this.api.YohanPrice().subscribe({
       next: (res: any) => {
@@ -79,6 +76,7 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
+  // Handle sponsor ID selection
   onRegisterIdSelect(event: any): void {
     const id = event.target.value;
     if (!id) return;
@@ -100,10 +98,12 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
+  // Receive TxHash from external JS
   updateTxHashFromOutside(txHash: string): void {
     this.form.patchValue({ transno: txHash });
   }
 
+  // Form submit
   onSubmit(): void {
     if (!this.form.valid) {
       alert('Please fill all required fields before submitting.');
@@ -116,6 +116,7 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
     this.registerUser();
   }
 
+  // Register user
   registerUser(): void {
     const data = this.form.value;
     this.loading = true;
@@ -132,6 +133,7 @@ export class RegistrationHomeComponent implements OnInit, AfterViewInit, OnDestr
     });
   }
 
+  // Refresh page after success
   refreshPage(): void {
     this.successModal.hide();
     window.location.reload();
