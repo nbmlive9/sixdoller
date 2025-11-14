@@ -2,6 +2,8 @@ import { Component, AfterViewInit } from '@angular/core';
 import { AuthUserService } from '../../service/auth-user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import * as XLSX from 'xlsx';
+import { saveAs } from 'file-saver';
 declare var bootstrap: any;
 
 @Component({
@@ -17,7 +19,8 @@ export class CpdashboardComponent implements AfterViewInit {
   successMessage: string = '';
   errorMessage: string = '';
   updateCoinModal: any;
-
+rdata: any;
+  rewardUsersModal: any;
   constructor(private api: AuthUserService, private fb: FormBuilder, private router: Router) {
     this.form = this.fb.group({
       coinvalue: ['', [Validators.required, Validators.min(0)]]
@@ -27,12 +30,61 @@ export class CpdashboardComponent implements AfterViewInit {
   ngOnInit() {
     this.yohanprice();
     this.cpDashboardData();
+     this.GetRewardData();
   }
+
+  GetRewardData() {
+    this.api.GetRewardCount().subscribe((res: any) => {
+      console.log('reward',res);
+      this.rdata = res.data;
+    });
+  }
+
+    openRewardModal() {
+    this.rewardUsersModal.show();
+  }
+
+ downloadRewardExcel() {
+  if (!this.rdata || this.rdata.length === 0) {
+    alert('No reward data available to download.');
+    return;
+  }
+
+  // Convert reward data to worksheet
+ const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+    this.rdata.map((user: any, index: number) => ({
+      'S.No': index + 1,
+      'Reg ID': user.regid,
+      'Name': user.name,
+      'Sponsor Count': user.sponcer_count,
+      'Team Count': user.team_count
+    }))
+  );
+
+  // Create a workbook and append the sheet
+  const workbook: XLSX.WorkBook = {
+    Sheets: { 'Reward Users': worksheet },
+    SheetNames: ['Reward Users']
+  };
+
+  // Generate Excel file
+  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
+
+  // Save file
+  const fileName = `Reward_Users_${new Date().toISOString().split('T')[0]}.xlsx`;
+  const blob: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
+  saveAs(blob, fileName);
+}
+
 
   ngAfterViewInit() {
     const modalEl = document.getElementById('updateCoinModal');
     if (modalEl) {
       this.updateCoinModal = new bootstrap.Modal(modalEl);
+    }
+     const rewardModalEl = document.getElementById('rewardUsersModal');
+    if (rewardModalEl) {
+      this.rewardUsersModal = new bootstrap.Modal(rewardModalEl);
     }
   }
 

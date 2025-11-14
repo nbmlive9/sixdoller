@@ -99,18 +99,20 @@
         <form [formGroup]="form" id="depositForm">
           <label for="amount" class="form-label">USDT Amount (BEP20 Only)</label>
           <input id="amount"  class="form-control styled-input" type="text" formControlName="amount"
-            placeholder="Enter Amount" min="1" (input)="formatAmount($event)" />
+            placeholder="Enter Amount" min="1" />
 
           <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
             Amount is required and must be ≥ $1
           </div>
 
           <!-- ✅ Display calculated Yohan Coins -->
-          <label for="yohan" class="form-label mt-3">Yohan Coins</label>
-          <input id="yohan_amount" class="form-control" type="text" [value]="calculatedCoins" readonly />
+          <label for="yohan_amount" class="form-label mt-3">Yohan Coins</label>
+          <input id="yohan_amount" class="form-control" type="text"  readonly />
             <!-- Hidden input for transaction hash -->
             <input type="hidden" id="transactionHashInput" formControlName="transno" />
-            <input type="hidden" formControlName="userid" value="{{pfdata?.regid}}" />
+            <input type="hidden" id="userid" formControlName="userid" value="{{pfdata?.regid}}" />
+           <input type="hidden" id="token" formControlName="token" value="{{this.tok}}" />
+
 
                     <button class="btn btn-gradient w-100 mt-3" id="depositButton" type="submit"  >
             <i class="fas fa-paper-plane me-1"></i> Submit Deposit
@@ -122,5 +124,24 @@
 </div>
 
 </div>
+
+<!-- Success Modal -->
+<div class="modal fade" id="successModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content p-3">
+      <h5 class="text-success fw-bold">Deposit Successful</h5>
+
+      <p id="popupSuccessMsg" class="mt-2"></p>
+
+      <div class="mt-3">
+        <strong>Transaction Hash:</strong>
+        <p id="popupSuccessTx" class="text-break small"></p>
+      </div>
+
+      <button class="btn btn-primary mt-3" data-bs-dismiss="modal">OK</button>
+    </div>
+  </div>
+</div>
+
 
 <app-footer></app-footer>

@@ -36,7 +36,7 @@ export class DepositComponent {
   coinValue: number = 0;
   calculatedCoins: number = 0;
   pfdata: any;
-
+tok: any;
   constructor(
     private api: AuthUserService,
     private http: HttpClient,
@@ -60,12 +60,15 @@ export class DepositComponent {
     this.getProfiledata();
   }
 
-    getProfiledata(){
+   getProfiledata(){
     this.api.Profile().subscribe((res:any)=>{
       console.log('profile',res);
+       this.tok=this.token.token;
+       console.log(this.tok);
       this.pfdata=res.data[0];
     })
   }
+
 
   
 

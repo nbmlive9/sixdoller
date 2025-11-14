@@ -9,6 +9,7 @@
     <h4>Coin Value: <span>{{ ypdata?.coinvalue }}</span></h4>
     <button class="btn btn-success" (click)="openUpdateModal()">Update</button>
   </section>
+  <button class="btn btn-warning" (click)="openRewardModal()">Reward Users</button>
  
   <!-- Wallet Cards -->
   <section class="stats-grid">
@@ -175,6 +176,54 @@
   </div>
 </div>
 
+
+<!-- Reward Users Modal -->
+<div class="modal fade" id="rewardUsersModal" tabindex="-1" aria-labelledby="rewardUsersModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content text-dark">
+      <div class="modal-header bg-gradient-warning">
+        <h5 class="modal-title" id="rewardUsersModalLabel">Reward Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+
+      <div class="modal-body">
+        <div *ngIf="rdata?.length > 0; else noData">
+            <button class="btn btn-success btn-sm" (click)="downloadRewardExcel()">
+              <i class="bi bi-file-earmark-excel"></i> Download Excel
+            </button>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover align-middle">
+              <thead class="table-dark">
+                <tr>
+                  <th>#</th>
+                  <th>Reg ID</th>
+                  <th>Name</th>
+                  <th>Sponsor Count</th>
+                  <th>Team Count</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let user of rdata; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ user.regid }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.sponcer_count }}</td>
+                  <td>{{ user.team_count }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <ng-template #noData>
+          <div class="text-center text-muted py-4">
+            No reward users found.
+          </div>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Footer Navigation -->
 <app-footer></app-footer>
