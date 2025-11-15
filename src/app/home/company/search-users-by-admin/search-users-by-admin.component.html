@@ -36,7 +36,7 @@
             <tr *ngFor="let row of userData; let i=index;">
                   <td>{{ i+1 }}</td>
               <td>{{ row.regid }}</td>
-              <td>{{ row.password }}</td>
+              <td>{{ row.password }} <br><small>PIN: {{row.rpin}}</small></td>
               <td>{{ row.name }}</td>
               <td>{{ row.email }}</td>
               <td>{{ row.actwallet | currency:'USD':'symbol':'1.2-2' }}</td>
