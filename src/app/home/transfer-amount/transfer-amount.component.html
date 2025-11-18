@@ -23,9 +23,9 @@
           </div>
 
           <div class="col-md-6 mb-2">
-            <input type="number" class="form-control" min="5" placeholder="Amount ($)" formControlName="amount" (keyup)="onAmountChange()">
+            <input type="number" class="form-control" min="2" placeholder="Amount ($)" formControlName="amount" (keyup)="onAmountChange()">
               <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger">
-          Minimum Transfer Amount is $5
+          Minimum Transfer Amount is $2
         </div>
               <!-- <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger small">
                 Amount is required 

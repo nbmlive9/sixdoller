@@ -68,22 +68,14 @@ calculateNetAmount() {
   const amount = parseFloat(this.form.value.amount) || 0;
 
   if (amount >= 5) {
-    this.charges = amount * 0.10;        // 10% deduction
-    this.netAmount = amount - this.charges;
-
-    // Convert net amount to Yohan coins
-    if (this.coinValue > 0) {
-      this.calculatedCoins = this.netAmount / this.coinValue;
-    } else {
-      this.calculatedCoins = 0;
-    }
-
+    this.charges = amount * 0.10;        // 10% charge
+    this.netAmount = amount - this.charges;  // only for display
   } else {
     this.charges = 0;
     this.netAmount = 0;
-    this.calculatedCoins = 0;
   }
 }
+
 
 
     YohanPriceData() {
@@ -140,35 +132,39 @@ calculateNetAmount() {
     this.modalRef.show();
 
     this.api.withdrawToBlockchain(payload).subscribe({
-      next: (res: any) => {
-        this.loadingModal = false;
+    next: (res: any) => {
+  console.log("Withdraw Response:", res);
+  this.loadingModal = false;
 
-        if (res.success) {
-          this.successMessage = `Withdraw Successful! Tx Hash: ${res.transactionHash}`;
-          this.errorMessage = '';
-          this.form.reset();
-          this.charges = 0;
-          this.netAmount = 0;
+  const isSuccess =
+    res.status === "success" ||     // your backend format
+    res.success === true ||
+    res.message?.toLowerCase().includes("success");
 
-          setTimeout(() => {
-            this.modalRef.hide();
-            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/withdrawreport']);
-            });
-          }, 1500);
+  if (isSuccess) {
+    this.successMessage = `Withdraw Successfully...`;
+    this.errorMessage = '';
+    this.form.reset();
+    this.charges = 0;
+    this.netAmount = 0;
 
-        } else if (res.error && res.error.toLowerCase().includes('approval')) {
-          this.errorMessage = 'Your withdrawal request is pending admin approval.';
-          this.successMessage = '';
-        } else {
-          this.errorMessage = res.error || 'Withdraw failed.';
-          this.successMessage = '';
-        }
-      },
+    setTimeout(() => {
+      this.modalRef.hide();
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/withdrawreport']);
+      });
+    }, 1500);
+
+  } else {
+    this.errorMessage = res.error || res.message || 'Withdraw failed.';
+    this.successMessage = '';
+  }
+},
+
       error: (err) => {
         console.error(err);
         this.loadingModal = false;
-        this.errorMessage = 'Insufficient Funds';
+        this.errorMessage = 'MINIMUM WIthdraw ABOVE $5 or Insufficient Funds';
         this.successMessage = '';
       }
     });

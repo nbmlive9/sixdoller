@@ -42,7 +42,7 @@ loadingModal: boolean = false;
   ) {
     this.form = this.fb.group({
       regid: new FormControl('', [Validators.required]),
-      amount: new FormControl('', [Validators.required, Validators.min(5)]),
+      amount: new FormControl('', [Validators.required, Validators.min(2)]),
       wallettype: new FormControl('', [Validators.required]),
       remark:new FormControl('User Transfer'),
       securepin: ['', [Validators.required, Validators.pattern(/^\d{4}$/)]],

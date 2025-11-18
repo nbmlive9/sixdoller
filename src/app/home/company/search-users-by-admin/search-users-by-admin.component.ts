@@ -80,7 +80,7 @@ noData: any;
         // console.log("updateprofile:", res);
         if (res.status === 1) {
             this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-            this.router.navigate(['/cpdash']);
+            this.router.navigate(['/allusers']);
           });
           this.pffdata = { ...this.pffdata, ...payload };  
           this.isEdit = false;  
