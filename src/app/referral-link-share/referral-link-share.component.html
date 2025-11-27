@@ -1,109 +1,97 @@
 <div class="register-container">
-  <div
-    class="register-card animate__animated animate__fadeInDown"
-    [class.error-shake]="errorMessage"
-  >
-
-
+  <div class="register-card">
     <div class="logo-area">
       <img src="assets/logo.png" class="logo" />
       <h2>User Registration</h2>
     </div>
 
-      <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
-            <div class="d-flex justify-content-center mb-3">
-         <w3m-button></w3m-button>
+    <!-- Error message -->
+    <p class="text-warning text-center" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+    <!-- Wallet connect button -->
+    <div class="d-flex justify-content-center mb-3">
+      <w3m-button></w3m-button>
     </div>
-    <form [formGroup]="form">
-      <!-- Sponsor ID -->
-      <div class="form-group">
+
+    <form [formGroup]="form" id="registrationForm">
+      
+     <div class="form-group">
         <label>Sponsor ID *</label>
         <input type="text" class="form-control" placeholder="Enter Sponsor ID"
-          formControlName="sponcerid" readonly />
+          formControlName="sponcerid" id="sponcerid" readonly />
         <small class="text-info">{{data1?.name}}</small>
       </div>
-
-      <!-- Name -->
       <div class="form-group">
         <label>Name *</label>
-        <input
-          type="text"
-          class="form-control"
-          placeholder="Enter your name"
-          formControlName="name"
-          [ngClass]="{ 'is-invalid': form.get('name')?.touched && form.get('name')?.invalid }"
-        />
-        <div class="invalid-feedback text-white" *ngIf="form.get('name')?.touched && form.get('name')?.invalid">
-          Name is required
-        </div>
+        <input type="text" id="name" class="form-control" placeholder="Enter your name" formControlName="name">
       </div>
 
-      <!-- Email -->
       <div class="form-group">
         <label>Email *</label>
-        <input
-          type="email"
-          class="form-control"
-          placeholder="Enter your email"
-          formControlName="email"
-          [ngClass]="{ 'is-invalid': form.get('email')?.touched && form.get('email')?.invalid }"
-        />
-        <div class="invalid-feedback text-white" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
-          Enter valid email
-        </div>
+        <input type="email" id="email" class="form-control" placeholder="Enter your email" formControlName="email">
       </div>
 
-<div class="form-group mt-2">
-  <label>Wallet Address</label>
-        <input type="text" class="form-control" id="user_address" value="" formControlName='walletaddress' readonly>
-       </div>
- <input type="hidden" id="transactionHashInput" formControlName="transno" />
-<div class="form-group mt-2">
-  <label>Yohan Coins</label>
-  <input type="text" class="form-control" [value]="convertedYohanCoins" id="yohan_price" readonly>
+      <div class="form-group mt-2">
+        <label>Wallet Address</label>
+        <input type="text" class="form-control" id="user_address" formControlName="walletaddress" readonly>
+      </div>
 
-</div>
+      <input type="hidden" id="transactionHashInput" formControlName="transno" />
 
-      <!-- Submit Button -->
-       <button class="btn-login w-100 mt-3" id="registerButton" type="submit" (click)="onSubmit()">
+      <div class="form-group mt-2">
+        <label>Yohan Coins</label>
+        <input type="text" class="form-control" [value]="convertedYohanCoins" id="yohan_price" readonly>
+      </div>
+
+      <button class="btn-login w-100 mt-3" id="registerButton" type="submit" (click)="onSubmit()">
         Register & Deposit
       </button>
     </form>
+
     <div class="links mt-4 text-center">
-          <a routerLink="/login" class="forgot-link mt-2 d-block text-white">
-            <i class="fa fa-key"></i> Back to Login?
-          </a>
-        </div>
-  </div>
-
-       
-
-</div>
-
-<!-- ✅ Success Modal -->
-<div class="modal fade" id="successModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content text-center p-3">
-      <!-- Loader -->
-      <div *ngIf="loading">
-        <h4 class="text-success">Processing Registration...</h4>
-        <div class="spinner-border text-success my-3"></div>
-        <p>Please wait...</p>
-      </div>
-
-      <!-- After Success -->
-      <div *ngIf="!loading && udata">
-        <h4 class="text-success">Registration Successful 🎉</h4>
-
-        <p><strong>Reg ID:</strong> {{ udata.regid }}</p>
-        <p><strong>Password:</strong> {{ udata.password }}</p>
-        <p><strong>Name:</strong> {{ udata.name }}</p>
-        <p><strong>Email:</strong> {{ udata.email }}</p>
-        <p><strong>Sponsor ID:</strong> {{ udata.sponcerid }}</p>
-        <p><strong>Sponsor Name:</strong> {{ udata.sname }}</p>
-        <p><strong><a href="https://yohanrise.com/" target="_blank">www.yohanrise.com</a></strong></p>
-        <button class="btn btn-success mt-3" (click)="refreshPage()">OK</button>
-      </div>
+      <a routerLink="/login" class="forgot-link mt-2 d-block text-white">
+        <i class="fa fa-key"></i> Back to Login?
+      </a>
     </div>
   </div>
+
+<!-- ============================
+     REGISTRATION SUCCESS POPUP
+     ============================ -->
+<div class="modal fade" id="successModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3 text-center">
+
+      <h3 class="text-success fw-bold">🎉 Registration Successful</h3>
+      <p class="text-muted mb-2">Your account has been created successfully.</p>
+
+      <hr>
+
+      <!-- LOGIN DETAILS FROM json.data -->
+      <h5 class="text-primary mb-2">Login Credentials</h5>
+
+      <p><strong>Register ID :</strong> <span id="popupRegId"></span></p>
+      <p><strong>Password :</strong> <span id="popupPassword"></span></p>
+      <p><strong>Transaction Password :</strong> <span id="popupTxPassword"></span></p>
+
+      <hr>
+
+      <!-- USER DETAILS FROM json.adddata -->
+      <h5 class="text-primary mb-2">User Details</h5>
+
+      <p><strong>Name :</strong> <span id="popupNameJs"></span></p>
+      <p><strong>Email :</strong> <span id="popupEmailJs"></span></p>
+      <p><strong>Sponsor ID :</strong> <span id="popupSponsorId"></span></p>
+      <p><strong>Sponsor Name :</strong> <span id="popupSponsorName"></span></p>
+
+      <hr>
+
+      <button class="btn btn-success w-100 mt-2" data-bs-dismiss="modal">
+        OK
+      </button>
+
+    </div>
+  </div>
+</div>
+
 </div>

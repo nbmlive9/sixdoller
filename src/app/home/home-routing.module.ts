@@ -29,6 +29,7 @@ import { CpWithdrawsComponent } from './company/cp-withdraws/cp-withdraws.compon
 import { RoyaltyUsersDataComponent } from './company/royalty-users-data/royalty-users-data.component';
 import { RoyaltyIncomeComponent } from './royalty-income/royalty-income.component';
 import { AddMisslianceComponent } from './company/add-missliance/add-missliance.component';
+import { InsideCompanyRegistrationComponent } from './company/inside-company-registration/inside-company-registration.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -64,6 +65,7 @@ const routes: Routes = [
 { path: 'cpwithdraw', component: CpWithdrawsComponent }, 
 { path: 'cproyaltyusers', component: RoyaltyUsersDataComponent }, 
 { path: 'addexpensive', component: AddMisslianceComponent },
+{ path: 'cregister', component: InsideCompanyRegistrationComponent },
 
 ];
 

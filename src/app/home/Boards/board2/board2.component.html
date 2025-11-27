@@ -5,11 +5,11 @@
 
   <div class="tree-slider-wrapper" *ngIf="data?.length">
     <div class="tree-slider">
-      <ng-container *ngFor="let node of data">
+      <ng-container *ngFor="let boardTree of data">
         <div class="tree-node-container">
           <ng-template
             [ngTemplateOutlet]="recursiveNode"
-            [ngTemplateOutletContext]="{ $implicit: node }"
+            [ngTemplateOutletContext]="{ $implicit: boardTree }"
           ></ng-template>
         </div>
       </ng-container>

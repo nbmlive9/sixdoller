@@ -21,6 +21,33 @@ HomeRegistration(value: any){
       });
   }
 
+  InsideCompanyRegistration(value: {
+    email: string;
+    sponcerid: string;
+    name: string;
+    regid:string;
+    password:string;
+  }) {
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    };
+    return this.http.post(
+      AUTH_API + 'Register_Direct',
+      { 
+        "email":value.email, 
+        "sponcerid":value.sponcerid, 
+        "name":value.name, 
+        "regid":value.regid, 
+        "password":value.name,
+      },
+      httpOptions
+    );
+  }
+
   UserRegistration(value: {
     email: string;
     sponcerid: string;
@@ -950,6 +977,20 @@ SearchUserData(id:any){
   );   
 }
 
+SearchDatabyUser(qry:string) {
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  };
+  return this.http.get(
+    AUTH_API + `Admin/Total_Memebers?q=${qry}`,
+    httpOptions
+  );
+}
+
 cupdateprofile(id: string, value: {
    password: string;
   name: string;
@@ -986,6 +1027,20 @@ cupdateprofile(id: string, value: {
   };
 
   return this.http.get(`${AUTH_API}Total_users?page=${page}`, httpOptions);
+}
+
+TotalUsersNoPage(){
+  const token1 = this.token.getToken();
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token1
+    })
+  }
+  return this.http.get(
+    AUTH_API + 'Total_Memebers',
+    httpOptions
+  );
 }
 
 DepositeReports(){

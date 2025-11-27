@@ -50,6 +50,20 @@ noData: any;
       });
   }
 
+  //   onSearch() {
+  //   if (!this.searchInput.trim()) return;
+  //   this.api.SearchDatabyUser(this.searchInput).subscribe({
+  //       next: (res: any) => {
+  //         console.log('API Response:', res);
+  //         this.userData = res.data;
+  //       },
+  //       error: (err) => {
+  //         console.error('Error fetching user data:', err);
+  //         this.userData = null;
+  //       }
+  //     });
+  // }
+
    openProfile(item: any) {
     // console.log("item:",item.regid);
     this.userid=item.regid

@@ -13,8 +13,7 @@ interface TreeNode {
   styleUrls: ['./board1.component.scss']
 })
 export class Board1Component {
-  data: TreeNode[] = [];
-  bp: any;
+  data: TreeNode[] = []; // will hold trees for all boards
   errorMessage: string = '';
 
   constructor(private api: AuthUserService) {}
@@ -26,10 +25,8 @@ export class Board1Component {
   getboardonedata() {
     this.api.GetBoard1().subscribe(
       (res: any) => {
-        // console.log('board', res);
-        this.bp = res.data?.[0]; // ✅ access safely
-        if (this.bp) {
-          this.buildTree(); // ✅ now bp is defined
+        if (res.data?.length) {
+          this.data = res.data.map((board: any) => this.buildTree(board));
         } else {
           this.errorMessage = 'No data available for organization chart.';
         }
@@ -41,48 +38,41 @@ export class Board1Component {
     );
   }
 
-  buildTree() {
-  if (!this.bp) return;
+  buildTree(bp: any): TreeNode {
+    if (!bp) return { title: 'No Board', image: 'assets/logo.png', children: [] };
 
-  // Root node
-  const root: TreeNode = {
-    title: this.bp.boardid,
-    image: 'assets/gold.png',
-    children: []
-  };
+    const root: TreeNode = {
+      title: bp.boardid,
+      image: 'assets/gold.png',
+      children: []
+    };
 
-  // Helper to get user or placeholder
-  const getNode = (member?: any): TreeNode => ({
-    title: member ? member.regid : 'No User',
-     image: member?.regid ? 'assets/gold.png' : 'assets/logo.png',
-    children: []
-  });
+    // Helper for member node
+    const getNode = (member?: any): TreeNode => ({
+      title: member?.regid || 'No User',
+      image: member?.regid ? 'assets/gold.png' : 'assets/logo.png',
+      children: []
+    });
 
-  // Level 1: team1 (2 users max)
-  const team1Nodes: TreeNode[] = [];
-  for (let i = 0; i < 2; i++) {
-    const member = this.bp.team1[i];
-    const node: TreeNode = getNode(member);
+    // Level 1: team1
+    const team1Nodes: TreeNode[] = [];
+    for (let i = 0; i < 2; i++) {
+      const member = bp.team1[i];
+      const node: TreeNode = getNode(member);
 
-    // Level 2: assign team2 members under this team1 node
-    const team2UnderMember = this.bp.team2.filter(
-      (t2: any) => t2.refid === member?.regid
-    );
+      // Level 2: team2 under this team1 member
+      const team2UnderMember = bp.team2.filter((t2: any) => t2.refid === member?.regid);
+      node.children = [
+        getNode(team2UnderMember[0]),
+        getNode(team2UnderMember[1])
+      ];
 
-    // Each team1 node can have 2 children (from team2)
-    node.children = [
-      getNode(team2UnderMember[0]),
-      getNode(team2UnderMember[1])
-    ];
+      team1Nodes.push(node);
+    }
 
-    team1Nodes.push(node);
+    root.children = team1Nodes;
+    return root;
   }
-
-  root.children = team1Nodes;
-
-  this.data = [root];
-}
-
 
   getChildren(node: TreeNode): TreeNode[] {
     return node.children || [];
