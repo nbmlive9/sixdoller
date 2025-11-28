@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/user.service';
 import { AuthUserService } from '../../service/auth-user.service';
 
 declare var bootstrap: any;
@@ -12,20 +10,26 @@ declare var bootstrap: any;
   templateUrl: './inside-company-registration.component.html',
   styleUrls: ['./inside-company-registration.component.scss']
 })
-export class InsideCompanyRegistrationComponent {
+export class InsideCompanyRegistrationComponent implements AfterViewInit {
 
   form: FormGroup;
   loading = false;
   successMessage = '';
   errorMessage = '';
-  successTransferModal: any;
-loadingModal: boolean = false;
+
+  loadingModal = false;
+
   idselectmsg: string = '';
+  idselectmsg1: string = '';
   regname: any;
-    idselectmsg1: string = '';
   regname1: any;
-  errorMessage1='';
-  constructor(private fb: FormBuilder, private router:Router, private api:AuthUserService ) {
+
+  errorMessage1 = '';
+
+  @ViewChild('successRegModal') successRegModal!: ElementRef;
+  successTransferModal: any;
+
+  constructor(private fb: FormBuilder, private router: Router, private api: AuthUserService) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       sponcerid: ['', Validators.required],
@@ -35,7 +39,10 @@ loadingModal: boolean = false;
     });
   }
 
-   /** When user types or QR code fills regid */
+  ngAfterViewInit() {
+    this.successTransferModal = new bootstrap.Modal(this.successRegModal.nativeElement);
+  }
+
   onRegisterIdSelect(event: any) {
     const id = event.target.value;
     if (!id) return;
@@ -66,8 +73,8 @@ loadingModal: boolean = false;
     this.api.UserNameDisplay(id).subscribe(
       (res4: any) => {
         if (res4?.data?.length) {
-          this.regname1= res4.data[0];
-          this.idselectmsg = `User Name: ${this.regname1.name}`;
+          this.regname1 = res4.data[0];
+          this.idselectmsg1 = `User Name: ${this.regname1.name}`;
           this.errorMessage1 = '';
         } else {
           this.regname1 = null;
@@ -83,51 +90,50 @@ loadingModal: boolean = false;
   }
 
   submitRegistration() {
-      if (this.form.invalid) return;
 
-  const payload = {
-    email: this.form.value.email,
-    sponcerid: this.form.value.sponcerid,
-    name: this.form.value.name,
-    regid: this.form.value.regid,
-    password:this.form.value.password,
-    
-  };
+    if (this.form.invalid) return;
 
-  this.loadingModal = true;
-  this.successMessage = '';
-  this.errorMessage = '';
+    const payload = {
+      email: this.form.value.email,
+      sponcerid: this.form.value.sponcerid,
+      name: this.form.value.name,
+      regid: this.form.value.regid,
+      password: this.form.value.password,
+    };
 
-  this.successTransferModal.show(); // ✅ Open modal immediately
+    this.loadingModal = true;
+    this.successMessage = '';
+    this.errorMessage = '';
 
-  this.api.InsideCompanyRegistration(payload).subscribe(
-    (res: any) => {
-      this.loadingModal = false;
-      this.successMessage = 'Register successfully! ✅';
-      this.form.reset();
+    this.successTransferModal.show();
 
-      setTimeout(() => {
-        this.successTransferModal.hide();
-        this.reloadComponent();
-      }, 1500); // ✅ Auto close after 3 sec
-    },
-    (err: any) => {
-      this.loadingModal = false;
-      this.errorMessage = 'Register failed. Please try again. ❌';
+    this.api.InsideCompanyRegistration(payload).subscribe(
+      (res: any) => {
+        this.loadingModal = false;
+        this.successMessage = 'Register successfully! ✅';
+        this.form.reset();
 
-      setTimeout(() => {
-        this.successTransferModal.hide();
-        this.reloadComponent();
-      }, 1500);
-    }
-  );
+        setTimeout(() => {
+          this.successTransferModal.hide();
+          this.reloadComponent();
+        }, 1500);
+      },
+      (err: any) => {
+        this.loadingModal = false;
+        this.errorMessage = 'Register failed. Please try again. ❌';
+
+        setTimeout(() => {
+          this.successTransferModal.hide();
+          this.reloadComponent();
+        }, 1500);
+      }
+    );
   }
 
-    reloadComponent() {
-  this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-    this.router.navigate(['/cregister']);
-  });
-
-}
+  reloadComponent() {
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/cregister']);
+    });
+  }
 
 }

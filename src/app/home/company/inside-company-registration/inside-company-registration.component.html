@@ -1,15 +1,16 @@
 <div class="dashboard-container">
   <app-header></app-header>
+
   <section class="stats-grid">
     <div class="stat-card gradient-cyan w-100">
       <h5 class="text-center">Company Registration</h5>
 
-      <!-- Success / Error Messages -->
       <div *ngIf="successMessage" class="text-success text-center mb-2">{{ successMessage }}</div>
       <div *ngIf="errorMessage" class="text-danger text-center mb-2">{{ errorMessage }}</div>
 
       <form [formGroup]="form" novalidate (ngSubmit)="submitRegistration()">
         <div class="row">
+
           <div class="col-md-6 mb-2">
             <input type="text" class="form-control" placeholder="Name" formControlName="name">
             <div *ngIf="form.get('name')?.touched && form.get('name')?.invalid" class="text-danger small">
@@ -26,7 +27,8 @@
 
           <div class="col-md-6 mb-2">
             <input type="text" class="form-control" placeholder="Sponsor ID" formControlName="sponcerid" (keyup)="onRegisterIdSelect($event)">
-              <small class="text-white"> {{idselectmsg}} </small>
+            <small class="text-white">{{ idselectmsg }}</small>
+            <small class="text-white">{{ errorMessage }}</small>
             <div *ngIf="form.get('sponcerid')?.touched && form.get('sponcerid')?.invalid" class="text-danger small">
               Sponsor ID is required.
             </div>
@@ -34,7 +36,8 @@
 
           <div class="col-md-6 mb-2">
             <input type="text" class="form-control" placeholder="Registration ID" formControlName="regid" (keyup)="onRegisterIdSelect1($event)">
-              <small class="text-white"> {{idselectmsg1}} </small>
+            <small class="text-white">{{ idselectmsg1 }}</small>
+            <small class="text-white">{{ errorMessage1 }}</small>
             <div *ngIf="form.get('regid')?.touched && form.get('regid')?.invalid" class="text-danger small">
               Registration ID is required.
             </div>
@@ -46,6 +49,7 @@
               Password must be at least 4 characters.
             </div>
           </div>
+
         </div>
 
         <div class="text-center mt-3">
@@ -53,32 +57,28 @@
             {{ loading ? 'Processing...' : 'Register' }}
           </button>
         </div>
+
       </form>
     </div>
   </section>
-
 </div>
 
-
-<!-- ✅ Registration Modal -->
+<!-- Registration Modal -->
 <div class="modal fade" #successRegModal tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content text-center p-3">
 
-      <!-- Spinner -->
       <div *ngIf="loadingModal">
         <h4 class="text-success">Processing Registration...</h4>
         <div class="spinner-border text-success mt-2"></div>
         <p class="mt-2">Please wait...</p>
       </div>
 
-      <!-- Success -->
       <div *ngIf="!loadingModal && successMessage">
         <h4 class="text-success">✅ Success</h4>
         <p class="mt-2">{{ successMessage }}</p>
       </div>
 
-      <!-- Error -->
       <div *ngIf="!loadingModal && errorMessage">
         <h4 class="text-danger">❌ Failed</h4>
         <p class="mt-2">{{ errorMessage }}</p>

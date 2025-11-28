@@ -986,7 +986,7 @@ SearchDatabyUser(qry:string) {
     })
   };
   return this.http.get(
-    AUTH_API + `Admin/Total_Memebers?q=${qry}`,
+    AUTH_API + `Total_Memebers?q=${qry}`,
     httpOptions
   );
 }

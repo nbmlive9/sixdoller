@@ -1,7 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { AuthUserService } from '../../service/auth-user.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { debounceTime, Subject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-users-by-admin',
@@ -9,23 +10,19 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./search-users-by-admin.component.scss']
 })
 export class SearchUsersByAdminComponent {
-
    @ViewChild('successModal') successModal!: ElementRef;
-   searchInput: string = '';
+  searchInput: string = '';
   userData: any = null;
-  visible: boolean = false;
-  repd:any
-  pffdata: any;
+  noData: boolean = false;
+form:FormGroup;
   isEdit: boolean=true;
   userid: any;
-noData: any;
-    showDialog(row:any) {
-      this.repd=row;
-        this.visible = true;
-    }
-      form:FormGroup;
-  constructor(private api:AuthUserService, private router: Router, private fb:FormBuilder, private activeroute:ActivatedRoute) { 
-    this.form = this.fb.group({
+  pffdata: any;
+  loading: boolean = false;
+  private searchSubject = new Subject<string>();
+
+  constructor(private api: AuthUserService, private router: Router, private fb:FormBuilder) {
+        this.form = this.fb.group({
        password: [''],
       name: [''],
       email: [''],
@@ -34,25 +31,21 @@ noData: any;
   }
 
   ngOnInit(): void {
+    // Debounce 500ms before calling API
+    this.searchSubject.pipe(
+      debounceTime(500)
+    ).subscribe(value => {
+      this.callSearchAPI(value);
+    });
   }
 
-  onSearch() {
-    if (!this.searchInput.trim()) return;
-    this.api.SearchUserData(this.searchInput).subscribe({
-        next: (res: any) => {
-          console.log('API Response:', res);
-          this.userData = res.data;
-        },
-        error: (err) => {
-          console.error('Error fetching user data:', err);
-          this.userData = null;
-        }
-      });
+  onTyping(value: string) {
+    this.searchSubject.next(value);
   }
 
-  //   onSearch() {
+  // onSearch() {
   //   if (!this.searchInput.trim()) return;
-  //   this.api.SearchDatabyUser(this.searchInput).subscribe({
+  //   this.api.SearchUserData(this.searchInput).subscribe({
   //       next: (res: any) => {
   //         console.log('API Response:', res);
   //         this.userData = res.data;
@@ -64,7 +57,42 @@ noData: any;
   //     });
   // }
 
-   openProfile(item: any) {
+  callSearchAPI(value: string) {
+  if (!value.trim()) {
+    this.userData = null;
+    this.noData = false;
+    this.loading = false;
+    return;
+  }
+
+  this.loading = true;  // start loader
+
+  this.api.SearchDatabyUser(value).subscribe({
+    next: (res: any) => {
+
+      let allUsers = res.data || [];
+      const search = value.toLowerCase();
+
+      this.userData = allUsers.filter((u: any) =>
+        (u.regid && u.regid.toString().includes(search)) ||
+        (u.name && u.name.toLowerCase().includes(search)) ||
+        (u.email && u.email.toLowerCase().includes(search))
+      );
+
+      this.noData = this.userData.length === 0;
+      this.loading = false; // stop loader
+    },
+    error: () => {
+      this.userData = null;
+      this.noData = true;
+      this.loading = false; // stop loader
+    }
+  });
+}
+
+
+  
+  openProfile(item: any) {
     // console.log("item:",item.regid);
     this.userid=item.regid
     
@@ -106,5 +134,7 @@ noData: any;
       }
     });
   }
+
+
 
 }
