@@ -295,3 +295,113 @@
   }
 }
 
+
+/* ⭐ NEWS SCROLLER ⭐ */
+.news-scroller { background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); color: #fff; overflow-x: auto; white-space: nowrap; border-radius: 15px; }
+/* Outer box */
+.news-marquee {
+  width: 100%;
+  overflow-x: scroll;         /* ⭐ Manual scroll enabled */
+  overflow-y: hidden;
+  position: relative;
+  scroll-behavior: smooth;    /* Smooth drag */
+  cursor: grab;               /* Drag cursor */
+}
+
+/* Hide scrollbar but allow touch/mouse drag */
+.news-marquee::-webkit-scrollbar {
+  display: none;
+}
+
+.news-track {
+  display: flex;
+  gap: 15px;
+  width: max-content;
+  animation: marqueeScroll 25s linear infinite;
+}
+
+/* Pause auto-scroll if user touches/drags */
+.news-marquee:active .news-track,
+.news-marquee:hover .news-track {
+  animation-play-state: paused;
+}
+
+.news-item {
+  min-width: 260px;
+  max-width: 260px;
+  background: rgba(255,255,255,0.08);
+  border-radius: 12px;
+  padding: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  transition: transform .3s ease;
+}
+
+.news-item:hover {
+  transform: translateY(-4px);
+}
+
+.news-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #00e0ff;
+}
+
+.news-text {
+  font-size: 0.85rem;
+  color: #fff;
+  opacity: .9;
+}
+
+.news-date {
+  font-size: .75rem;
+  color: #ccc;
+}
+
+@keyframes marqueeScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.news-container {
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  color: #fff;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.fixed-title {
+  background: rgba(255, 255, 255, 0.10);
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  text-align: center;
+  color: #00e0ff;
+  font-weight: 600;
+}
+
+.scroll-box {
+  max-height: 90px; /* Visible height for scroll */
+  overflow-y: hidden;
+  position: relative;
+  font-size: 0.9rem;
+  padding-right: 10px;
+  white-space: normal;
+}
+
+.scroll-box p {
+  margin: 0;
+  animation: autoScroll 8s linear forwards;
+}
+
+/* Auto scroll upward */
+@keyframes autoScroll {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+/* Pause animation when hovering or manual scroll */
+.scroll-box:hover p {
+  animation-play-state: paused;
+}
+

@@ -55,8 +55,34 @@
   </div>
 </div>
 
+<div class="news-scroller card p-3 mt-2 shadow-sm rounded-3">
+  <h5 class="mb-3 text-center text-info">Latest News</h5>
+
+  <div class="news-container">
+
+    <!-- FIXED TITLE BOX -->
+    <div class="fixed-title">
+      <h6>{{ currentNews?.news_title }}</h6>
+    </div>
+
+    <!-- AUTO SCROLL CONTENT BOX -->
+    <div class="scroll-box" #scrollBox (scroll)="onManualScroll()">
+      <p>{{ currentNews?.news }}</p>
+    </div>
+
+  </div>
+</div>
+
+
 
    <button type="button" class="btn btn-success" *ngIf="pfdata?.regid === '115599'" routerLink="/cpdashboard">  Company Dashboard </button>
+
+   <section class="container">
+  <div *ngIf="pfdata?.regid === '899846'" >
+        <app-search-userdata-employee></app-search-userdata-employee>
+   </div>
+  </section>
+
   <!-- Wallet Cards -->
   <section class="stats-grid">
     <div class="stat-card gradient-blue">

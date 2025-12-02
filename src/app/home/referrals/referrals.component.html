@@ -16,13 +16,13 @@
           <div class="ref-icon"><i class="bi bi-person-fill"></i></div>
           <div class="ref-info">
             <div class="d-flex justify-content-between align-items-center">
-              <div class="ref-name">{{ row.name }}</div>
-              <div class="ref-id text-gradient">{{ row.regid }}</div>
+              <div class="ref-name">{{ row.directsponcer }} </div>
+              <div class="ref-id text-gradient">Sponsor Count: {{ row.sponcercount }} </div>
             </div>
             <div class="d-flex justify-content-between align-items-center mt-1">
-              <div class="ref-date">{{ row.cdate | date:'dd/MMM/yyyy' }}</div>
-              <span class="badge" [ngClass]="row.topupstatus=='1' ? 'badge-success' : 'badge-danger'">
-                {{ row.topupstatus=='0' ? 'Activated' : 'Activated' }}
+              <div class="ref-date">{{ row.name }} </div>
+              <span class="badge badge-success">
+                Team: {{ row.teamcount }}
               </span>
             </div>
           </div>

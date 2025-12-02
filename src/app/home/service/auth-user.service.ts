@@ -996,6 +996,7 @@ cupdateprofile(id: string, value: {
   name: string;
   email: string;
   wallet1: string;
+  securepin:string;
 }) {
   const token = this.token.getToken();
   const httpOptions = {
@@ -1011,7 +1012,8 @@ cupdateprofile(id: string, value: {
       password:value.password,
       name: value.name,
       email: value.email,
-      wallet1: value.wallet1
+      wallet1: value.wallet1,
+      securepin:value.securepin
     },
     httpOptions
   );
@@ -1291,6 +1293,75 @@ forgotPassword(value: { regid: string; email: string }): Observable<any> {
     email: value.email
   });
 }
+
+// News APi
+  addNews(value: {
+    news_title: string;
+    news: string;
+  }){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    };
+    return this.http.post(
+      AUTH_API + 'Add_News',
+      { "news_title":value.news_title,
+      "news":value.news,   
+     },
+       httpOptions 
+    );
+  }
+
+  GetNews(){
+    return this.http.get(
+      AUTH_API + 'Get_News',
+    );
+  }
+
+  // GetNews(){
+  //   const token1 = this.token.getToken();
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer ' + token1
+  //     })
+  //   }
+  //   return this.http.get(
+  //     AUTH_API + 'Get_News',
+  //     httpOptions
+  //   );
+  // }
+
+  DeleteNews(id:any){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Deletenews/'+id,
+      httpOptions
+    );
+  }
+
+  GetUniqeWallet(){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Wallet_Count',
+      httpOptions
+    );
+  }
 
  
 }

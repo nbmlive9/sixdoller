@@ -1,7 +1,11 @@
 <div class="dashboard-container ml-5">
   <app-header></app-header>
 
-<section class="extra-grid">
+<div class="text-center text-light mt-5" *ngIf="loadingData">
+  <div class="spinner-border text-light mb-3" style="width: 3rem; height: 3rem;"></div>
+  <h5>Please wait… loading level members</h5>
+</div>
+<section class="extra-grid" *ngIf="!loadingData">
   <div class="extra-card gradient-purple w-100">
     <h5 class="text-center mb-2">Level Members</h5>
         <h4 class="text-light mb-3">
@@ -26,24 +30,28 @@
    <!-- Level Selector -->
 <div class="level-selector-wrapper">
   <div class="level-selector d-flex flex-nowrap overflow-auto">
-    <button
-      *ngFor="let lvl of levelMembers"
-      class="btn btn-outline-light level-btn"
-      [class.active]="lvl.level === selectedLevel"
-      (click)="selectLevel(lvl.level)"
-    >
-      Level {{ lvl.level }}
-    </button>
+  <button
+  *ngFor="let lvl of levelMembers; let i = index"
+  class="btn btn-outline-light level-btn"
+  [class.active]="lvl.level === selectedLevel"
+  (click)="selectLevel(lvl.level)"
+>
+  Level {{ lvl.level }}  
+  <span class="badge bg-warning text-dark ms-1">
+    {{ levelCounts[i]?.count }}
+  </span>
+</button>
   </div>
 </div>
 
 <!-- Members -->
 <div class="members-container">
-  <div class="member-card" *ngFor="let member of levelMembers[selectedLevel - 1]?.members">
+  <div class="member-card" *ngFor="let member of levelMembers[selectedLevel - 1]?.members; let i=index;">
     <div class="member-icon">
       <i class="bi bi-person-fill"></i>
     </div>
     <div class="member-info">
+      
       <h6 class="member-regid">{{ member.regid }}</h6>
     </div>
     <div class="member-board-status">

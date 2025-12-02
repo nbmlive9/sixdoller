@@ -18,6 +18,9 @@ export class DashboardComponent {
   @ViewChild('messageModal') messageModal!: ElementRef;
   @ViewChild('offerModal') offerModal!: ElementRef;
 
+currentIndex = 0;
+currentNews: any;
+scrollInterval: any;
   back: any;
   team:any;
   walletAddress: string = '';
@@ -100,13 +103,14 @@ totalMembers: number = 0;
   }
 
   ngOnInit(){
+ 
     this.getProfiledata();
     this.getDashboarddata();
     this.gwalletReport();
 
-    setTimeout(() => {
-  this.showOfferPopup();
-}, 500);
+//     setTimeout(() => {
+//   this.showOfferPopup();
+// }, 500);
 
 
   
@@ -125,16 +129,44 @@ totalMembers: number = 0;
 
   }
 
+  startScrolling() {
+  // Wait for text animation (8 seconds)
+  this.scrollInterval = setInterval(() => {
+    this.nextNews();
+  }, 8000);
+}
+
+nextNews() {
+  this.currentIndex++;
+
+  if (this.currentIndex >= this.hdata.news.length) {
+    this.currentIndex = 0; // loop
+  }
+
+  this.currentNews = this.hdata.news[this.currentIndex];
+
+  // Restart animation
+  const box = document.querySelector('.scroll-box p') as HTMLElement;
+  box.style.animation = "none";
+  void box.offsetWidth; // Force reflow
+  box.style.animation = "autoScroll 8s linear forwards";
+}
+
+onManualScroll() {
+  // If user scrolls, pause automatic cycle
+  clearInterval(this.scrollInterval);
+}
+
  ngOnDestroy() {
     this.subscriptions.forEach(sub => sub.unsubscribe());
   }
 
-  showOfferPopup() {
-  if (this.offerModal) {
-    const modal = new bootstrap.Modal(this.offerModal.nativeElement);
-    modal.show();
-  }
-}
+//   showOfferPopup() {
+//   if (this.offerModal) {
+//     const modal = new bootstrap.Modal(this.offerModal.nativeElement);
+//     modal.show();
+//   }
+// }
 
 
 copiedLink: boolean = false;
@@ -251,6 +283,10 @@ shareTo(platform: string) {
     this.api.DashboardData().subscribe((res:any)=>{
       console.log('homedata',res);
       this.hdata=res.data;
+      if (this.hdata?.news && this.hdata.news.length > 0) {
+      this.currentNews = this.hdata.news[0];
+      this.startScrolling();     // ⭐ start scrolling ONLY after data loaded
+    }
     })
   }
 

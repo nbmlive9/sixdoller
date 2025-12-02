@@ -20,6 +20,7 @@ export class LevelIncomeComponent implements OnInit {
   rankBoard: string = 'N/A'; // ✅ define rankBoard
  totalMembers: number = 0;
   levelCounts: { level: number; count: number }[] = [];
+  loadingData: boolean = true;
   constructor(private api: AuthUserService, private sharedService:SharedService) {}
 
   ngOnInit() {
@@ -27,45 +28,57 @@ export class LevelIncomeComponent implements OnInit {
      this.sharedService.loadLevelData();
   }
 
+  
+
   loadLevelData() {
-    this.api.LevelMembersReport().subscribe((res: any) => {
-      // console.log('levelmem',res);
-      if (!res?.data) return;
+  this.loadingData = true;  // ⭐ start loading
+
+  this.api.LevelMembersReport().subscribe({
+    next: (res: any) => {
+      if (!res?.data) {
+        this.loadingData = false;
+        return;
+      }
 
       this.rawData = Array.isArray(res.data) ? res.data[0] : res.data;
-      if (!this.rawData) return;
 
       this.levelMembers = [];
-       this.totalMembers = 0;
-          this.levelCounts = [];
-          
+      this.totalMembers = 0;
+      this.levelCounts = [];
+
       for (let i = 1; i <= 12; i++) {
         const levelKey = `level${i}`;
         const levelData = this.rawData[levelKey];
 
-        let members: LevelMember[] = [];
-          let count = 0;
+      let members: LevelMember[] = [];
+        let count = 0;
+
         if (Array.isArray(levelData)) {
           members = levelData.map((m: any) => ({
             regid: m.regid,
             name: m.name,
             boardStatus: this.getBoardStatus(m)
-            
           }));
-            count = members.length;
+
+          count = members.length;
         }
 
         this.levelMembers.push({ level: i, members });
-         this.totalMembers += count;
-       
+        this.levelCounts.push({ level: i, count });
+        this.totalMembers += count;
       }
 
-      // ✅ Set initial rankBoard based on first member in first level
       this.updateRankBoard();
-    }, err => {
-      console.error('Error fetching level data', err);
-    });
-  }
+      this.loadingData = false;  // ⭐ stop loading
+    },
+
+    error: (err) => {
+      console.error(err);
+      this.loadingData = false; // stop loading even if error
+    }
+  });
+}
+
   
 
  getBoardStatus(member: any): string {

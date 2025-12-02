@@ -30,6 +30,8 @@ import { RoyaltyUsersDataComponent } from './company/royalty-users-data/royalty-
 import { RoyaltyIncomeComponent } from './royalty-income/royalty-income.component';
 import { AddMisslianceComponent } from './company/add-missliance/add-missliance.component';
 import { InsideCompanyRegistrationComponent } from './company/inside-company-registration/inside-company-registration.component';
+import { AddNewsComponent } from './company/add-news/add-news.component';
+import { UniqueWalletsDataComponent } from './company/unique-wallets-data/unique-wallets-data.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -66,6 +68,8 @@ const routes: Routes = [
 { path: 'cproyaltyusers', component: RoyaltyUsersDataComponent }, 
 { path: 'addexpensive', component: AddMisslianceComponent },
 { path: 'cregister', component: InsideCompanyRegistrationComponent },
+{ path: 'addnews', component: AddNewsComponent },
+{ path: 'uniquewalletdata', component: UniqueWalletsDataComponent },
 
 ];
 

@@ -26,7 +26,8 @@ form:FormGroup;
        password: [''],
       name: [''],
       email: [''],
-      wallet1: ['']
+      wallet1: [''],
+      securepin:['']
     });
   }
 
@@ -103,7 +104,8 @@ form:FormGroup;
       password: item.password,
       name: item.name,
       email: item.email,
-      wallet1: item.wallet1
+      wallet1: item.wallet1,
+      securepin: item.rpin
     });
     
     this.form.markAsPristine();

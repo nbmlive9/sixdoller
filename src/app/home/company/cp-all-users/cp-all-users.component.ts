@@ -156,7 +156,7 @@ profileform:FormGroup;
         'Sponsor ID': user.sponcerid,
             'Secure Pin': user.rpin,
            'Activation Wallet': user.actwallet,
-           'Wallet Fund': user.rpin,
+           'Wallet Fund': user.walletamount,
            'Wallet Address': user.wallet1,
           'Re-Birth Count': user.autocount,
 
