@@ -5,21 +5,9 @@
   <!-- Main Body -->
   <section class="welcome-section">
     <h4>👋 Welcome, <span>{{ pfdata?.name }}</span></h4>
-    <p>{{pfdata?.regid}} (<span class="text-warning" *ngIf="pfdata?.board==='1'">Board 1 Running</span>
-      <span class="text-warning" *ngIf="pfdata?.board==='2'"> Board 2 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='3'"> Board 3 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='4'"> Board 4 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='5'"> Board 5 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='6'"> Board 6 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='7'"> Board 7 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='8'"> Board 8 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='9'"> Board 9 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='10'"> Board 10 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='11'"> Board 11 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='12'"> Board 12 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='13'"> Board 13 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='14'"> Board 14 Running  </span>
-      <span class="text-warning" *ngIf="pfdata?.board==='15'"> Board 15 Running  </span>)
+    <p>{{pfdata?.regid}} ( <span *ngIf="runningBoard" class="text-warning">
+    Board {{ runningBoard }} Running
+  </span>)
     </p>
   </section>
 

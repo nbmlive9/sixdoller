@@ -279,10 +279,23 @@ shareTo(platform: string) {
     alert('Redirecting to registration page...');
   }
 
+  runningBoard: number | null = null;
+
     getDashboarddata(){
     this.api.DashboardData().subscribe((res:any)=>{
       console.log('homedata',res);
       this.hdata=res.data;
+
+      // Extract boarddata object
+    const bd = this.hdata.boarddata;
+          // Find highest board with value "1"
+    for (let i = 15; i >= 1; i--) {
+      if (bd[`board${i}`] == "1") {
+        this.runningBoard = i;
+        break;
+      }
+    }
+
       if (this.hdata?.news && this.hdata.news.length > 0) {
       this.currentNews = this.hdata.news[0];
       this.startScrolling();     // ⭐ start scrolling ONLY after data loaded
