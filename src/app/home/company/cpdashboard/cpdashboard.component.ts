@@ -44,37 +44,7 @@ rdata: any;
     this.rewardUsersModal.show();
   }
 
- downloadRewardExcel() {
-  if (!this.rdata || this.rdata.length === 0) {
-    alert('No reward data available to download.');
-    return;
-  }
-
-  // Convert reward data to worksheet
- const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
-    this.rdata.map((user: any, index: number) => ({
-      'S.No': index + 1,
-      'Reg ID': user.regid,
-      'Name': user.name,
-      'Sponsor Count': user.sponcer_count,
-      'Team Count': user.team_count
-    }))
-  );
-
-  // Create a workbook and append the sheet
-  const workbook: XLSX.WorkBook = {
-    Sheets: { 'Reward Users': worksheet },
-    SheetNames: ['Reward Users']
-  };
-
-  // Generate Excel file
-  const excelBuffer: any = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
-
-  // Save file
-  const fileName = `Reward_Users_${new Date().toISOString().split('T')[0]}.xlsx`;
-  const blob: Blob = new Blob([excelBuffer], { type: 'application/octet-stream' });
-  saveAs(blob, fileName);
-}
+ 
 
 
   ngAfterViewInit() {

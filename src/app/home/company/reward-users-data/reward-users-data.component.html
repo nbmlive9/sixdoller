@@ -1,0 +1,277 @@
+    <div class="dashboard-container">
+
+    <!-- Header -->
+    <app-header></app-header>
+    <!-- Transfer Transactions -->
+    <section class="extra-grid">
+        <div class="w-100">
+        <h5 class="modal-title" id="rewardUsersModalLabel">Reward Users</h5>
+            <div *ngIf="rdata.length > 0; else noData">
+                <button class="btn btn-success btn-sm" (click)="downloadRewardExcel()">
+                <i class="bi bi-file-earmark-excel"></i> Download Excel
+                </button>
+            <div class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                    <th>#</th>
+                    <th>Reg ID</th>
+                    <th>Name</th>
+                    <th>Sponsor Count</th>
+                    <th>Team Count</th>
+                    <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of rdata; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td (click)="UserWiseDirectData(user.regid)" class="text-primary" style="cursor:pointer;">   {{ user.regid }}    </td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.sponcer_count }}</td>
+                    <td>{{ user.team_count }}</td>
+                    <td class="text-primary" style="cursor:pointer;" (click)="openWalletModal(user)">
+                        View Joint Wallet
+                        </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            </div>
+
+            <ng-template #noData>
+            <div class="text-center text-muted py-4">
+                No reward users found.
+            </div>
+            </ng-template>
+        </div>
+    </section>
+
+    
+
+    </div>
+
+
+    <!-- Direct Sponsor Modal -->
+    <div class="modal fade" id="directModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">
+            Direct Sponsors - {{ directUser?.name }} ({{ directUser?.regid }})
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <button class="btn btn-success btn-sm mb-3" (click)="downloadDirectExcel()">
+            <i class="bi bi-file-earmark-excel"></i> Download Excel
+            </button>
+
+            <div *ngIf="directRows.length > 0; else noDirectData">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                    <th>#</th>
+                    <th>Reg ID</th>
+                    <th>Name</th>
+                    <th>Wallet Address</th>
+                    <th>Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let row of directRows; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ row.regid }}</td>
+                    <td>{{ row.name }}</td>
+                    <td>{{ row.wallet }}</td>
+                    <td>{{ row.count }}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+
+            </div>
+
+            <ng-template #noDirectData>
+            <div class="text-center text-muted py-3">
+                No Direct Sponsor Data Found.
+            </div>
+            </ng-template>
+
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Sponsor List Modal -->
+    <div class="modal fade" id="sponsorModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">
+            Sponsors of {{ directUser?.name }} ({{ directUser?.regid }})
+            </h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <div *ngIf="sponsorList.length > 0; else noSponsorData">
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                    <th>#</th>
+                    <th>Reg ID</th>
+                    <th>Name</th>
+                    <th>Team Count</th>
+                    <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let s of sponsorList; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td class="text-primary" style="cursor:pointer;"
+                        (click)="OpenSponsorWallet(s)">
+                        {{ s.regid }}
+                    </td>
+                    <td>{{ s.name }}</td>
+                    <td>{{ s.team_count }}</td>
+                    <td>
+                        <button class="btn btn-info btn-sm"
+                                (click)="OpenSponsorWallet(s)">
+                        View Wallet
+                        </button>
+                    </td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+
+            </div>
+
+            <ng-template #noSponsorData>
+            <div class="text-center text-muted py-3">
+                No sponsors found.
+            </div>
+            </ng-template>
+
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+    <!-- Sponsor Wallet Modal -->
+    <div class="modal fade" id="sponsorWalletModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header bg-info text-white">
+            <h5 class="modal-title">
+            Wallet Frequency - {{ selectedSponsor?.name }} ({{ selectedSponsor?.regid }})
+            </h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <div *ngIf="sponsorWalletRows.length > 0; else noSponsorWallet">
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                <tr>
+                    <th>#</th>
+                    <th>Wallet Address</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr *ngFor="let row of sponsorWalletRows; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ row.address }}</td>
+                    <td>{{ row.count }}</td>
+                </tr>
+                </tbody>
+
+            </table>
+            </div>
+
+            <ng-template #noSponsorWallet>
+            <div class="text-center text-muted py-3">
+                No Wallet Data Found.
+            </div>
+            </ng-template>
+
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+
+
+
+    <!-- Joint Wallet Modal -->
+    <div class="modal fade" id="walletModal" tabindex="-1" aria-labelledby="walletModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content text-dark">
+
+        <div class="modal-header bg-gradient-info">
+            <h5 class="modal-title ">   Joint Wallet Frequency - {{ selectedUser?.name }} ({{ selectedUser?.regid }})</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+
+        <div class="modal-body">
+    <button class="btn btn-success btn-sm mb-3" (click)="downloadWalletExcel()">
+            <i class="bi bi-file-earmark-excel"></i> Download Wallet Excel
+            </button>
+            <div *ngIf="walletRows.length > 0; else noWalletData">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                    <th>#</th>
+                    <th>Wallet Address</th>
+                    <th>Count</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let row of walletRows; let i = index">
+                    <td>{{ i + 1 }}</td>
+                    <td>{{ row.address }}</td>
+                    <td>{{ row.count }}</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+            </div>
+
+            <ng-template #noWalletData>
+            <div class="text-center text-muted py-3">
+                No Joint Wallet Data Found.
+            </div>
+            </ng-template>
+
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+
+    <!-- Footer Navigation -->
+    <app-footer></app-footer>
+
+

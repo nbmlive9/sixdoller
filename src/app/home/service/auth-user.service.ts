@@ -1363,5 +1363,19 @@ forgotPassword(value: { regid: string; email: string }): Observable<any> {
     );
   }
 
+    UserWiseDirectCount(id:any){
+    const token1 = this.token.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token1
+      })
+    }
+    return this.http.get(
+      AUTH_API + 'Userwise_Director/'+id,
+      httpOptions
+    );
+  }
+
  
 }

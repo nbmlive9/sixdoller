@@ -5,6 +5,7 @@
   <!-- Main Body -->
   <section class="welcome-section">
     <h4>👋 Welcome, <span>{{ pfdata?.name }}</span></h4>
+        <h6>Joining Date: <span>{{ pfdata?.cdate | date:'dd/MM/YYYY' }}</span></h6>
     <p>{{pfdata?.regid}} ( <span *ngIf="runningBoard" class="text-warning">
     Board {{ runningBoard }} Running
   </span>)

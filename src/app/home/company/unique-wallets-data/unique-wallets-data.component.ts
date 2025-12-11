@@ -40,8 +40,7 @@ export class UniqueWalletsDataComponent {
           this.tdata = res.data;
         });
       }
-
-    
+   
   
 
 }

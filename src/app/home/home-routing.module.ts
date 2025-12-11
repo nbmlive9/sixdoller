@@ -32,6 +32,7 @@ import { AddMisslianceComponent } from './company/add-missliance/add-missliance.
 import { InsideCompanyRegistrationComponent } from './company/inside-company-registration/inside-company-registration.component';
 import { AddNewsComponent } from './company/add-news/add-news.component';
 import { UniqueWalletsDataComponent } from './company/unique-wallets-data/unique-wallets-data.component';
+import { RewardUsersDataComponent } from './company/reward-users-data/reward-users-data.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -70,6 +71,7 @@ const routes: Routes = [
 { path: 'cregister', component: InsideCompanyRegistrationComponent },
 { path: 'addnews', component: AddNewsComponent },
 { path: 'uniquewalletdata', component: UniqueWalletsDataComponent },
+{ path: 'rewardusers', component: RewardUsersDataComponent },
 
 ];
 

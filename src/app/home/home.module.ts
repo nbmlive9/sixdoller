@@ -62,6 +62,7 @@ import { InsideCompanyRegistrationComponent } from './company/inside-company-reg
 import { AddNewsComponent } from './company/add-news/add-news.component';
 import { UniqueWalletsDataComponent } from './company/unique-wallets-data/unique-wallets-data.component';
 import { SearchUserdataEmployeeComponent } from './company/search-userdata-employee/search-userdata-employee.component';
+import { RewardUsersDataComponent } from './company/reward-users-data/reward-users-data.component';
 
 
 
@@ -71,7 +72,7 @@ import { SearchUserdataEmployeeComponent } from './company/search-userdata-emplo
   declarations: [
     HomeComponent,
     DashboardComponent,
-    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, WalletRoiReportComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent, SignUpComponent, HeaderComponent, ReceivedWalletComponent, BoardIncomeComponent, LevelIncomeComponent, Board1Component, Board2Component, Board3Component, Board4Component, Board5Component, Board6Component, Board7Component, Board8Component, Board9Component, Board10Component, Board11Component, Board12Component, Board13Component, Board14Component, Board15Component, ReferralIncomeComponent, CpdashboardComponent, CpSupportComponent, CpAllUsersComponent, CpDepositsComponent, CpTransferComponent, CpWithdrawsComponent, SearchUsersByAdminComponent, RoyaltyUsersDataComponent, RoyaltyIncomeComponent, AddMisslianceComponent, InsideCompanyRegistrationComponent, AddNewsComponent, UniqueWalletsDataComponent, SearchUserdataEmployeeComponent
+    FooterComponent, ProfileComponent, TransferAmountComponent, ReceiveComponent, DepositComponent, DirectTeamComponent, ReportComponent, ReferralsComponent, ReferralsAllDataComponent, SelfTransferComponent, ReferralLinkShareComponent, WalletRoiReportComponent, ForgotPasswordComponent, WithdrawFundComponent, WithdrawReportsComponent, SupportTicketComponent, SignUpComponent, HeaderComponent, ReceivedWalletComponent, BoardIncomeComponent, LevelIncomeComponent, Board1Component, Board2Component, Board3Component, Board4Component, Board5Component, Board6Component, Board7Component, Board8Component, Board9Component, Board10Component, Board11Component, Board12Component, Board13Component, Board14Component, Board15Component, ReferralIncomeComponent, CpdashboardComponent, CpSupportComponent, CpAllUsersComponent, CpDepositsComponent, CpTransferComponent, CpWithdrawsComponent, SearchUsersByAdminComponent, RoyaltyUsersDataComponent, RoyaltyIncomeComponent, AddMisslianceComponent, InsideCompanyRegistrationComponent, AddNewsComponent, UniqueWalletsDataComponent, SearchUserdataEmployeeComponent, RewardUsersDataComponent
   ],
   imports: [
     CommonModule,
