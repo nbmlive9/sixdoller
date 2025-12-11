@@ -104,7 +104,8 @@
 
     <div class="extra-card gradient-pink">
       <h5>Team Count</h5>
-      <h3>{{ totalMembers }}</h3>
+      <p *ngIf="loadingData">Load Data…</p>
+      <h3 *ngIf="!loadingData">{{ totalMembers }}</h3>
     </div>
 
     <div class="extra-card gradient-referal">

@@ -112,6 +112,8 @@ showModalMessage(message: string, type: 'success' | 'danger') {
   getProfiledata() {
     this.api.Profile().subscribe((res: any) => {
       this.pfdata = res.data[0];
+      console.log('profile',res);
+      
       this.form.patchValue({
         name: this.pfdata.name,
         password: '',

@@ -8,6 +8,12 @@ import { Subscription } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 declare var bootstrap: any;
 
+interface LevelMember {
+  regid: string;
+  name: string;
+  boardStatus?: string;
+}
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -89,7 +95,11 @@ totalMembers: number = 0;
   }
 }
 
-
+  rawData: any;
+  levelMembers: { level: number }[] = [];
+  selectedLevel: number = 1;
+  rankBoard: string = 'N/A'; // ✅ define rankBoard
+  loadingData: boolean = true;
 
   wdata:any;
    permissionDenied: boolean = false;
@@ -107,27 +117,72 @@ totalMembers: number = 0;
     this.getProfiledata();
     this.getDashboarddata();
     this.gwalletReport();
-
+this.loadLevelData();
 //     setTimeout(() => {
 //   this.showOfferPopup();
 // }, 500);
 
+    //     this.sharedService.loadLevelData();
 
-  
-        this.sharedService.loadLevelData();
+    // this.subscriptions.push(
+    //   this.sharedService.totalMembers$.subscribe(val => this.totalMembers = val)
+    // );
 
-    // Subscribe to reactive updates
-    this.subscriptions.push(
-      this.sharedService.totalMembers$.subscribe(val => this.totalMembers = val)
-    );
-
-    this.subscriptions.push(
-      this.sharedService.levelCounts$.subscribe(val => this.levelCounts = val)
-    );
+    // this.subscriptions.push(
+    //   this.sharedService.levelCounts$.subscribe(val => this.levelCounts = val)
+    // );
     
     
 
   }
+
+
+  loadLevelData() {
+  this.loadingData = true;  // ⭐ start loading
+
+  this.api.LevelMembersReport().subscribe({
+    next: (res: any) => {
+      if (!res?.data) {
+        this.loadingData = false;
+        return;
+      }
+
+      this.rawData = Array.isArray(res.data) ? res.data[0] : res.data;
+
+      this.levelMembers = [];
+      this.totalMembers = 0;
+      this.levelCounts = [];
+
+      for (let i = 1; i <= 12; i++) {
+        const levelKey = `level${i}`;
+        const levelData = this.rawData[levelKey];
+
+      let members: LevelMember[] = [];
+        let count = 0;
+
+        if (Array.isArray(levelData)) {
+          members = levelData.map((m: any) => ({
+            regid: m.regid,
+            name: m.name,
+          }));
+
+          count = members.length;
+        }
+
+        this.levelMembers.push({ level: i });
+        this.levelCounts.push({ level: i, count });
+        this.totalMembers += count;
+      }
+
+      this.loadingData = false;  // ⭐ stop loading
+    },
+
+    error: (err) => {
+      console.error(err);
+      this.loadingData = false; // stop loading even if error
+    }
+  });
+}
 
   startScrolling() {
   // Wait for text animation (8 seconds)
