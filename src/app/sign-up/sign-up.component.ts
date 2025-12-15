@@ -1,15 +1,17 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthUserService } from '../home/service/auth-user.service';
 import * as confetti from 'canvas-confetti';
 import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, filter } from 'rxjs/operators';
 
 declare var bootstrap: any; // ✅ Bootstrap instance
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  styleUrls: ['./sign-up.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SignUpComponent implements OnInit, AfterViewInit {
   form: FormGroup;
@@ -24,19 +26,29 @@ export class SignUpComponent implements OnInit, AfterViewInit {
 loading: boolean = false;
   ypdata: any;
     coinValue = 0;
-  constructor(private fb: FormBuilder, private api: AuthUserService, private router: Router) {
+  constructor(private fb: FormBuilder, private api: AuthUserService, private router: Router, private cdr: ChangeDetectorRef) {
     this.form = this.fb.group({
       sponcerid: new FormControl('', [Validators.required]),
       name: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
       coins: [''],
     });
+    
   }
 
   ngOnInit() {
   this.getProfiledata();
       this.YohanPriceData();
+  this.form.get('sponcerid')?.valueChanges.pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+    filter(val => !!val)
+  ).subscribe(id => {
+    this.fetchSponsorName(id);
+  });
   }
+
+
 
     YohanPriceData() {
     this.api.YohanPrice().subscribe({
@@ -49,12 +61,14 @@ loading: boolean = false;
     });
   }
 
-    getProfiledata(){
-    this.api.Profile().subscribe((res:any)=>{
-      console.log('profile',res);
-      this.pfdata=res.data[0];
-    })
-  }
+getProfiledata(){
+  this.api.Profile().subscribe((res:any)=>{
+    this.pfdata = res.data[0];
+
+    // ✅ FORCE UI UPDATE
+    this.cdr.markForCheck();
+  });
+}
 
   ngAfterViewInit() {
     const successEl = document.getElementById('successModal');
@@ -74,6 +88,8 @@ loading: boolean = false;
         if (res?.data?.length) {
           this.regname = res.data[0].name;
           this.idselectmsg = `Sponsor Name: ${this.regname}`;
+          // ✅ FORCE UI UPDATE
+this.cdr.markForCheck();
           this.errorMessage = '';
         } else {
           this.idselectmsg = 'Referral ID Not Available';
@@ -87,6 +103,30 @@ loading: boolean = false;
     );
   }
 
+  fetchSponsorName(id: string) {
+  this.api.UserNameDisplay(id).subscribe({
+    next: (res: any) => {
+      if (res?.data?.length) {
+        this.regname = res.data[0].name;
+        this.idselectmsg = `Sponsor Name: ${this.regname}`;
+        this.errorMessage = '';
+      } else {
+        this.idselectmsg = 'Referral ID Not Available';
+        this.regname = '';
+      }
+
+      // ✅ IMPORTANT
+      this.cdr.markForCheck();
+    },
+    error: () => {
+      this.errorMessage = 'Invalid Sponsor ID';
+      this.idselectmsg = '';
+      this.cdr.markForCheck();
+    }
+  });
+}
+
+
   
 userSubmit() {
   if (this.form.invalid) {
@@ -94,52 +134,40 @@ userSubmit() {
     return;
   }
 
-  this.loading = true; // Start loader
-  this.udata = null;   // Reset data
+  this.loading = true;
+  this.udata = null;
 
-  // ✅ Convert $6 into Yohan Coin based on current coinValue
   const usdAmount = 6;
-  const yohanCoinAmount = (usdAmount / this.coinValue).toFixed(6); // keep precision
-
-  // ✅ Update coins field in the form
+  const yohanCoinAmount = (usdAmount / this.coinValue).toFixed(6);
   this.form.patchValue({ coins: yohanCoinAmount });
 
-  console.log("Converted Coin Value:", yohanCoinAmount);
+  this.api.UserRegistration(this.form.value).subscribe({
+    next: (res: any) => {
+      this.loading = false;
 
-  this.successModal.show(); // Show modal immediately
-
-  const val = this.form.value;
-
-  this.api.UserRegistration(val).subscribe(
-    (res: any) => {
       if (res?.adddata) {
-        this.udata = res.adddata; // Assign data
+        this.udata = res.adddata;
+        this.successModal.show(); // ✅ SHOW HERE
+        this.form.reset();
       } else {
-        this.showErrorModal("Registration failed. Please try again.");
+        this.showErrorModal('Registration failed');
       }
-
-      this.loading = false;
-      this.form.reset();
     },
-    (err: any) => {
+    error: (err) => {
       this.loading = false;
-      this.showErrorModal(err.error?.message || "Registration failed");
+      this.showErrorModal(err.error?.message || 'Registration failed');
     }
-  );
+  });
 }
+
 
 
 refreshPage() {
   this.successModal.hide();
-  // window.location.reload();
-   // this.router.navigateByUrl('/sign');
-      setTimeout(() => {
-            // this.modalRef.hide();
-            this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-              this.router.navigate(['/sign']);
-            });
-          },);
+  this.form.reset();
+  this.udata = null;
 }
+
 
 
   showErrorModal(message: string) {
