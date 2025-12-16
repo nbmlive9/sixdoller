@@ -79,52 +79,28 @@ getProfiledata(){
   }
 
   // 🔹 Get sponsor name by ID
-  onRegisterIdSelect(event: any) {
-    const id = event.target.value;
-    if (!id) return;
-
-    this.api.UserNameDisplay(id).subscribe(
-      (res: any) => {
-        if (res?.data?.length) {
-          this.regname = res.data[0].name;
-          this.idselectmsg = `Sponsor Name: ${this.regname}`;
-          // ✅ FORCE UI UPDATE
-this.cdr.markForCheck();
-          this.errorMessage = '';
-        } else {
-          this.idselectmsg = 'Referral ID Not Available';
-          this.regname = '';
-        }
-      },
-      (err: any) => {
-        this.errorMessage = err.error?.message || 'Error fetching data';
-        this.idselectmsg = '';
-      }
-    );
-  }
 
   fetchSponsorName(id: string) {
+  this.errorMessage = '';
+  this.idselectmsg = '';
+
   this.api.UserNameDisplay(id).subscribe({
     next: (res: any) => {
       if (res?.data?.length) {
         this.regname = res.data[0].name;
         this.idselectmsg = `Sponsor Name: ${this.regname}`;
-        this.errorMessage = '';
       } else {
         this.idselectmsg = 'Referral ID Not Available';
-        this.regname = '';
       }
-
-      // ✅ IMPORTANT
       this.cdr.markForCheck();
     },
     error: () => {
       this.errorMessage = 'Invalid Sponsor ID';
-      this.idselectmsg = '';
       this.cdr.markForCheck();
     }
   });
 }
+
 
 
   
@@ -135,7 +111,7 @@ userSubmit() {
   }
 
   this.loading = true;
-  this.udata = null;
+  this.cdr.markForCheck();
 
   const usdAmount = 6;
   const yohanCoinAmount = (usdAmount / this.coinValue).toFixed(6);
@@ -147,7 +123,8 @@ userSubmit() {
 
       if (res?.adddata) {
         this.udata = res.adddata;
-        this.successModal.show(); // ✅ SHOW HERE
+        this.cdr.markForCheck();   // 🔥 IMPORTANT
+        this.successModal.show();
         this.form.reset();
       } else {
         this.showErrorModal('Registration failed');
@@ -155,10 +132,12 @@ userSubmit() {
     },
     error: (err) => {
       this.loading = false;
+      this.cdr.markForCheck();     // 🔥 IMPORTANT
       this.showErrorModal(err.error?.message || 'Registration failed');
     }
   });
 }
+
 
 
 
