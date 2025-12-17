@@ -118,6 +118,13 @@ onWalletTypeChange() {
     );
   }
 
+  truncateTwoDecimals(value: number | string): string {
+  if (value === null || value === undefined) return '0.00';
+  const num = Number(value);
+  return (Math.floor(num * 100) / 100).toFixed(2);
+}
+
+
   /** Open QR Scanner Modal */
   // openScanner() {
   //   const modalElement = document.getElementById('qrScannerModal');

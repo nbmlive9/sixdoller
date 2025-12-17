@@ -1,0 +1,41 @@
+<div class="dashboard-container" style="margin-bottom: 75px;">
+  <!-- Back Header -->
+<app-header></app-header>
+<h4 class="text-center mt-1">Activation Data</h4>
+  <!-- Loader -->
+  <div *ngIf="isLoading" class="d-flex flex-column justify-content-center align-items-center" style="height:200px;">
+    <img src="assets/favicon.png" alt="Loading..." width="60" height="60" class="mb-3">
+    <p class="fw-semibold text-primary">Loading Activation Report...</p>
+  </div>
+
+  <!-- Referrals List -->
+  <div *ngIf="!isLoading">
+    <div *ngIf="data1?.length > 0; else noData">
+      <div class="referral-list">
+        <div class="referral-card" *ngFor="let row of data1">
+          <div class="ref-icon"><i class="bi bi-person-fill"></i></div>
+          <div class="ref-info">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="ref-name">{{ row.forid }} </div>
+              <div class="ref-id text-gradient">Name: {{ row.uname }} </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-1">
+              <div class="ref-date">{{ row.cdate | date:'dd/MMM/YYYY' }} ({{row.ctime}}) </div>
+              <span class="badge badge-success">
+                Amount: ${{ row.amount }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #noData>
+      <div class="text-center text-white mt-4">
+        No referrals found.
+      </div>
+    </ng-template>
+  </div>
+</div>
+
+<app-footer></app-footer>

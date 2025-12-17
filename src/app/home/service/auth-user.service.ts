@@ -1377,5 +1377,6 @@ forgotPassword(value: { regid: string; email: string }): Observable<any> {
     );
   }
 
+
  
 }

@@ -33,6 +33,7 @@ import { InsideCompanyRegistrationComponent } from './company/inside-company-reg
 import { AddNewsComponent } from './company/add-news/add-news.component';
 import { UniqueWalletsDataComponent } from './company/unique-wallets-data/unique-wallets-data.component';
 import { RewardUsersDataComponent } from './company/reward-users-data/reward-users-data.component';
+import { ActivationReportComponent } from './activation-report/activation-report.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -57,6 +58,7 @@ const routes: Routes = [
   { path: 'walletri', component: WalletRoiReportComponent },
 
   { path: 'withdrawreport', component: WithdrawReportsComponent },
+    { path: 'activationreport', component: ActivationReportComponent },
     { path: 'support', component: SupportTicketComponent },
 
     //Company Dashboard

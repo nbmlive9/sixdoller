@@ -7,7 +7,9 @@
   <section class="stats-grid">
     <div class="stat-card gradient-cyan w-100">
       <h5 class="text-center">Wallet Transfer</h5>
-      <h3 class="text-center mb-3">{{ pfdata?.actwallet | currency:'USD':true:'1.2-2' }}</h3>
+      <h3 class="text-center mb-3">
+  {{ truncateTwoDecimals(pfdata?.actwallet) }}
+</h3>
             <small class="text-danger"> {{errorMessage}} </small>
       <form [formGroup]="form" novalidate>
         <div class="row">
