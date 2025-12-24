@@ -10,7 +10,11 @@
 
     <!-- Wallet connect button -->
     <div class="d-flex justify-content-center mb-3">
-      <w3m-button></w3m-button>
+   <button id="connectBtn"
+        type="button"
+        onclick="connectWallet()">
+  🔗 Connect Wallet
+</button>
     </div>
 
     <form [formGroup]="form" id="registrationForm">

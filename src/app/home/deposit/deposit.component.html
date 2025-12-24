@@ -9,7 +9,11 @@
       <h6>Activation Fund</h6>
       <h3 class="mt-1">{{pfdata?.actwallet | currency:'USD':true:'1.2-2'}}</h3>
           <div class="d-flex justify-content-end">
-                  <w3m-button></w3m-button>
+                  <button id="connectBtns"
+        type="button"
+        onclick="connectWallet()">
+  🔗 Connect Wallet
+</button>
             </div>
       <button class="btn btn-glow mt-2" data-bs-toggle="modal" data-bs-target="#addFundModal">
         <i class="fas fa-plus-circle me-1"></i> Deposit Amount
