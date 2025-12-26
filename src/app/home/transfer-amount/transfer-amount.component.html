@@ -16,8 +16,8 @@
           <div class="col-md-6 mb-2">
             <select class="form-control" formControlName="wallettype"  (change)="onWalletTypeChange()">
               <option value="" disabled>Select Wallet Type</option>
-              <option value="dwallet">Activation Fund ({{ pfdata?.actwallet | currency:'USD':true:'1.2-2' }})</option>
-              <option value="ewallet">Main Wallet ({{ pfdata?.walletamount | currency:'USD':true:'1.2-2' }})</option>
+              <option value="dwallet">Activation Fund ({{ truncateTwoDecimals(pfdata?.actwallet) }})</option>
+              <option value="ewallet">Main Wallet ({{ truncateTwoDecimals(pfdata?.walletamount) }})</option>
             </select>
             <div *ngIf="form.get('wallettype')?.invalid && form.get('wallettype')?.touched" class="text-danger small">
                 wallettype is required 
