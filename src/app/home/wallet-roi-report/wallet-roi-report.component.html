@@ -29,7 +29,7 @@
       </thead>
       <tbody>
         <tr *ngFor="let row of data1; else noTransactions">
-          <td>{{row.cdate | date:'dd/MMM/YYYY'}}</td>
+          <td>{{row.cdate | date:'dd/MMM/yyyy'}}</td>
           <td>{{row.pkamount | currency:'USD':true:'1.0-2'}}</td>
           <td> {{row.cramount | currency:'USD':true:'1.0-2'}} </td>
           <td> {{row.balamount | currency:'USD':true:'1.0-2'}} </td>

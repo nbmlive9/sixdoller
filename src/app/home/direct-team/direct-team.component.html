@@ -31,7 +31,7 @@
               {{ row.topupstatus == '1' ? 'Activated' : 'Not Activated' }}
             </span>
           </td>
-          <td>{{ row.adate | date:'dd/MM/yyyy' }}</td>
+          <td>{{ row.adate | date:'dd/MMM/yyyy' }}</td>
         </tr>
       </tbody>
     </table>
@@ -49,7 +49,7 @@
           {{ row.topupstatus == '1' ? 'Activated' : 'Not Activated' }}
         </span>
       </div>
-      <div class="text-muted mt-2"><small>Date: {{ row.adate | date:'dd/MM/yyyy' }}</small></div>
+      <div class="text-muted mt-2"><small>Date: {{ row.adate | date:'dd/MMM/yyyy' }}</small></div>
       <div class="fw-semibold mt-1">S.No: {{ i + 1 }}</div>
     </div>
   </div>

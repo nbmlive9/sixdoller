@@ -38,7 +38,7 @@
         <tbody>
           <tr *ngFor="let row of ddata; let i = index;">
             <td>{{ i + 1 }}</td>
-            <td>{{ row.cdate | date:'dd/MM/yyyy' }}</td>
+            <td>{{ row.cdate | date:'dd/MMM/yyyy' }}</td>
             <td class="text-success fw-bold">{{ row.amount | currency:'USD':true:'1.2-2' }}</td>
             <td>{{ row.transno }}</td>
             <td><span class="badge bg-success">Success</span></td>
@@ -62,7 +62,7 @@
               {{ wd.transno }}
             </div>
 
-            <div class="text-white-50 small">{{ wd.cdate | date:'dd/MM/yyyy' }} <br> ({{wd.ctime}})</div>
+            <div class="text-white-50 small">{{ wd.cdate | date:'dd/MMM/yyyy' }} <br> ({{wd.ctime}})</div>
           </div>
           <div class="text-end">
             <div [ngClass]="wd.amount >= 0 ? 'text-success-glow' : 'text-danger-glow'" class="fw-bold fs-6">
